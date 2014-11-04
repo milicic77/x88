@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: cae8f519c773e4a4bbbfa6f03ddfe4c1
+guid: 7c8fe1f6c08ac93479bf5f233f34b7ad
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: road_001
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
