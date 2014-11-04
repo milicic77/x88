@@ -38,6 +38,9 @@ namespace Game
                 Game.GameEnv.LogicStartTickCount = (uint)Environment.TickCount;
 
                 m_ClientInitialized = true;
+
+
+                m_Represent.CreateScene(1);
             }
             catch (Exception e)
             {

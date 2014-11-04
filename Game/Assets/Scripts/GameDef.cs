@@ -7,6 +7,7 @@ namespace Game
 {
     class GameDef
     {
+        // 逻辑帧数
         public const int GAME_FPS = 16;
     }
 
