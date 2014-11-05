@@ -47,6 +47,8 @@ namespace Game.RepresentLogic
             GameObject sceneCameraObj = new GameObject(RepresentDef.SCENE_CAMERA_NAME);
             sceneCameraObj.transform.position = new Vector3(0, 0, -2);
             Camera sceneCamera = sceneCameraObj.AddComponent<Camera>();
+            // 输入处理先挂在摄像机下面
+            sceneCameraObj.AddComponent<InputManager>();
             sceneCamera.backgroundColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
             sceneCamera.clearFlags = CameraClearFlags.Skybox;
             sceneCamera.orthographic = true;
