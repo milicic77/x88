@@ -46,6 +46,9 @@ namespace Game.GameLogic
 
         public void Activate()
         {
+            if (null == m_Path)
+                return;
+
             int nNow = Environment.TickCount;
             if (nNow - nTime1 >= 500)
             {
