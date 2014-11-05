@@ -30,10 +30,66 @@ namespace Game.RepresentLogic
                 ExceptionTool.ThrowException("nLogicY不合法！");
             }
 
-            float nWorldY = nLogicY * RepresentDef.SCENE_OBJECT_PIXEL_Y + RepresentDef.SCENE_OBJECT_PIXEL_Y / 2 - RepresentDef.SCENE_PIXEL_Y / 2;
+            float nWorldY = RepresentDef.SCENE_PIXEL_Y / 2 - nLogicY * RepresentDef.SCENE_OBJECT_PIXEL_Y - RepresentDef.SCENE_OBJECT_PIXEL_Y / 2;
             nWorldY = nWorldY / 100;
 
             return nWorldY;
+        }
+
+        // 世界坐标X转逻辑坐标X
+        public static int WorldX2LogicX(float fWorldX)
+        {
+            if (fWorldX > RepresentDef.SCENE_PIXEL_X / 2 || fWorldX < -(RepresentDef.SCENE_PIXEL_X / 2))
+            {
+                ExceptionTool.ThrowException("fWorldX不合法！");
+            }
+
+            int nWorldX = (int)fWorldX;
+            nWorldX = nWorldX + (RepresentDef.SCENE_PIXEL_X / 2);
+
+            if (nWorldX == 0)
+                return 0;
+
+            if (nWorldX == RepresentDef.SCENE_PIXEL_X)
+                return RepresentDef.SCENE_CELL_MAX_X - 1;
+
+            int nIndex = nWorldX / RepresentDef.SCENE_OBJECT_PIXEL_X - 1;
+            int nMod = nWorldX % RepresentDef.SCENE_OBJECT_PIXEL_X;
+
+            if (nMod > 0)
+            {
+                nIndex++;
+            }
+
+            return nIndex;
+        }
+
+        // 世界坐标Y转逻辑坐标Y
+        public static int WorldY2LogicY(float fWorldY)
+        {
+            if (fWorldY > RepresentDef.SCENE_PIXEL_Y / 2 || fWorldY < -(RepresentDef.SCENE_PIXEL_Y / 2))
+            {
+                ExceptionTool.ThrowException("fWorldY不合法！");
+            }
+
+            int nWorldY = (int)fWorldY;
+            nWorldY = nWorldY + (RepresentDef.SCENE_PIXEL_Y / 2);
+
+            if (nWorldY == 0)
+                return RepresentDef.SCENE_CELL_MAX_Y - 1;
+
+            if (nWorldY == RepresentDef.SCENE_PIXEL_Y)
+                return 0;
+
+            int nIndex = nWorldY / RepresentDef.SCENE_OBJECT_PIXEL_Y - 1;
+            int nMod = nWorldY % RepresentDef.SCENE_OBJECT_PIXEL_Y;
+
+            if (nMod > 0)
+            {
+                nIndex++;
+            }
+
+            return RepresentDef.SCENE_CELL_MAX_Y - 1 - nIndex;
         }
     }
 }
