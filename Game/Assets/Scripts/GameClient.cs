@@ -33,10 +33,6 @@ namespace Game
                 LogWriter.Write("Initializing GameWorld...");
                 GameWorld.Instance().Init();
 
-                //////////////////////////////////////////////////////////////////////////
-                // 记录启动游戏时的TickCount
-                GameEnv.LogicStartTime = (uint)Environment.TickCount;
-
                 m_ClientInitialized = true;
                 GameEnv.LogicStartTime = Time.time;
             }
