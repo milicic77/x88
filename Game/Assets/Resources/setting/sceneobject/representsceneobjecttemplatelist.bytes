@@ -1,2 +1,11 @@
-RepresentId	Name	Path
-1	sceneobject001	sceneobject001
+RepresentId	Name	Path	Desc
+1	sceneobject001	sceneobject001	八路步枪
+2	sceneobject002	sceneobject002	民兵大刀
+3	sceneobject003	sceneobject003	国军冲锋
+4	sceneobject004	sceneobject004	国军骑兵
+5	sceneobject005	sceneobject005	国军机枪
+6	sceneobject006	sceneobject006	日军步枪
+7	sceneobject007	sceneobject007	日军工兵
+8	sceneobject008	sceneobject008	日军装甲车
+9	sceneobject009	sceneobject009	伪军步枪
+10	sceneobject010	sceneobject010	炮楼

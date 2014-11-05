@@ -6,7 +6,7 @@ using Game.Common;
 
 namespace Game.RepresentLogic
 {
-    class RLScene
+    public class RLScene
     {
         // 场景对象
         private GameObject m_SceneObject;
@@ -72,13 +72,13 @@ namespace Game.RepresentLogic
                 }
             }
 
-            for (int i = 0; i <= 19; ++i)
-            {
-                for (int j = 0; j <= 14; ++j)
-                {
-                    AddSceneObject(1, i, j);
-                }
-            }
+            //for (int i = 0; i <= 19; ++i)
+            //{
+            //    for (int j = 0; j <= 14; ++j)
+            //    {
+            //        AddSceneObject(1, i, j);
+            //    }
+            //}
 
             m_SceneObject.transform.parent = RepresentEnv.SceneRoot.transform;
         }
@@ -88,14 +88,16 @@ namespace Game.RepresentLogic
 
         }
 
-        public void AddSceneObject(int nRepresentId, int nLogicX, int nLogicY)
+        public RLSceneObject AddSceneObject(int nRepresentId)
         {
             GameObject playerGo = new GameObject();
             RLSceneObject sSceneObject = playerGo.AddComponent<RLSceneObject>();		
             sSceneObject.Init(nRepresentId); // representid
-            sSceneObject.SetPosition(nLogicX, nLogicY);
+            //sSceneObject.SetPosition(nLogicX, nLogicY);
 
             sSceneObject.transform.parent = m_SceneObject.transform;
+
+            return sSceneObject;
         }
 
     }

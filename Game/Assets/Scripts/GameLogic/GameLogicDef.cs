@@ -5,15 +5,19 @@ using System.Text;
 
 namespace Game.GameLogic
 {
-    public class SceneConfig
+    public class GLSceneConfig
     {
-        public UInt32 templateId = 0;
-        public string className = null;		/* 场景类名 */
-        public string showName = null;		/* 显示场景名 */
-        public string path = null;		    /* 逻辑场景路径 */
+        public int nSceneId = 0;
+        public string szName = null;
+        public int nTemplateId = 0;
     }
 
     class GameLogicDef
     {
+        // 表现场景配置文件
+        public const string SCENE_LIST_FILE = "setting/scene/scenelist";
+
+        // NPC配置文件
+        public const string NPC_TEMPLATE_LIST_FILE = "setting/npc/npc";
     }
 }

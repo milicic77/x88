@@ -10,8 +10,6 @@ namespace Game
 {
     public class GameClient
     {
-        public static Represent m_Represent = new Represent();
-        public static GameWorld m_GameWorld = new GameWorld();
         private bool m_ClientInitialized = false;
 
         public void Init()
@@ -26,21 +24,18 @@ namespace Game
                 //////////////////////////////////////////////////////////////////////////
                 // 初始化表现逻辑
                 LogWriter.Write("Initializing Represent...");
-                m_Represent.Init();
+                Represent.Instance().Init();
 
                 //////////////////////////////////////////////////////////////////////////
                 // 初始化游戏逻辑
                 LogWriter.Write("Initializing GameWorld...");
-                m_GameWorld.Init();
+                GameWorld.Instance().Init();
 
                 //////////////////////////////////////////////////////////////////////////
                 // 记录启动游戏时的TickCount
                 Game.GameEnv.LogicStartTickCount = (uint)Environment.TickCount;
 
                 m_ClientInitialized = true;
-
-
-                m_Represent.CreateScene(1);
             }
             catch (Exception e)
             {
@@ -58,8 +53,8 @@ namespace Game
 
         public void UnInit()
         {
-            m_GameWorld.UnInit();
-            m_Represent.UnInit();
+            GameWorld.Instance().UnInit();
+            Represent.Instance().UnInit();
 
             m_ClientInitialized = false;
         }
@@ -78,7 +73,7 @@ namespace Game
             }
             //////////////////////////////////////////////////////////////////////////
             // 处理绘制帧
-            m_Represent.Update();
+            Represent.Instance().Update();
 
             // 显示FPS
             ShowFPS();
@@ -103,8 +98,8 @@ namespace Game
 
         private void Activate()
         {
-            m_GameWorld.Activate();
-            m_Represent.Activate();
+            GameWorld.Instance().Activate();
+            Represent.Instance().Activate();
         }
 
         public void ShowFPS()

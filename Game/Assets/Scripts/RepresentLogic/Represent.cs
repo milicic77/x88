@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Common;
 
 namespace Game.RepresentLogic
 {
-    public class Represent
+    public class Represent : Common.Singleton<Represent>
     {
         public void Init()
         {
@@ -54,7 +55,7 @@ namespace Game.RepresentLogic
             RepresentEnv.SceneCamera = sceneCamera;
         }
 
-        public void CreateScene(int nTemplateId)
+        public RLScene CreateScene(int nTemplateId)
         {
             //GameObject scene = new GameObject("test");
             //scene.AddComponent("BackGround");
@@ -63,6 +64,8 @@ namespace Game.RepresentLogic
             //Sprite sceneSprite = sceneCameraObj.AddComponent<Sprite>();
             RLScene RScene = new RLScene();
             RScene.Create(nTemplateId);
+
+            return RScene;
         }
     }
 }

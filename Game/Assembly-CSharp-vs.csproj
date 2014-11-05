@@ -54,10 +54,12 @@
      <Compile Include="Assets\Scripts\Common\TableFile.cs" />
      <Compile Include="Assets\Scripts\GameClient.cs" />
      <Compile Include="Assets\Scripts\GameDef.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\GLNpc.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\GLNpcManager.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\GLScene.cs" />
+     <Compile Include="Assets\Scripts\GameLogic\GLSceneManager.cs" />
      <Compile Include="Assets\Scripts\GameLogic\GameLogicDef.cs" />
      <Compile Include="Assets\Scripts\GameLogic\GameWorld.cs" />
-     <Compile Include="Assets\Scripts\GameLogic\Scene.cs" />
-     <Compile Include="Assets\Scripts\GameLogic\SceneManager.cs" />
      <Compile Include="Assets\Scripts\Main.cs" />
      <Compile Include="Assets\Scripts\RepresentLogic\RLCell.cs" />
      <Compile Include="Assets\Scripts\RepresentLogic\RLScene.cs" />

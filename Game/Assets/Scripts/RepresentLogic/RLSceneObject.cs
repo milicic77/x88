@@ -33,6 +33,30 @@ namespace Game.RepresentLogic
         // 当前方向
         public int m_Direction = (int)SceneObjectDirection.SceneObjectDirection_Right;
 
+        public int DOING
+        {
+            set
+            {
+                m_nAni = value;
+            }
+            get
+            {
+                return m_nAni;
+            }
+        }
+
+        public int DIRECTION
+        {
+            set
+            {
+                m_Direction = value;
+            }
+            get
+            {
+                return m_Direction;
+            }
+        }
+
         public SpriteRenderer SceneObjectSpriteRenderer
         {
             set
