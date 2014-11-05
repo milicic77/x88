@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\GameLogic\GLNpcManager.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GLScene.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GLSceneManager.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\GLScenePath.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GameLogicDef.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GameWorld.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />

@@ -23,6 +23,12 @@ namespace Game.GameLogic
         private int m_nDoing = (int)SceneObjectAni.SceneObjectAni_Stand;
         private int m_nDirection = (int)SceneObjectDirection.SceneObjectDirection_Right;
 
+        // 行走路径
+        private GLScenePath m_Path;
+        private int m_nPathIndex = 0;
+
+        private int nTime1 = Environment.TickCount;
+
         public void Init(int nTemplateId, GLScene scene)
         {
             GLNpcTemplate template = GLNpcManager.Instance().GetNpcTemplate(nTemplateId);
@@ -40,7 +46,16 @@ namespace Game.GameLogic
 
         public void Activate()
         {
-
+            int nNow = Environment.TickCount;
+            if (nNow - nTime1 >= 500)
+            {
+                GLScenePoint point = m_Path.m_PointList[m_nPathIndex];
+                SetPosition(point.nX, point.nY);
+                m_nPathIndex++;
+                m_nPathIndex = m_nPathIndex % m_Path.m_PointList.Count();
+                nTime1 = nNow;
+            }
+            
         }
 
         public void SetPosition(int nLogicX, int nLogicY)
@@ -63,6 +78,12 @@ namespace Game.GameLogic
             m_nDirection = nDirection;
 
             m_RLSceneObject.DIRECTION = nDirection;
+        }
+
+        public void SetPath(GLScenePath path)
+        {
+            m_Path = path;
+            m_nPathIndex = 0;
         }
 
     }

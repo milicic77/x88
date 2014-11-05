@@ -10,6 +10,7 @@ namespace Game.GameLogic
         public int nSceneId = 0;
         public string szName = null;
         public int nTemplateId = 0;
+        public GLScenePath[] ScenePathList = new GLScenePath[5];
     }
 
     class GameLogicDef
