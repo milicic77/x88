@@ -33,16 +33,45 @@ namespace Game.GameLogic
             m_RLScene = Represent.Instance().CreateScene(cfg.nTemplateId);
 
             // 创建NPC
-            AddNpc(1, 0, 0);
-            AddNpc(2, 1, 1);
-            AddNpc(3, 2, 2);
-            AddNpc(4, 3, 3);
-            AddNpc(5, 4, 4);
-            AddNpc(6, 5, 5);
-            AddNpc(7, 6, 6);
-            AddNpc(8, 7, 7);
-            AddNpc(9, 8, 8);
-            AddNpc(10, 9, 9);
+            GLNpc npc = AddNpc(1, 0, 0);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Stand);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Right);
+
+            npc = AddNpc(2, 1, 1);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Run);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Up);
+
+            npc = AddNpc(3, 2, 2);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Attack);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Left);
+
+            npc = AddNpc(4, 3, 3);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Hurt);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Down);
+
+            npc = AddNpc(5, 4, 4);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Stand);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Right);
+
+            npc = AddNpc(6, 5, 5);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Run);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Up);
+
+            npc = AddNpc(7, 6, 6);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Attack);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Left);
+
+            npc = AddNpc(8, 7, 7);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Hurt);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Down);
+
+            npc = AddNpc(9, 8, 8);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Attack);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Up);
+
+            npc = AddNpc(10, 9, 9);
+            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Attack);
+            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Down);
         }
 
         public void UnInit()
@@ -50,15 +79,15 @@ namespace Game.GameLogic
 
         }
 
-        public void AddNpc(int nTemplateId, int nLogicX, int nLogicY)
+        public GLNpc AddNpc(int nTemplateId, int nLogicX, int nLogicY)
         {
             GLNpc npc = new GLNpc();
             npc.Init(nTemplateId, this);
             npc.SetPosition(nLogicX, nLogicY);
-            npc.SetDoing((int)SceneObjectAni.SceneObjectAni_Stand);
-            npc.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Right);
 
             asNpctList.Add(npc);
+
+            return npc;
         }
 
         public void DelNpc()
