@@ -92,7 +92,7 @@ namespace Game.RepresentLogic
             gameObject.AddComponent<SpriteRenderer>().sprite = m_Sprite;
 
 
-            spriteRenderer = renderer as SpriteRenderer;
+            spriteRenderer = GetComponent<Renderer>() as SpriteRenderer;
 
             m_Animation.Init(this, ref cfg);
         }
