@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Game.RepresentLogic;
+using UnityEngine;
 
 namespace Game.GameLogic
 {
@@ -100,13 +101,35 @@ namespace Game.GameLogic
             return npc;
         }
 
+        public bool CanAddTurret(int nLogicX, int nLogicY)
+        {
+            RLCell cell = m_RLScene.GetRLCell(nLogicX, nLogicY);
+            if (null == cell)
+                return false;
+
+            if (cell.nType != (int)SceneCellType.SceneCellType_Idel)
+                return false;
+
+            return true;
+        }
+
         public GLTurret AddTurret(int nTemplateId, int nLogicX, int nLogicY)
         {
+            if (!CanAddTurret(nLogicX, nLogicY))
+            {
+                Debug.LogFormat("[Error] Can't Plant Turrent here! nLogicX = {0}, nLogicY = {1}", nLogicX, nLogicY);
+                return null;
+            }
+
+            // 场景中添加Turret
             GLTurret turret = new GLTurret();
             turret.Init(nTemplateId, this);
             turret.SetPosition(nLogicX, nLogicY);
-
             m_asTurretList.Add(turret);
+
+            // 修改Cell信息
+            RLCell cell = m_RLScene.GetRLCell(nLogicX, nLogicY);
+            cell.nType = (int)SceneCellType.SceneCellType_Obstacle;
 
             return turret;
         }

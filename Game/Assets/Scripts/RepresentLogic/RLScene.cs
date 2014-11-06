@@ -100,5 +100,33 @@ namespace Game.RepresentLogic
             return sSceneObject;
         }
 
+        public RLCell GetRLCell(int nLogicX, int nLogicY)
+        {
+            if (nLogicX >= RepresentDef.SCENE_CELL_MAX_X || nLogicX < 0)
+                return null;
+
+            if (nLogicY >= RepresentDef.SCENE_CELL_MAX_Y || nLogicX < 0)
+                return null;
+
+            return m_Cells[nLogicX, nLogicY];
+        }
+
+        public void SetRLCellState(int nLogicX, int nLogicY, int nState)
+        {
+            RLCell cell = GetRLCell(nLogicX, nLogicY);
+            if (null != cell)
+            {
+                cell.nState = nState;
+            }
+        }
+
+        public void SetRLCellType(int nLogicX, int nLogicY, int nType)
+        {
+            RLCell cell = GetRLCell(nLogicX, nLogicY);
+            if (null != cell)
+            {
+                cell.nType = nType;
+            }
+        }
     }
 }

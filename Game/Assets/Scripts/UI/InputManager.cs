@@ -31,6 +31,9 @@ public class InputManager : MonoBehaviour
         // 判断是否是合法位置
 
         GLTurret turret = m_GameWorld.m_Stage.AddTurret(nTemplateId, nLogicX, nLogicY);
+        if (null == turret)
+            return;
+
         turret.SetDoing((int)SceneObjectAni.SceneObjectAni_Stand);
         turret.SetDirection((int)SceneObjectDirection.SceneObjectDirection_Right);
     }
