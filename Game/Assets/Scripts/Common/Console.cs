@@ -105,7 +105,7 @@ namespace Game.Common
                 return false;
 
             AllocConsole();
-            Application.RegisterLogCallback(HandleUnityConsole);
+            Application.logMessageReceived += HandleUnityConsole;
 
             m_StdOutHandle = GetStdHandle(unchecked((uint)STD_OUTPUT_HANDLE));
             m_StdInHandle = GetStdHandle(unchecked((uint)STD_INPUT_HANDLE));
@@ -123,7 +123,7 @@ namespace Game.Common
             if (Application.platform != RuntimePlatform.WindowsEditor && Application.platform != RuntimePlatform.WindowsPlayer)
                 return false;
 
-            Application.RegisterLogCallback(null);
+            Application.logMessageReceived -= HandleUnityConsole;
             FreeConsole();
             return true;
         }
