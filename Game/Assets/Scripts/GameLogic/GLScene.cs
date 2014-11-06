@@ -9,8 +9,8 @@ namespace Game.GameLogic
     // 关卡
     public class GLScene
     {
-        // 关卡中NPC列表
-        public List<GLNpc> asNpctList = new List<GLNpc>();
+        public List<GLNpc>    m_asNpctList   = new List<GLNpc>();       // 关卡中NPC列表
+        public List<GLTurret> m_asTurretList = new List<GLTurret>();    // 关卡中Turret列表
 
         // 关卡中路径集合 Key从1开始
         private Dictionary<int, GLScenePath> m_PathList = new Dictionary<int, GLScenePath>();
@@ -95,9 +95,20 @@ namespace Game.GameLogic
             npc.Init(nTemplateId, this);
             npc.SetPosition(nLogicX, nLogicY);
 
-            asNpctList.Add(npc);
+            m_asNpctList.Add(npc);
 
             return npc;
+        }
+
+        public GLTurret AddTurret(int nTemplateId, int nLogicX, int nLogicY)
+        {
+            GLTurret turret = new GLTurret();
+            turret.Init(nTemplateId, this);
+            turret.SetPosition(nLogicX, nLogicY);
+
+            m_asTurretList.Add(turret);
+
+            return turret;
         }
 
         public void DelNpc()
@@ -107,11 +118,28 @@ namespace Game.GameLogic
 
         public void Activate()
         {
-            for (int i = 0; i < asNpctList.Count; i++)
+            ActivateNpcList();
+            ActivateTurretList();
+        }
+
+        public void ActivateNpcList()
+        {
+            for (int i = 0; i < m_asNpctList.Count; i++)
             {
-                if (asNpctList[i] != null)
+                if (m_asNpctList[i] != null)
                 {
-                    asNpctList[i].Activate();
+                    m_asNpctList[i].Activate();
+                }
+            }
+        }
+
+        public void ActivateTurretList()
+        {
+            for (int i = 0; i < m_asTurretList.Count; i++)
+            {
+                if (m_asTurretList[i] != null)
+                {
+                    m_asTurretList[i].Activate();
                 }
             }
         }
