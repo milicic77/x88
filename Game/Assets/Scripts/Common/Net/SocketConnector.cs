@@ -9,12 +9,20 @@ using UnityEngine;
 
 namespace Game.Common
 {
+    /*------------------------------------------------------------------
+      Interface   : ISocketConnector
+      Description : 套接字连接器接口。
+    --------------------------------------------------------------------*/
     public interface ISocketConnector
     {
         ISocketStream Connect(string    ip, int port, int nMilliseconds);
         ISocketStream Connect(IPAddress ip, int port, int nMilliseconds);
     }
 
+    /*------------------------------------------------------------------
+      class       : SocketConnector
+      Description : 套接字连接器。
+    --------------------------------------------------------------------*/
     public class SocketConnector : ISocketConnector
     {
         public SocketConnector()
@@ -71,6 +79,10 @@ namespace Game.Common
         }
     }
 
+    /*------------------------------------------------------------------
+      class       : AsyncSocketConnector
+      Description : 套接字异步连接器。
+    --------------------------------------------------------------------*/
     public class AsyncSocketConnector : ISocketConnector
     {
         public AsyncSocketConnector()

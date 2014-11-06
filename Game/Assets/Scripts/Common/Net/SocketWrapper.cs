@@ -9,8 +9,16 @@ using UnityEngine;
 
 namespace Game.Common
 {
+    /*------------------------------------------------------------------
+      class       : SocketWrapper
+      Description : 套接字封装类。
+    --------------------------------------------------------------------*/
     class SocketWrapper
     {
+        /*------------------------------------------------------------------
+          Function    : CreateTcpSocket
+          Description : 创建TCP套接字。
+        --------------------------------------------------------------------*/
         public static Socket CreateTcpSocket()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -21,6 +29,10 @@ namespace Game.Common
             return s;
         }
 
+        /*------------------------------------------------------------------
+          Function    : CreateUdpSocket
+          Description : 创建UDP套接字。
+        --------------------------------------------------------------------*/
         public static Socket CreateUdpSocket()
         {
             Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Tcp);
@@ -31,6 +43,11 @@ namespace Game.Common
             return s;
         }
 
+        /*------------------------------------------------------------------
+          Function    : CloseSocket
+          Description : 关闭套接字。
+          RetCode     : 0 - 失败，1 - 成功
+        --------------------------------------------------------------------*/
         public static int CloseSocket(ref Socket s)
         {
             int nResult = 0;
@@ -57,6 +74,11 @@ namespace Game.Common
             return nResult;
         }
 
+        /*------------------------------------------------------------------
+          Function    : IsValidSocket
+          Description : 判断套接字合法性。
+          RetCode     : 0 - 非法，1 - 合法
+        --------------------------------------------------------------------*/
         public static int IsValidSocket(Socket s)
         {
             if (null != s && s.Connected)
@@ -66,6 +88,11 @@ namespace Game.Common
             return 0;
         }
 
+        /*------------------------------------------------------------------
+          Function    : IsSocketInterrupted
+          Description : 判断套接字是否被打断。
+          RetCode     : 0 - 否，1 - 是
+        --------------------------------------------------------------------*/
         public static int IsSocketInterrupted(SocketException e)
         {
             int nErrorCode = e.NativeErrorCode;
@@ -95,6 +122,11 @@ namespace Game.Common
             return 0;
         }
 
+        /*------------------------------------------------------------------
+          Function    : IsSocketEWouldBlock
+          Description : 判断套接字是否被阻止。
+          RetCode     : 0 - 否，1 - 是
+        --------------------------------------------------------------------*/
         public static int IsSocketEWouldBlock(SocketException e)
         {
             int nErrorCode = e.NativeErrorCode;
@@ -124,6 +156,11 @@ namespace Game.Common
             return 0;
         }
 
+        /*------------------------------------------------------------------
+          Function    : CheckCanRecv
+          Description : 判断套接字中是否有数据可读。
+          RetCode     : 0 - 超时，1 - 成功，-1 - 发生错误
+        --------------------------------------------------------------------*/
         public static int CheckCanRecv(Socket s, int nMilliseconds)
         {
             int nRetCode = 0;
@@ -165,6 +202,11 @@ namespace Game.Common
             return 1;
         }
 
+        /*------------------------------------------------------------------
+          Function    : CheckCanSend
+          Description : 判断套接字是否可以发送数据。
+          RetCode     : 0 - 超时，1 - 成功，-1 - 发生错误
+        --------------------------------------------------------------------*/
         public static int CheckCanSend(Socket s, int nMilliseconds)
         {
             int nRetCode = 0;
@@ -206,13 +248,17 @@ namespace Game.Common
             return 1;
         }
 
-        /*
-         * s             : 套接字
-         * data          : 数据缓冲区
-         * uSize         : 期望接收到的数据长度
-         * uRecvBytes    : 实际接收到的数据长度
-         * nMilliseconds : 超时时间
-         */
+        /*------------------------------------------------------------------
+          Function    : CheckRecvSocketData
+          Description : 检查并接收数据。
+          RetCode     : 0 - 超时，1 - 成功，-1 - 发生错误
+          Params      :
+              s             : 套接字
+              data          : 数据缓冲区
+              uSize         : 期望接收到的数据长度
+              uRecvBytes    : 实际接收到的数据长度
+              nMilliseconds : 超时时间
+        --------------------------------------------------------------------*/
         public static int CheckRecvSocketData(Socket s, byte[] data, uint uSize, ref uint uRecvBytes, int nMilliseconds)
         {
             int  nRetCode         = 0;
@@ -284,12 +330,16 @@ namespace Game.Common
             return 1;
         }
 
-        /*
-         * s             : 套接字
-         * data          : 数据缓冲区
-         * uSize         : 期望发送的数据长度
-         * nMilliseconds : 超时时间
-         */
+        /*------------------------------------------------------------------
+          Function    : CheckSendSocketData
+          Description : 检查并发送数据。
+          RetCode     : 0 - 超时，1 - 成功，-1 - 发生错误
+          Params      :
+              s             : 套接字
+              data          : 数据缓冲区
+              uSize         : 期望发送的数据长度
+              nMilliseconds : 超时时间
+        --------------------------------------------------------------------*/
         public static int CheckSendSocketData(Socket s, byte[] data, uint uSize, int nMilliseconds)
         {
             int  nRetCode         = 0;
@@ -347,6 +397,10 @@ namespace Game.Common
             return 1;
         }
 
+        /*------------------------------------------------------------------
+          Function    : SocketErrCode2Desc
+          Description : 获取套接字错误描述字符串。
+        --------------------------------------------------------------------*/
         public static string SocketErrCode2Desc(int nErrCode)
         {
             if (SocketErrDesc.ContainsKey(nErrCode))
