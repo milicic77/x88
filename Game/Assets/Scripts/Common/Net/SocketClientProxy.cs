@@ -10,7 +10,7 @@ namespace Game.Common
         int UnInit();
         int Activate();
         int IsReady();
-        //int Send(byte[] data, uint uSize, int nMilliseconds);
+        int Send(byte[] data, int nMilliseconds);
     }
     class SocketClientProxy : ISocketClientProxy
     {
@@ -147,6 +147,23 @@ namespace Game.Common
             return 0;
         }
 
+        public int Send(byte[] data, int nMilliseconds)
+        {
+            if (!m_bInitFlag)
+            {
+                Debug.LogError("[SocketClientProxy] It seems SocketClientProxy hasn't been initialized!");
+                return 0;
+            }
+
+            if (!m_bConnected || null == m_SocketStream)
+            {
+                Debug.LogError("[SocketClientProxy] It seems SocketClientProxy hasn't been connected to server!");
+                return 0;
+            }
+
+            return m_SocketStream.Send(ref data, nMilliseconds);
+        }
+
         public virtual int ProcessNetPackage()
         {
             int nRetCode       = 0;
@@ -181,13 +198,10 @@ namespace Game.Common
         }
         public virtual int OnServerDataRecvd(byte[] data)
         {
-            int nRetCode = 0;
-
             Debug.LogFormat("[SocketClientProxy] Receive a package from [ip - {0}, port - {1}]", m_SocketStream.GetEndPointIp(), m_SocketStream.GetEndPointPort());
             Debug.LogFormat("[SocketClientProxy] {0}", System.Text.Encoding.Default.GetString(data));
 
-            nRetCode = m_SocketStream.Send(ref data, 0);
-            return nRetCode;
+            return 1;
         }
         public virtual int OnCloseConnection()
         {
