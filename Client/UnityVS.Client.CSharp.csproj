@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D87EAD8F-C74D-D6CD-802E-532702453B5E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_0_0;UNITY_5_0;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_OBSOLETE_API_UPDATING;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_5_0_0;UNITY_5_0;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_OBSOLETE_API_UPDATING;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="UnityEngine">
+      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="GBK">
+      <HintPath>Assets\Devenv\GBK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\Common\Console.cs" />
+    <Compile Include="Assets\Scripts\Common\ExceptionTool.cs" />
+    <Compile Include="Assets\Scripts\Common\File\TableFile.cs" />
+    <Compile Include="Assets\Scripts\Common\GameEncoding.cs" />
+    <Compile Include="Assets\Scripts\Common\LogWriter.cs" />
+    <Compile Include="Assets\Scripts\Common\Net\SocektStream.cs" />
+    <Compile Include="Assets\Scripts\Common\Net\SocketClientProxy.cs" />
+    <Compile Include="Assets\Scripts\Common\Net\SocketConnector.cs" />
+    <Compile Include="Assets\Scripts\Common\Net\SocketDemo.cs" />
+    <Compile Include="Assets\Scripts\Common\Net\SocketWrapper.cs" />
+    <Compile Include="Assets\Scripts\Common\Pattern\Singleton.cs" />
+    <Compile Include="Assets\Scripts\GameEvent\EventDef.cs" />
+    <Compile Include="Assets\Scripts\GameEvent\EventCenter.cs" />
+    <Compile Include="Assets\Scripts\GameClient.cs" />
+    <Compile Include="Assets\Scripts\GameDef.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLRadish.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLPoint.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLCell.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLDoodad.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLStage.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLNpc.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLScene.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\GLSettingManager.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLPath.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLTower.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\GameLogicDef.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\GameWorld.cs" />
+    <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLTower.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLRadish.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLNpc.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLCell.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLScene.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLLayer.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLDoodad.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\RLResourceManager.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Represent.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\RepresentCommon.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\RepresentDef.cs" />
+    <None Include="Assets\Devenv\GBK.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
+</Project>
