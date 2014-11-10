@@ -41,5 +41,6 @@ public class InputManager : MonoBehaviour
         GLTower tower = new GLTower();
         tower.Init(nTemplateId, nCellX, nCellY, m_GameWorld.Stage.Scene);
         m_GameWorld.Stage.Scene.AddTower(tower);
+        m_GameWorld.Stage.TowerList.Add(tower);
     }
 }
