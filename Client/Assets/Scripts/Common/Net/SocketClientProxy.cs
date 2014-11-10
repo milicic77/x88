@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Game.Common
 {
+    /*------------------------------------------------------------------
+      Interface   : ISocketClientProxy
+      Description : 客户端套接字代理接口。
+    --------------------------------------------------------------------*/
     public interface ISocketClientProxy
     {
         int Init();
@@ -12,6 +16,11 @@ namespace Game.Common
         int IsReady();
         int Send(byte[] data, int nMilliseconds);
     }
+
+    /*------------------------------------------------------------------
+      class       : SocketClientProxy
+      Description : 客户端套接字代理。
+    --------------------------------------------------------------------*/
     class SocketClientProxy : ISocketClientProxy
     {
         public int Init()

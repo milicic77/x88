@@ -9,6 +9,10 @@ using UnityEngine;
 
 namespace Game.Common
 {
+    /*------------------------------------------------------------------
+      Interface   : ISocketStream
+      Description : 套接字流接口。
+    --------------------------------------------------------------------*/
     public interface ISocketStream
     {
         int UnInit();
@@ -17,17 +21,16 @@ namespace Game.Common
         int CheckCanRecv(int nMilliseconds);
         int Send(ref byte[] data, int nMilliseconds);
         int Recv(ref byte[] data, int nMilliseconds);
-
         string GetEndPointIp();
         int    GetEndPointPort();
     }
 
+    /*------------------------------------------------------------------
+      class       : ISocketStream
+      Description : 无缓冲套接字流。
+    --------------------------------------------------------------------*/
     public class SocektStream : ISocketStream
     {
-        public SocektStream()
-        {
-        }
-
         public int Init(Socket s, IPEndPoint ipEndPoint)
         {
             if (m_bInitFlag)
@@ -140,11 +143,16 @@ namespace Game.Common
             return m_ipEndPoint.Port;
         }
 
-        protected bool       m_bInitFlag     = false;
-        protected Socket     m_hRemoteSocket = null;
-        protected IPEndPoint m_ipEndPoint    = null;
+        // member variables
+        protected bool       m_bInitFlag     = false;                   // 初始化标记
+        protected Socket     m_hRemoteSocket = null;                    // 远端套接字
+        protected IPEndPoint m_ipEndPoint    = null;                    // 套接字地址
     }
 
+    /*------------------------------------------------------------------
+      class       : ISocketStream
+      Description : 带冲套接字流。
+    --------------------------------------------------------------------*/
     //public class BufferedSocketStream : ISocketStream
     //{
     //    public BufferedSocketStream()

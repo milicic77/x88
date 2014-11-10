@@ -4,6 +4,10 @@ using UnityEditor;
 
 namespace Game.Common
 {
+    /*------------------------------------------------------------------
+      class       : MyClientProxy
+      Description : 一个客户端代理使用例子。
+    --------------------------------------------------------------------*/
     class MyClientProxy : SocketClientProxy
     {
         public override int OnClientConnected()
