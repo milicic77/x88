@@ -34,6 +34,11 @@ namespace Game.GameLogic
 
         }
 
+        public GLStage Stage
+        {
+            get { return m_stage; }
+        }
+
         public void CreateStage(int nStageId)
         {
             m_stage = new GLStage();

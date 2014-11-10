@@ -100,7 +100,7 @@ namespace Game.RepresentLogic
             }
 
             int nWorldY = (int)(fWorldY * RepresentDef.PIXEL_UNITY_SCALE);
-            nWorldY = RepresentDef.SCENE_SIZE_PIXEL_Y - nWorldY;
+            nWorldY = RepresentDef.SCENE_SIZE_PIXEL_Y / 2 - nWorldY;
 
             return nWorldY;
         }

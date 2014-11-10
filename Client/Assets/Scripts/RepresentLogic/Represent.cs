@@ -51,6 +51,7 @@ namespace Game.RepresentLogic
             CameraObject.transform.position = new Vector3(0, 0, 0);
             // 添加摄像机组件
             Camera MainCamera = CameraObject.AddComponent<Camera>();
+            CameraObject.AddComponent<InputManager>();
             // 背景色设置为黑色
             MainCamera.backgroundColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
             MainCamera.clearFlags = CameraClearFlags.Skybox;

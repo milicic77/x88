@@ -94,6 +94,11 @@ namespace Game.GameLogic
             UnRegisterEvents();
         }
 
+        public GLScene Scene
+        {
+            get { return m_GLScene; }
+        }
+
         public void Run()
         {
             m_nStart = 1;
