@@ -19,7 +19,8 @@ namespace Game.RepresentLogic
         // 表现模板
         public RLNpcTemplate m_Template;
 
-        public float framesPerSecond = 4;
+        // 每秒播放几帧动画
+        public float framesPerSecond = 5;
 
         //// 逻辑X坐标
         //public int m_nLogicX;
@@ -82,7 +83,7 @@ namespace Game.RepresentLogic
             // 精灵
             Sprite sprite = Sprite.Create(template.TexAni[0],
                 spriteRect,
-                new Vector2(0.5f, 0.5f)
+                new Vector2(0.5f, 0.0f)
             );
 
             for (int i = 0; i < 2; ++i )
@@ -93,7 +94,7 @@ namespace Game.RepresentLogic
                 m_sprites[i] = Sprite.Create(
                     template.TexAni[i],
                     rect,
-                    new Vector2(0.5f, 0.5f)
+                    new Vector2(0.5f, 0.2f)
                 );
             }
                 

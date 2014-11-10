@@ -86,6 +86,9 @@ namespace Game.GameLogic
                     tabFile.GetInteger(i, "SceneId", 0, ref nTemp);
                     template.nSceneId = nTemp;
 
+                    tabFile.GetInteger(i, "NpcGroupInterval", 0, ref nTemp);
+                    template.nNpcGroupInterval = nTemp;
+
                     //////////////////////////////////////////////////////////////////////////
                     // 加载Doodad配置
                     string szDoodadPath = null;
@@ -141,6 +144,7 @@ namespace Game.GameLogic
                         GLStageNpcConfig stagenpc = new GLStageNpcConfig();
 
                         NpcTabFile.GetInteger(k, "PathId", 0, ref stagenpc.nPathId);
+                        NpcTabFile.GetInteger(k, "Interval", 0, ref stagenpc.nInterval);
 
                         for (int nNpcIdx = 1; nNpcIdx <= 30; ++nNpcIdx)
                         {

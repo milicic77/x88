@@ -1,3 +1,3 @@
-TemplateId	Name	SceneId	Npc	Doodad	Tower	Radish
-1	第一关	1	logic_scenenpc_001	logic_scenedoodad_001	logic_scenetower_001	1,10,2
-2	第二关	2	logic_scenenpc_001	logic_scenedoodad_001	logic_scenetower_001	1,10,2
+TemplateId	Name	SceneId	NpcGroupInterval	Npc	Doodad	Tower	Radish
+1	第一关	1	5000	logic_scenenpc_001	logic_scenedoodad_001	logic_scenetower_001	1,10,2
+2	第二关	2	5000	logic_scenenpc_001	logic_scenedoodad_001	logic_scenetower_001	1,10,2

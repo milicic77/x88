@@ -44,6 +44,8 @@ namespace Game.GameLogic
             m_stage = new GLStage();
 
             m_stage.Init(nStageId);
+
+            m_stage.Start();
         }
     }
 }

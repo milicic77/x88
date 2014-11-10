@@ -23,6 +23,8 @@ namespace Game.GameLogic
         public string szName = null;
         // 逻辑场景模板ID
         public int nSceneId = 0;
+        // 每两组Npc创建的间隔（毫秒）
+        public int nNpcGroupInterval;
         // 场景中的物件配置
         public List<GLDoodadPos> asDoodad = new List<GLDoodadPos>();
         // 场景中的炮塔配置
@@ -41,6 +43,8 @@ namespace Game.GameLogic
     {
         // 行走路径ID
         public int nPathId = 0;
+        // 出现间隔（毫秒）
+        public int nInterval = 0;
         // Npc列表
         public List<int> asNpc = new List<int>();
     }

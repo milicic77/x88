@@ -4,52 +4,58 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using Game.GameEvent;
+using Game.Common;
 
 namespace Game.GameLogic
 {
     public class GLStage
     {
+        // 状态机
+        GLStageFsm m_fsm;
+
         // 逻辑场景
-        private GLScene m_GLScene = null;
+        public GLScene m_GLScene = null;
 
         // 模板
-        private GLStageTemplate m_Template = null;
+        public GLStageTemplate m_Template = null;
 
         // 逻辑场景Doodad
-        private List<GLDoodad> m_GLDoodadList = new List<GLDoodad>();
+        public List<GLDoodad> m_GLDoodadList = new List<GLDoodad>();
 
         // 逻辑场景Npc
-        private List<GLNpc> m_GLNpcList = new List<GLNpc>();
+        public List<GLNpc> m_GLNpcList = new List<GLNpc>();
 
+        // 逻辑场景炮塔
         private List<GLTower> m_TowerList = new List<GLTower>();    // 关卡中Tower列表
         public List<GLTower> TowerList
         {
             get { return m_TowerList; }
         }
 
-        // 怪物总波数
-        private int m_nNpcGroupCount = 0;
-
-        // 当前第几波
-        private int m_nCurNpcGroupIndex = 0;
-
-        // 当前第出现怪在组内的索引
-        private int m_nCurNpcIndex = 0;
+        // 怪物总组数
+        public int m_nNpcGroupCount = 0;
+        // 当前第几组
+        public int m_nCurNpcGroup = 0;
+        // 当前第几组第几个
+        public int m_nCurNpcGroupIndex = 0;
 
         // 上一个怪创建的时间
-        private uint m_nLastNpcCreateTime = 0;
+        public uint m_nLastNpcCreateTime = 0;
 
-        // 处于两组NPC的间隔
-        private int m_nBetween = 0;
         // 进入两组NPC间隔的时间
-        private uint m_nBetweenTime = 0;
-
-        // 创建NPC完成
-        private int m_nCreateNpcFinish = 0;
-
-        private int m_nStart = 0;
+        public uint m_nBetweenTime = 0;
 
         public void Init(int nStageId)
+        {
+            m_fsm = new GLStageFsm();
+            m_fsm.Init(this, nStageId);
+        }
+        public void Start()
+        {
+            m_fsm.Start();
+        }
+
+        public void DoInit(int nStageId)
         {
             RegisterEvents();
 
@@ -72,10 +78,10 @@ namespace Game.GameLogic
                 m_GLDoodadList.Add(doodad);
             }
             //////////////////////////////////////////////////////////////////////////
-            // 怪物总波数
+            // 怪物总组数
             m_nNpcGroupCount = template.asNpc.Count;
-            // 当前第几波
-            m_nCurNpcGroupIndex = 0;
+            // 当前正在创建第几组
+            m_nCurNpcGroup = 0;
             //////////////////////////////////////////////////////////////////////////
             // 创建萝卜
             GLRadish radish = new GLRadish();
@@ -90,16 +96,33 @@ namespace Game.GameLogic
             //        template.asTower[i].nCellY, m_GLScene);
             //    m_GLScene.AddTower(tower);
 
-            //    //m_GLDoodadList.Add(doodad);
+                //m_GLTowerList.Add(tower);
             //}
+
             //////////////////////////////////////////////////////////////////////////
+            Common.Console.Write("游戏初始化中");
+        }
+
+        public void DoStart()
+        {
+            Common.Console.Write("游戏开始中");
+        }
+
+        public void DoReady()
+        {
+            Common.Console.Write("游戏准备中");
+        }
+
+        public void DoEnd()
+        {
+            Common.Console.Write("游戏结束中");
+            UnRegisterEvents();
         }
 
         public void UnInit()
         {
             UnRegisterEvents();
         }
-
         public GLScene Scene
         {
             get { return m_GLScene; }
@@ -112,26 +135,16 @@ namespace Game.GameLogic
 
         public void Run()
         {
-            m_nStart = 1;
+
         }
 
         public void Activate()
         {
-            //if (m_nStart == 0)
-            //    return;
-            //    
+            m_fsm.Activate();
+        }
 
-            //DestroyNpc();
-            CreateNpc();
-
-            //for (int i = 0; i < m_GLNpcList.Count; i++)
-            //{
-            //    if (m_GLNpcList[i].m_nDelete == 1)
-            //    {
-            //        m_GLNpcList[i].Activate();
-            //    }
-            //}
-
+        public void ActivateNpc()
+        {
             for (int i = 0; i < m_GLNpcList.Count; i++)
             {
                 if (m_GLNpcList[i].m_nDelete == 0)
@@ -139,68 +152,70 @@ namespace Game.GameLogic
                     m_GLNpcList[i].Activate();
                 }
             }
-
-            ActivateTowerList();
         }
 
-        public void CreateNpc()
+        public void ActivateTower()
         {
-            if (m_nCreateNpcFinish == 1)
-                return;
-
-            // 所有组NPC都已经生成完
-            if (m_nCurNpcGroupIndex >= m_nNpcGroupCount)
+            for (int i = 0; i < m_TowerList.Count; i++)
             {
-                m_nCreateNpcFinish = 1;
-                return;
-            }
-
-            if (m_nCurNpcIndex >= m_Template.asNpc[m_nCurNpcGroupIndex].asNpc.Count)
-            {
-                m_nCurNpcGroupIndex++;
-                m_nCurNpcIndex = 0;
-
-                m_nBetween = 1;
-                m_nBetweenTime = (uint)Time.time;
-
-                return;
-            }
-
-            if (m_nBetween == 1)
-            {
-                // 波次之间5秒
-                if (Time.time - m_nBetweenTime < 5)
+                if (m_TowerList[i] != null)
                 {
-                    return;
-                }
-                else
-                {
-                    m_nBetween = 0;
-                    m_nBetweenTime = 0;
+                    m_TowerList[i].Activate();
                 }
             }
+        }
 
-            // 1秒创建一个
-            if (Time.time - m_nLastNpcCreateTime >= 2)
+        // ret==1 所有组Npc创建完成
+        // ret==2 本组Npc创建完成
+        public int ActiveCreateGroupNpc()
+        {
+            if (m_nCurNpcGroup >= m_nNpcGroupCount)
+                return 1;
+
+            if (m_nCurNpcGroupIndex >= m_Template.asNpc[m_nCurNpcGroup].asNpc.Count)
             {
-                GLPath path = GLSettingManager.Instance().GetGLPath(m_Template.asNpc[m_nCurNpcGroupIndex].nPathId);
+                m_nCurNpcGroup++;
+                m_nCurNpcGroupIndex = 0;
+
+                return 2;
+            }
+
+            // 创建Npc的间隔
+            if (Environment.TickCount - m_nLastNpcCreateTime >= m_Template.asNpc[m_nCurNpcGroup].nInterval)
+            {
+                GLPath path = GLSettingManager.Instance().GetGLPath(m_Template.asNpc[m_nCurNpcGroup].nPathId);
                 int nStartCellX = path.m_PointList[0].nCellX;
                 int nStartCellY = path.m_PointList[0].nCellY;
 
-                if (m_nCurNpcIndex < m_Template.asNpc[m_nCurNpcGroupIndex].asNpc.Count)
+                if (m_nCurNpcGroupIndex < m_Template.asNpc[m_nCurNpcGroup].asNpc.Count)
                 {
-                    int nNpcTemplate = m_Template.asNpc[m_nCurNpcGroupIndex].asNpc[m_nCurNpcIndex];
+                    int nNpcTemplate = m_Template.asNpc[m_nCurNpcGroup].asNpc[m_nCurNpcGroupIndex];
                     GLNpc npc = new GLNpc();
                     npc.Init(nNpcTemplate, nStartCellX, nStartCellY, m_GLScene);
-                    npc.SetPath(m_Template.asNpc[m_nCurNpcGroupIndex].nPathId);
+                    npc.SetPath(m_Template.asNpc[m_nCurNpcGroup].nPathId);
                     m_GLScene.AddNpc(npc);
 
                     m_GLNpcList.Add(npc);
 
-                    m_nLastNpcCreateTime = (uint)Time.time;
-                    m_nCurNpcIndex++;
+                    m_nLastNpcCreateTime = (uint)Environment.TickCount;
+                    m_nCurNpcGroupIndex++;
+
+                    Common.Console.Write("创建Npc第" + m_nCurNpcGroup.ToString() + "组 第" + m_nCurNpcGroupIndex.ToString() + "个");
                 }
             }
+            return 0;
+        }
+
+        // ret==1 可以创建下一组
+        public int ActiveCreateGroupNpcInterval()
+        {
+            if (m_GLNpcList.Count != 0)
+                return 0;
+
+            if (Environment.TickCount - m_nBetweenTime >= m_Template.nNpcGroupInterval)
+                return 1;
+
+            return 0;
         }
 
         //public void DestroyNpc()
@@ -235,23 +250,19 @@ namespace Game.GameLogic
             {
                 args.npc.UnInit();
                 m_GLNpcList.Remove(args.npc);
+
+                if (m_GLNpcList.Count == 0)
+                {
+                    m_nBetweenTime = (uint)Environment.TickCount;
+                }
             }
             catch (Exception e)
             {
                 Common.ExceptionTool.ProcessException(e);
             }
         }
-
-        public void ActivateTowerList()
-        {
-            for (int i = 0; i < m_TowerList.Count; i++)
-            {
-                if (m_TowerList[i] != null)
-                {
-                    m_TowerList[i].Activate();
-                }
-            }
-        }
+        //////////////////////////////////////////////////////////////////////////
+        
 
     }
 }

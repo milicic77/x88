@@ -67,7 +67,7 @@ namespace Game.GameLogic
             Vector2 vTower = new Vector2(RepresentCommon.LogicX2WorldX(tower.LogicX), RepresentCommon.LogicY2WorldY(tower.LogicY));
 
             float angle = Vector2.Angle(vTower, vNpc);
-            Debug.Log(angle);
+            //Debug.Log(angle);
 
             int nAngle = tower.Angle;
             nAngle = (nAngle + 200) % 360;

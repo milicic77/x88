@@ -75,7 +75,7 @@ namespace Game
             Represent.Instance().Update();
 
             // 显示FPS
-            ShowFPS();
+            //ShowFPS();
         }
 
         private bool CanActive()

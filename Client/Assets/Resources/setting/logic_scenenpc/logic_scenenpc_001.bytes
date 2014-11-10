@@ -1,6 +1,3 @@
-PathId	Npc1	Npc2	Npc3	Npc4	Npc5	Npc6	Npc7	Npc8	Npc9	Npc10	Npc11	Npc12	Npc13	Npc14	Npc15	Npc16	Npc17	Npc18	Npc19	Npc20	Npc21	Npc22	Npc23	Npc24	Npc25	Npc26	Npc27	Npc28	Npc29	Npc30
-1	1	2	1	2	1	1	2	2	2	2																				
-1	1	2	1	2	1	1	2	1																						
-1	1	2	1	2	1	1	1																							
-1	1	2	1	2	1	1																								
-1	1	2	1	2	1	1	1	1																						
+PathId	Interval	Npc1	Npc2	Npc3	Npc4	Npc5	Npc6	Npc7	Npc8	Npc9	Npc10	Npc11	Npc12	Npc13	Npc14	Npc15	Npc16	Npc17	Npc18	Npc19	Npc20	Npc21	Npc22	Npc23	Npc24	Npc25	Npc26	Npc27	Npc28	Npc29	Npc30
+1	1000	1	1	1	1	1	1	1	1	1	1																				
+2	1000	1	1	1	1	1	1	1	1	1	1																				
