@@ -7,16 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D87EAD8F-C74D-D6CD-802E-532702453B5E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,6 +54,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Common\AI\BehaviourTree\BTBehaviorNode.cs" />
+    <Compile Include="Assets\Scripts\Common\AI\BehaviourTree\BTDeciderNode.cs" />
+    <Compile Include="Assets\Scripts\Common\AI\BehaviourTree\BTNode.cs" />
+    <Compile Include="Assets\Scripts\Common\AI\BehaviourTree\BehaviorTree.cs" />
     <Compile Include="Assets\Scripts\Common\Console.cs" />
     <Compile Include="Assets\Scripts\Common\ExceptionTool.cs" />
     <Compile Include="Assets\Scripts\Common\File\TableFile.cs" />
@@ -67,36 +69,36 @@
     <Compile Include="Assets\Scripts\Common\Net\SocketDemo.cs" />
     <Compile Include="Assets\Scripts\Common\Net\SocketWrapper.cs" />
     <Compile Include="Assets\Scripts\Common\Pattern\Singleton.cs" />
-    <Compile Include="Assets\Scripts\GameEvent\EventDef.cs" />
-    <Compile Include="Assets\Scripts\GameEvent\EventCenter.cs" />
     <Compile Include="Assets\Scripts\GameClient.cs" />
     <Compile Include="Assets\Scripts\GameDef.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLRadish.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLPoint.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLCell.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLDoodad.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLStage.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLNpc.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLScene.cs" />
+    <Compile Include="Assets\Scripts\GameEvent\EventCenter.cs" />
+    <Compile Include="Assets\Scripts\GameEvent\EventDef.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GLSettingManager.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLPath.cs" />
-    <Compile Include="Assets\Scripts\GameLogic\Stage\GLTower.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GameLogicDef.cs" />
     <Compile Include="Assets\Scripts\GameLogic\GameWorld.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLCell.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLDoodad.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLNpc.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLPath.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLPoint.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLRadish.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLScene.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLStage.cs" />
+    <Compile Include="Assets\Scripts\GameLogic\Stage\GLTower.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
-    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLTower.cs" />
-    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLRadish.cs" />
-    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLNpc.cs" />
-    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLCell.cs" />
-    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLScene.cs" />
-    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLLayer.cs" />
-    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLDoodad.cs" />
     <Compile Include="Assets\Scripts\RepresentLogic\RLResourceManager.cs" />
     <Compile Include="Assets\Scripts\RepresentLogic\Represent.cs" />
     <Compile Include="Assets\Scripts\RepresentLogic\RepresentCommon.cs" />
     <Compile Include="Assets\Scripts\RepresentLogic\RepresentDef.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLCell.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLDoodad.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLLayer.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLNpc.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLRadish.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLScene.cs" />
+    <Compile Include="Assets\Scripts\RepresentLogic\Scene\RLTower.cs" />
+    <Compile Include="Assets\Scripts\UI\InputManager.cs" />
     <None Include="Assets\Devenv\GBK.dll" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>
