@@ -16,6 +16,17 @@ namespace Game.GameLogic
         private int m_nLogicX = 0;
         private int m_nLogicY = 0;
 
+        public int LogicX
+        {
+            get { return m_nLogicX; }
+            set { m_nLogicX = value;}
+        }
+
+        public int LogicY
+        {
+            get { return m_nLogicY; }
+            set { m_nLogicY = value; }
+        }
     //    private int m_nDoing = (int)SceneObjectAni.SceneObjectAni_Stand;
     //    private int m_nDirection = (int)SceneObjectDirection.SceneObjectDirection_Right;
 

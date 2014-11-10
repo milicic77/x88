@@ -21,6 +21,12 @@ namespace Game.GameLogic
         // 逻辑场景Npc
         private List<GLNpc> m_GLNpcList = new List<GLNpc>();
 
+        private List<GLTower> m_TowerList = new List<GLTower>();    // 关卡中Tower列表
+        public List<GLTower> TowerList
+        {
+            get { return m_TowerList; }
+        }
+
         // 怪物总波数
         private int m_nNpcGroupCount = 0;
 
@@ -77,15 +83,15 @@ namespace Game.GameLogic
             m_GLScene.AddRadish(radish);
             //////////////////////////////////////////////////////////////////////////
             // 创建炮塔
-            for (int i = 0; i < template.asTower.Count; i++)
-            {
-                GLTower tower = new GLTower();
-                tower.Init(template.asTower[i].nTemplateId, template.asTower[i].nCellX,
-                    template.asTower[i].nCellY, m_GLScene);
-                m_GLScene.AddTower(tower);
+            //for (int i = 0; i < template.asTower.Count; i++)
+            //{
+            //    GLTower tower = new GLTower();
+            //    tower.Init(template.asTower[i].nTemplateId, template.asTower[i].nCellX,
+            //        template.asTower[i].nCellY, m_GLScene);
+            //    m_GLScene.AddTower(tower);
 
-                //m_GLDoodadList.Add(doodad);
-            }
+            //    //m_GLDoodadList.Add(doodad);
+            //}
             //////////////////////////////////////////////////////////////////////////
         }
 
@@ -97,6 +103,11 @@ namespace Game.GameLogic
         public GLScene Scene
         {
             get { return m_GLScene; }
+        }
+
+        public List<GLNpc> NpcList
+        {
+            get { return m_GLNpcList; }
         }
 
         public void Run()
@@ -128,6 +139,8 @@ namespace Game.GameLogic
                     m_GLNpcList[i].Activate();
                 }
             }
+
+            ActivateTowerList();
         }
 
         public void CreateNpc()
@@ -226,6 +239,17 @@ namespace Game.GameLogic
             catch (Exception e)
             {
                 Common.ExceptionTool.ProcessException(e);
+            }
+        }
+
+        public void ActivateTowerList()
+        {
+            for (int i = 0; i < m_TowerList.Count; i++)
+            {
+                if (m_TowerList[i] != null)
+                {
+                    m_TowerList[i].Activate();
+                }
             }
         }
 
