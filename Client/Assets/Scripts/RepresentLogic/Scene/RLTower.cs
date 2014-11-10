@@ -20,6 +20,19 @@ namespace Game.RepresentLogic
 
         public GameObject m_ObjectBG;
         public GameObject m_ObjectFG;
+        private int m_nAngle = 0;
+        private int m_nLastAngle = 0;
+        public int Angle
+        {
+            get { return m_nAngle; }
+            set { m_nAngle = value; }
+        }
+
+        public int LastAngle
+        {
+            get { return m_nLastAngle; }
+            set { m_nLastAngle = value; }
+        }
 
         //// 当前动作
         //public int m_nAni = (int)SceneObjectAni.SceneObjectAni_Stand;
@@ -140,6 +153,17 @@ namespace Game.RepresentLogic
             nIndex = nIndex % m_Template.TexFireAni.Count;
 
             spriteRenderer.sprite = m_SpriteFireAni[nIndex];
+
+            // 旋转角度
+            int nAngle = m_nAngle - m_nLastAngle;
+            if (nAngle < 0)
+            {
+                nAngle = 360 + nAngle;
+            }
+
+            transform.Rotate(Vector3.back * Mathf.Deg2Rad * nAngle);
+
+            //transform.RotateAround(Vector3.zero, Vector3.right, m_nAngle);
         }
     }
 }
