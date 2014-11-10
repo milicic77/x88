@@ -165,15 +165,10 @@ namespace Game.Common
             }
 
             int nStartIdx = 0;
-            if (null != m_LastNode)
+            if (null != m_LastNode && BTTaskState.RUNNING == m_LastNode.State)
             {
                 nStartIdx = m_Children.IndexOf(m_LastNode);
                 nStartIdx = nStartIdx >= 0 ? nStartIdx : 0;
-            }
-
-            if (BTTaskState.RUNNING != m_LastNode.State)
-            {
-                nStartIdx = 0;
             }
 
             IBTNode node = null;

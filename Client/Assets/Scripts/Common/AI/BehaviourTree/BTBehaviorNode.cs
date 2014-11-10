@@ -6,6 +6,9 @@ namespace Game.Common
     // BTBehaviorNode(叶子节点) = BTConditionNode + BTActionNode
     public abstract class BTBehaviorNode : BTNode
     {
+        public override void Activate()
+        {
+        }
     }
 
     public delegate bool BTCondHandler(object arg);
@@ -26,7 +29,7 @@ namespace Game.Common
             set { m_Arg = value; }
         }
 
-        public virtual void Activate()
+        public override void Activate()
         {
             if (null == m_Handler)
             {
@@ -40,5 +43,8 @@ namespace Game.Common
 
     public class BTActionNode : BTBehaviorNode
     {
+        public override void Activate()
+        {
+        }
     }
 }
