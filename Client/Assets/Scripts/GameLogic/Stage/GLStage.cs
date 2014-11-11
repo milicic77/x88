@@ -38,6 +38,7 @@ namespace Game.GameLogic
             get { return m_TowerList; }
         }
 
+
         // 怪物总组数
         public int m_nNpcGroupCount = 0;
         // 当前第几组

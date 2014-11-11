@@ -35,15 +35,20 @@ namespace Game.GameLogic
         // 当前目的点是路径的第几个点
         private int m_nCurPointIndex = 0;
 
+        public GLScene m_GLScene;
     //    private int m_nPathIndex = 0;
 
     //    private int nTime1 = Environment.TickCount;
 
         public int m_nDelete = 0;
 
+        // 出生特效
+        public GLEffect m_GLEffect = new GLEffect();
         public void Init(int nTemplateId, int nCellX, int nCellY, GLScene scene)
         {
             GLNpcTemplate template = GLSettingManager.Instance().GetGLNpcTemplate(nTemplateId);
+
+            m_GLScene = scene;
 
             // 格子坐标 => 逻辑坐标
             int nLogicX = RepresentCommon.CellX2LogicX(nCellX);
@@ -57,6 +62,13 @@ namespace Game.GameLogic
 
             m_nLogicX = nLogicX;
             m_nLogicY = nLogicY;
+
+            // 受伤特效
+            m_GLEffect.Init(1, nCellX, nCellY, m_GLScene);
+            m_GLScene.AddEffect(m_GLEffect);
+
+            // 只播放1次
+            m_GLEffect.Play(1);
         }
 
         public void UnInit()
