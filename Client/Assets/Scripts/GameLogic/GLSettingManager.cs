@@ -390,9 +390,11 @@ namespace Game.GameLogic
                     tabFile.GetInteger(i, "TemplateId", 0, ref nTemp);
                     template.nTemplateId = nTemp;
 
-                    int nRepresentId = 0;
-                    tabFile.GetInteger(i, "RepresentId", 0, ref nRepresentId);
-                    template.nRepresentId = nRepresentId;
+                    tabFile.GetInteger(i, "RepresentId", 0, ref nTemp);
+                    template.nRepresentId = nTemp;
+
+                    tabFile.GetInteger(i, "Life", 0, ref nTemp);
+                    template.nLife = nTemp;
 
                     tabFile.GetString(i, "Name", "", ref szTemp);
                     template.szName = szTemp;

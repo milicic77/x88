@@ -41,12 +41,15 @@ namespace Game.GameEvent
             public string name;
         }
         //////////////////////////////////////////////////////////////////////////
-        // 删除Npc事件
-        public delegate void Event_DelNpc(object sender, DelNpcArgs args);
-        public class DelNpcArgs : BaseEventArgs
+        // Npc啃到萝卜（到达终点）
+        public delegate void Event_NpcAttackRadish(object sender, NpcAttackRadishArgs args);
+        public class NpcAttackRadishArgs : BaseEventArgs
         {
             public GLNpc npc;
         }
+        //////////////////////////////////////////////////////////////////////////
+        // 游戏结束事件
+        public delegate void Event_GameOver(object sender, BaseEventArgs args);
         
     }
 }

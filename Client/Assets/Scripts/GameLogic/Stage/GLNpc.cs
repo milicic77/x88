@@ -84,9 +84,9 @@ namespace Game.GameLogic
                 m_nDelete = 1;
 
                 // 发起事件
-                EventDef.DelNpcArgs args = new EventDef.DelNpcArgs();
+                EventDef.NpcAttackRadishArgs args = new EventDef.NpcAttackRadishArgs();
                 args.npc = this;
-                EventCenter.Event_DelNpc(null, args);
+                EventCenter.Event_NpcAttackRadish(null, args);
 
                 return;
             }
@@ -132,47 +132,6 @@ namespace Game.GameLogic
             float fWorldX = RepresentCommon.LogicX2WorldX(m_nLogicX);
             float fWorldY = RepresentCommon.LogicY2WorldY(m_nLogicY);
             m_RLNpc.SetPosition(fWorldX, fWorldY);
-
-    //        int nNow = Environment.TickCount;
-    //        if (nNow - nTime1 >= 500)
-    //        {
-    //            GLCellPoint point = m_Path.m_PointList[m_nPathIndex];
-    //            SetPosition(point.nCellX, point.nCellY);
-    //            m_nPathIndex++;
-    //            m_nPathIndex = m_nPathIndex % m_Path.m_PointList.Count();
-    //            nTime1 = nNow;
-    //        }
-
         }
-
-    //    public void SetPosition(int nLogicX, int nLogicY)
-    //    {
-    //        m_nLogicX = nLogicX;
-    //        m_nLogicY = nLogicY;
-
-    //        m_RLSceneObject.SetPosition(nLogicX, nLogicY);
-    //    }
-
-    //    public void SetDoing(int nDoing)
-    //    {
-    //        m_nDoing = nDoing;
-
-    //        m_RLSceneObject.DOING = nDoing;
-    //    }
-
-    //    public void SetDirection(int nDirection)
-    //    {
-    //        m_nDirection = nDirection;
-
-    //        m_RLSceneObject.DIRECTION = nDirection;
-    //    }
-
-    //    public void SetPath(GLPath path)
-    //    {
-    //        m_Path = path;
-    //        m_nPathIndex = 0;
-    //    }
-    //    
-
     }
 }

@@ -119,6 +119,11 @@ namespace Game.RepresentLogic
             GameObject.Destroy(npc.gameObject);
         }
 
+        public void DestroyDoodad(RLDoodad doodad)
+        {
+            GameObject.Destroy(doodad.gameObject);
+        }
+
         // 创建表现萝卜
         public RLRadish CreateRadish(int nRepresentId, float fWorldX, float fWorldY)
         {
@@ -129,6 +134,11 @@ namespace Game.RepresentLogic
                 (int)RLSceneObjectOrder.RLSceneOrder_Radish);
 
             return radish;
+        }
+
+        public void DestroyRadish(RLRadish radish)
+        {
+            GameObject.Destroy(radish.gameObject);
         }
 
         // 创建表现炮塔

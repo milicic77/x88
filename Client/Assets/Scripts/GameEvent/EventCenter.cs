@@ -37,17 +37,31 @@ namespace Game.GameEvent
             }
         }
         //////////////////////////////////////////////////////////////////////////
-        // 删除Npc事件
-        public static event EventDef.Event_DelNpc m_EventDelNpc;
-        public static EventDef.Event_DelNpc Event_DelNpc
+        // Npc啃到萝卜（到达终点）
+        public static event EventDef.Event_NpcAttackRadish m_EventNpcAttackRadish;
+        public static EventDef.Event_NpcAttackRadish Event_NpcAttackRadish
         {
             get
             {
-                return m_EventDelNpc;
+                return m_EventNpcAttackRadish;
             }
             set
             {
-                m_EventDelNpc = value;
+                m_EventNpcAttackRadish = value;
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////
+        // 游戏结束
+        public static event EventDef.Event_GameOver m_EventGameOver;
+        public static EventDef.Event_GameOver Event_GameOver
+        {
+            get
+            {
+                return m_EventGameOver;
+            }
+            set
+            {
+                m_EventGameOver = value;
             }
         }
         //////////////////////////////////////////////////////////////////////////

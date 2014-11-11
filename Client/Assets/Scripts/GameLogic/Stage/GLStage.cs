@@ -27,6 +27,12 @@ namespace Game.GameLogic
 
         // 逻辑场景炮塔
         private List<GLTower> m_TowerList = new List<GLTower>();    // 关卡中Tower列表
+
+        // 萝卜
+        public GLRadish m_GLRadish = null;
+        // 表示萝卜血量的Doodad
+        public GLDoodad m_GLRadishLifeDoodad = null;
+
         public List<GLTower> TowerList
         {
             get { return m_TowerList; }
@@ -84,9 +90,14 @@ namespace Game.GameLogic
             m_nCurNpcGroup = 0;
             //////////////////////////////////////////////////////////////////////////
             // 创建萝卜
-            GLRadish radish = new GLRadish();
-            radish.Init(template.nRadishTemplateId, template.nRadishCellX, template.nRadishCellY, m_GLScene);
-            m_GLScene.AddRadish(radish);
+            m_GLRadish = new GLRadish();
+            m_GLRadish.Init(template.nRadishTemplateId, template.nRadishCellX, template.nRadishCellY, m_GLScene);
+            m_GLScene.AddRadish(m_GLRadish);
+            // 创建萝卜血量显示Doodad
+            m_GLRadishLifeDoodad = new GLDoodad();
+            // TODO 先写死模板ID
+            m_GLRadishLifeDoodad.Init(21, template.nRadishCellX+1, template.nRadishCellY, m_GLScene);
+            m_GLScene.AddDoodad(m_GLRadishLifeDoodad);
             //////////////////////////////////////////////////////////////////////////
             // 创建炮塔
             //for (int i = 0; i < template.asTower.Count; i++)
@@ -165,6 +176,11 @@ namespace Game.GameLogic
             }
         }
 
+        public void ActivateRadish()
+        {
+            m_GLRadish.Activate();
+        }
+
         // ret==1 所有组Npc创建完成
         // ret==2 本组Npc创建完成
         public int ActiveCreateGroupNpc()
@@ -236,21 +252,44 @@ namespace Game.GameLogic
         // 事件处理
         private void RegisterEvents()
         {
-            EventCenter.Event_DelNpc += OnDelNpcEvent;
+            EventCenter.Event_NpcAttackRadish += OnNpcAttackRadishEvent;
+            EventCenter.Event_GameOver += OnGameOverEvent;
         }
 
         private void UnRegisterEvents()
         {
-            EventCenter.Event_DelNpc -= OnDelNpcEvent;
+            EventCenter.Event_NpcAttackRadish -= OnNpcAttackRadishEvent;
+            EventCenter.Event_GameOver -= OnGameOverEvent;
         }
 
-        private void OnDelNpcEvent(object sender, EventDef.DelNpcArgs args)
+        private void OnNpcAttackRadishEvent(object sender, EventDef.NpcAttackRadishArgs args)
         {
             try
             {
+                // 萝卜掉血
+                m_GLRadish.m_nLife--;
+                // 删除Npc
                 args.npc.UnInit();
                 m_GLNpcList.Remove(args.npc);
 
+                if (m_GLRadish.m_nLife <= 0)
+                {
+                    // 萝卜没血了，游戏应该结束
+                    // 发起事件
+                    EventCenter.Event_GameOver(null, null);
+                    return;
+                }
+                // 改变萝卜外观
+                m_GLRadish.ChangeRepresent(10 - m_GLRadish.m_nLife + 1);
+                // 修改血量显示 TODO 模板Id先写死
+                m_GLRadishLifeDoodad.UnInit();
+                int nLifeDoodadTemplateId = 21 - (10 - m_GLRadish.m_nLife);
+                m_GLRadishLifeDoodad.Init(nLifeDoodadTemplateId,
+                    m_GLRadishLifeDoodad.m_nCellX, m_GLRadishLifeDoodad.m_nCellY, 
+                    m_GLScene);
+                m_GLScene.AddDoodad(m_GLRadishLifeDoodad);
+
+                // 设置Npc组出现间隔起始时间
                 if (m_GLNpcList.Count == 0)
                 {
                     m_nBetweenTime = (uint)Environment.TickCount;
@@ -260,6 +299,12 @@ namespace Game.GameLogic
             {
                 Common.ExceptionTool.ProcessException(e);
             }
+        }
+
+        private void OnGameOverEvent(object sender, EventDef.BaseEventArgs args)
+        {
+            // 游戏结束，状态跃迁
+            m_fsm.PushEvent((int)StageFsmEvent.STAGE_FSMLINK_GAME_END);
         }
         //////////////////////////////////////////////////////////////////////////
         

@@ -131,6 +131,8 @@ namespace Game.GameLogic
         public string szName = null;
         // 表现ID
         public int nRepresentId = 0;
+        // 血量
+        public int nLife = 0;
     }
     //////////////////////////////////////////////////////////////////////////
     // 逻辑炮塔NPC模板

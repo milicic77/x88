@@ -15,9 +15,16 @@ namespace Game.GameLogic
         public int m_nLogicX = 0;
         public int m_nLogicY = 0;
 
+        // 格子坐标
+        public int m_nCellX = 0;
+        public int m_nCellY = 0;
+
         public void Init(int nTemplateId, int nCellX, int nCellY, GLScene scene)
         {
             GLDoodadTemplate template = GLSettingManager.Instance().GetGLDoodadTemplate(nTemplateId);
+
+            m_nCellX = nCellX;
+            m_nCellY = nCellY;
 
             // 格子坐标 => 逻辑坐标
             int nLogicX = RepresentCommon.CellX2LogicX(nCellX);
@@ -39,7 +46,7 @@ namespace Game.GameLogic
 
         public void UnInit()
         {
-
+            Represent.Instance().DestroyDoodad(m_RLDoodad);
         }
     }
 }

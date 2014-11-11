@@ -62,6 +62,7 @@ namespace Game.GameLogic
             base.Update();
             m_Stage.ActivateNpc();
             m_Stage.ActivateTower();
+            m_Stage.ActivateRadish();
         }
     }
     //////////////////////////////////////////////////////////////////////////

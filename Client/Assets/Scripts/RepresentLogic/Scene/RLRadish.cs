@@ -8,65 +8,28 @@ namespace Game.RepresentLogic
 {
     public class RLRadish : MonoBehaviour
     {
+        public enum RLRadishAni
+        {
+            RLRadishAni_None,
+            RLRadishAni_Stand1,
+            RLRadishAni_Stand2,
+        }
+
+        public RLRadishAni m_CurrentAni = RLRadishAni.RLRadishAni_None;
+
         public Sprite[] m_SpriteStandAni1 = null; // 站立动画1精灵
         public Sprite[] m_SpriteStandAni2 = null; // 站立动画2精灵
 
         private SpriteRenderer spriteRenderer; // 动画渲染
 
-        //private RLSceneObjectAnimationCtrl m_Animation = new RLSceneObjectAnimationCtrl();
+        Sprite m_sprite;
 
-
-        //public float moveSpeed;
+        int m_nCurFrame = 0;
 
         // 表现模板
         public RLRadishTemplate m_Template;
 
-        public float framesPerSecond = 10;
-
-        //// 逻辑X坐标
-        //public int m_nLogicX;
-        //// 逻辑Y坐标
-        //public int m_nLogicY;
-        //// 当前动作
-        //public int m_nAni = (int)SceneObjectAni.SceneObjectAni_Stand;
-        //// 当前方向
-        //public int m_Direction = (int)SceneObjectDirection.SceneObjectDirection_Right;
-
-        //public int DOING
-        //{
-        //    set
-        //    {
-        //        m_nAni = value;
-        //    }
-        //    get
-        //    {
-        //        return m_nAni;
-        //    }
-        //}
-
-        //public int DIRECTION
-        //{
-        //    set
-        //    {
-        //        m_Direction = value;
-        //    }
-        //    get
-        //    {
-        //        return m_Direction;
-        //    }
-        //}
-
-        //public SpriteRenderer SceneObjectSpriteRenderer
-        //{
-        //    set
-        //    {
-        //        spriteRenderer = value;
-        //    }
-        //    get
-        //    {
-        //        return spriteRenderer;
-        //    }
-        //}
+        public float framesPerSecond = 2;
 
         public void Init(int nRepresentId, float fWorldX, float fWorldY, int nOrder)
         {
@@ -82,7 +45,7 @@ namespace Game.RepresentLogic
                 template.DefaultTexture.width, template.DefaultTexture.height);
 
             // 精灵
-            Sprite sprite = Sprite.Create(template.DefaultTexture,
+            m_sprite = Sprite.Create(template.DefaultTexture,
                 spriteRect,
                 new Vector2(0.4f, 0.3f)
             );
@@ -115,7 +78,7 @@ namespace Game.RepresentLogic
                 );
             }
 
-            gameObject.AddComponent<SpriteRenderer>().sprite = sprite;
+            gameObject.AddComponent<SpriteRenderer>().sprite = m_sprite;
 
             spriteRenderer = GetComponent<Renderer>() as SpriteRenderer;
 
@@ -129,20 +92,56 @@ namespace Game.RepresentLogic
             gameObject.transform.position = new Vector3(fWorldX, fWorldY, 0);
         }
 
+        public void DoStandAni()
+        {
+            m_CurrentAni = RLRadishAni.RLRadishAni_None;
+        }
+
+        public void DoStandAni_1()
+        {
+            m_CurrentAni = RLRadishAni.RLRadishAni_Stand1;
+        }
+        public void DoStandAni_2()
+        {
+            m_CurrentAni = RLRadishAni.RLRadishAni_Stand2;
+        }
+
         virtual public void Update()
         {
-            //m_DeltaTime = Time.time - m_LastRepresentFrameTime;
-            //m_LastRepresentFrameTime = Time.time / 1000.0f;
-            // 
+            int nIndex = 0;
 
-            // 播放动画
-            //m_Animation.ShowAnimation(m_nAni, m_Direction);
-            // 
-            int nIndex = (int)(Time.timeSinceLevelLoad * framesPerSecond);
+            switch (m_CurrentAni)
+            {
+                case RLRadishAni.RLRadishAni_None:
+                    spriteRenderer.sprite = m_sprite;
+                    m_nCurFrame = 0;
+                    break;
+                case RLRadishAni.RLRadishAni_Stand1:
+                    nIndex = (int)(Time.timeSinceLevelLoad * framesPerSecond);
+                    nIndex = nIndex % m_Template.TexStandAni1.Count;
+                    spriteRenderer.sprite = m_SpriteStandAni1[nIndex];
+                    m_nCurFrame++;
+                    if (m_nCurFrame >= m_Template.TexStandAni1.Count)
+                    {
+                        m_nCurFrame = 0;
+                        m_CurrentAni = RLRadishAni.RLRadishAni_None;
+                    }
 
-            nIndex = nIndex % m_Template.TexStandAni2.Count;
-
-            spriteRenderer.sprite = m_SpriteStandAni2[nIndex];
+                    break;
+                case RLRadishAni.RLRadishAni_Stand2:
+                    nIndex = (int)(Time.timeSinceLevelLoad * framesPerSecond);
+                    nIndex = nIndex % m_Template.TexStandAni2.Count;
+                    spriteRenderer.sprite = m_SpriteStandAni2[nIndex];
+                    m_nCurFrame++;
+                    if (m_nCurFrame >= m_Template.TexStandAni2.Count)
+                    {
+                        m_nCurFrame = 0;
+                        m_CurrentAni = RLRadishAni.RLRadishAni_None;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
