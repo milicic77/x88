@@ -9,8 +9,7 @@ namespace Game.RepresentLogic
     public class RLTower : MonoBehaviour
     {
         public Sprite[] m_SpriteFireAni = null; // 攻击动画精灵
-
-        private SpriteRenderer spriteRenderer; // 动画渲染
+        private SpriteRenderer spriteRenderer;  // 动画渲染
 
 
         // 表现模板
@@ -20,60 +19,29 @@ namespace Game.RepresentLogic
 
         public GameObject m_ObjectBG;
         public GameObject m_ObjectFG;
-        private int m_nAngle = 0;
-        private int m_nLastAngle = 0;
+
+        // 同步逻辑的数据
+        private int m_nAngle         = 0;
+        private int m_nFireRange     = 0;                   // 炮塔射程(像素)
+        private int m_nRotationAngle = 0;                   // 逻辑帧1帧转的角度
+
         public int Angle
         {
-            get { return m_nAngle; }
+            get { return m_nAngle;  }
             set { m_nAngle = value; }
         }
 
-        public int LastAngle
+        public int FireRange
         {
-            get { return m_nLastAngle; }
-            set { m_nLastAngle = value; }
+            get { return m_nFireRange;  }
+            set { m_nFireRange = value; }
         }
 
-        //// 当前动作
-        //public int m_nAni = (int)SceneObjectAni.SceneObjectAni_Stand;
-        //// 当前方向
-        //public int m_Direction = (int)SceneObjectDirection.SceneObjectDirection_Right;
-
-        //public int DOING
-        //{
-        //    set
-        //    {
-        //        m_nAni = value;
-        //    }
-        //    get
-        //    {
-        //        return m_nAni;
-        //    }
-        //}
-
-        //public int DIRECTION
-        //{
-        //    set
-        //    {
-        //        m_Direction = value;
-        //    }
-        //    get
-        //    {
-        //        return m_Direction;
-        //    }
-        //}
-
-        //public SpriteRenderer SceneObjectSpriteRenderer
-        //{
-        //    set
-        //    {
-        //        spriteRenderer = value;
-        //    }
-        //    get
-        //    {
-        //        return spriteRenderer;
-        //    }
-        //}
+        public int RotationAngle
+        {
+            get { return m_nRotationAngle; }
+            set { m_nRotationAngle = value; }
+        }
 
         public void Init(int nRepresentId, float fWorldX, float fWorldY, int nOrder)
         {
@@ -154,16 +122,70 @@ namespace Game.RepresentLogic
 
             spriteRenderer.sprite = m_SpriteFireAni[nIndex];
 
-            // 旋转角度
-            int nAngle = m_nAngle - m_nLastAngle;
-            if (nAngle < 0)
+            if (m_nRotationAngle > 0)
             {
-                nAngle = 360 + nAngle;
+                transform.Rotate(Vector3.back,    m_nRotationAngle);
+            }
+            else
+            {
+                transform.Rotate(Vector3.forward, -m_nRotationAngle);
             }
 
-            transform.Rotate(Vector3.back * Mathf.Deg2Rad * nAngle);
+            m_nRotationAngle = 0;
+        }
 
-            //transform.RotateAround(Vector3.zero, Vector3.right, m_nAngle);
+        void OnDrawGizmos()
+        {
+            DrawFireRange();
+        }
+
+        private void DrawFireRange()
+        {
+            float fRadius = m_nFireRange / 100;
+            float fTheta  = 0.1f;
+            Color m_Color = Color.red;
+
+            if (transform == null)
+                return;
+
+            if (fTheta < 0.0001f)
+                fTheta = 0.0001f;
+
+
+            // 设置矩阵
+            Matrix4x4 defaultMatrix = Gizmos.matrix;
+            Gizmos.matrix = transform.localToWorldMatrix;
+
+            // 设置颜色
+            Color defaultColor = Gizmos.color;
+            Gizmos.color = m_Color;
+
+            // 绘制圆环
+            Vector3 beginPoint = Vector3.zero;
+            Vector3 firstPoint = Vector3.zero;
+            for (float theta = 0; theta < 2 * Mathf.PI; theta += fTheta)
+            {
+                float x = fRadius * Mathf.Sin(theta);
+                float y = fRadius * Mathf.Cos(theta);
+
+                Vector3 endPoint = new Vector3(x, y, 0);
+                if (theta == 0)
+                {
+                    firstPoint = endPoint;
+                }
+
+                Gizmos.DrawLine(beginPoint, endPoint);
+                beginPoint = endPoint;
+            }
+
+            // 绘制最后一条线段
+            Gizmos.DrawLine(firstPoint, beginPoint);
+
+            // 恢复默认颜色
+            Gizmos.color = defaultColor;
+
+            // 恢复默认矩阵
+            Gizmos.matrix = defaultMatrix;
         }
     }
 }
