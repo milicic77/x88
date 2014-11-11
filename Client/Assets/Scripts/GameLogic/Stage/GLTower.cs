@@ -14,20 +14,20 @@ namespace Game.GameLogic
         {
             GLTower tower = m_Owner.Blackboard.GetData("self") as GLTower;
             if (null == tower)
-            {
+            { // 炮塔对象为空，查找失败
                 m_State = BTTaskState.FAILURE;
                 return;
             }
 
             List<GLNpc> enemies = GameWorld.Instance().Stage.NpcList;
             if (enemies.Count <= 0)
-            {
+            { // 敌人序列为空，查找失败
                 m_State = BTTaskState.FAILURE;
                 return;
             }
 
             for (int i = 0; i < enemies.Count; i++)
-            {
+            { // 查找射程范围中一个敌人
                 GLNpc npc = enemies[i];
                 double distance = Math.Sqrt(Math.Pow(tower.LogicX - npc.LogicX, 2) + Math.Pow(tower.LogicY - npc.LogicY, 2));
                 if (distance <= tower.FireRange)
@@ -38,6 +38,7 @@ namespace Game.GameLogic
                 }
             }
 
+            // 查找失败
             m_State = BTTaskState.FAILURE;
         }
     }
@@ -48,19 +49,27 @@ namespace Game.GameLogic
         {
             GLTower tower = m_Owner.Blackboard.GetData("self") as GLTower;
             if (null == tower)
-            {
+            { // 炮塔对象为空，瞄准失败
                 m_State = BTTaskState.FAILURE;
                 return;
             }
 
             if (null == tower.Target)
-            {
+            { // 攻击目标为空，瞄准失败
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            GLNpc target = tower.Target as GLNpc;
+            List<GLNpc> enemies = GameWorld.Instance().Stage.NpcList;
+            if (!enemies.Contains(target))
+            { // 敌人已经死亡，则序列执行失败，重新寻找敌人
+                tower.Target = null;
                 m_State = BTTaskState.FAILURE;
                 return;
             }
 
             // 对准目标
-            GLNpc  target           = tower.Target as GLNpc;
             Vector2 towerPos        = new Vector2(RepresentCommon.LogicX2WorldX(tower.LogicX),  RepresentCommon.LogicY2WorldY(tower.LogicY) );
             Vector2 targetPos       = new Vector2(RepresentCommon.LogicX2WorldX(target.LogicX), RepresentCommon.LogicY2WorldY(target.LogicY));
             Vector2 vecTower2Target = targetPos - towerPos;                         // 炮塔到目标的方向向量
@@ -131,7 +140,56 @@ namespace Game.GameLogic
             }
 
             tower.Angle = nTowerAngle;
+
+            // 瞄准成功
+            if (0 == nRotationAngle)
+            {
+                m_State = BTTaskState.SUCCESS;
+                return;
+            }
+
+            // 继续瞄准
             m_State = BTTaskState.RUNNING;
+        }
+    }
+
+    class TowerAction_AttackTarget : BTActionNode
+    {
+        public override void Activate()
+        {
+            GLTower tower = m_Owner.Blackboard.GetData("self") as GLTower;
+            if (null == tower)
+            { // 炮塔对象为空，攻击失败
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            if (null == tower.Target)
+            { // 敌人对象为空，攻击失败
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            GLNpc target = tower.Target as GLNpc;
+            List<GLNpc> enemies = GameWorld.Instance().Stage.NpcList;
+            if (!enemies.Contains(target))
+            { // 敌人已经死亡，攻击失败，序列执行失败
+                tower.Target = null;
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            // 判断射程
+            double distance = Math.Sqrt(Math.Pow(tower.LogicX - target.LogicX, 2) + Math.Pow(tower.LogicY - target.LogicY, 2));
+            if (distance > tower.FireRange)
+            { // 超出射程，攻击失败，序列执行失败
+                tower.Target = null;
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            // 攻击成功
+            m_State = BTTaskState.SUCCESS;
         }
     }
     public class GLTower
@@ -240,12 +298,16 @@ namespace Game.GameLogic
             TowerAction_AimTarget aimAction = new TowerAction_AimTarget();
             lockAction.Name = "锁定目标动作";
 
+            TowerAction_AttackTarget attackAction = new TowerAction_AttackTarget();
+            lockAction.Name = "攻击目标动作";
+
             BTSequenceNode attackTarget = new BTSequenceNode();
             ai.AddNode(attackTarget);
 
             attackTarget.Name = "锁定目标";
             attackTarget.AddCond(attackCond);
             attackTarget.AddNode(aimAction);
+            attackTarget.AddNode(attackAction);
         }
 
         public bool LockTargetCondition(object arg)
