@@ -1,3 +1,11 @@
 RepresentId	Name	Texture	StandAni_1	StandAni_2
-1	radish1	hlb10	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
-2	radish2	hlb10	hlb21	hlb21
+1	radish1_10	hlb10	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+2	radish1_9	hlb9	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+3	radish1_8	hlb8	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+4	radish1_7	hlb8	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+5	radish1_6	hlb6	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+6	radish1_5	hlb4	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+7	radish1_4	hlb4	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+8	radish1_3	hlb3	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+9	radish1_2	hlb2	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23
+10	radish1_1	hlb1	hlb10,hlb11,hlb12,hlb13,hlb14,hlb15,hlb16,hlb17,hlb18	hlb21,hlb22,hlb23

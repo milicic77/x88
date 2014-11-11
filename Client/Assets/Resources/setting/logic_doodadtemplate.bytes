@@ -10,3 +10,13 @@ TemplateId	Name	RepresentId	CellSizeX	CellSizeY
 9	物件9	9	2	2
 10	物件10	10	1	1
 11	开始	11	1	1
+12	BossHP01	12	1	1
+13	BossHP02	13	1	1
+14	BossHP03	14	1	1
+15	BossHP04	15	1	1
+16	BossHP05	16	1	1
+17	BossHP06	17	1	1
+18	BossHP07	18	1	1
+19	BossHP08	19	1	1
+20	BossHP09	20	1	1
+21	BossHP10	21	1	1
