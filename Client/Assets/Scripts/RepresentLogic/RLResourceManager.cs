@@ -24,6 +24,9 @@ namespace Game.RepresentLogic
         // 表现炮塔模板
         private Dictionary<int, RLTowerTemplate> m_RLTowerTemplateList = new Dictionary<int, RLTowerTemplate>();
         
+        // 表现特效模板
+        private Dictionary<int, RLEffectTemplate> m_RLEffectTemplateList = new Dictionary<int, RLEffectTemplate>();
+
         public void Init()
         {
             // 加载表现场景模板
@@ -38,6 +41,9 @@ namespace Game.RepresentLogic
             // 加载表现萝卜模板
             LoadRLRadishTemplate();
 
+            // 加载表现特效模板
+            LoadRLEffectTemplate();
+
             // 加载表现炮塔模板
             LoadRLTowerTemplate();
         }
@@ -49,6 +55,7 @@ namespace Game.RepresentLogic
             m_RLNpcTemplateList.Clear();
             m_RLRadishTemplateList.Clear();
             m_RLTowerTemplateList.Clear();
+            m_RLEffectTemplateList.Clear();
         }
 
         //////////////////////////////////////////////////////////////////////////
@@ -290,6 +297,65 @@ namespace Game.RepresentLogic
             if (m_RLRadishTemplateList.ContainsKey(nRepresent))
             {
                 return m_RLRadishTemplateList[nRepresent];
+            }
+            return null;
+        }
+        //////////////////////////////////////////////////////////////////////////
+        // 加载特效表现模板
+        public void LoadRLEffectTemplate()
+        {
+            bool success = true;
+            try
+            {
+                Common.TableFile tabFile = Common.TableFile.LoadFromFile(SceneDef.EFFECT_REPRESENT_TEMPLATE);
+                int rowCount = tabFile.GetRowsCount();
+                for (int i = 1; i <= rowCount; i++)
+                {
+                    RLEffectTemplate template = new RLEffectTemplate();
+
+                    int nTemp = 0;
+                    string szTemp = null;
+
+                    tabFile.GetInteger(i, "RepresentId", 0, ref nTemp);
+                    template.nRepresentId = nTemp;
+
+                    tabFile.GetString(i, "Name", "", ref szTemp);
+                    template.szName = szTemp;
+
+                    //////////////////////////////////////////////////////////////////////////
+                    tabFile.GetString(i, "Ani", "", ref szTemp);
+                    string[] szAni = szTemp.Split(new char[] { ',' });
+                    for (int nIndex = 0; nIndex < szAni.Count(); ++nIndex)
+                    {
+                        Texture2D tex = Resources.Load(SceneDef.EFFECT_REPRESENT_TEXTURE_PATH + szAni[nIndex]) as Texture2D;
+                        template.TexAni.Add(tex);
+                    }
+
+                    //////////////////////////////////////////////////////////////////////////
+
+                    m_RLEffectTemplateList[template.nRepresentId] = template;
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Common.ExceptionTool.ProcessException(e);
+            }
+            finally
+            {
+                if (!success)
+                {
+                    m_RLEffectTemplateList.Clear();
+                }
+            }
+        }
+
+        // 获取表现特效模板
+        public RLEffectTemplate GetRLEffectTemplate(int nRepresent)
+        {
+            if (m_RLEffectTemplateList.ContainsKey(nRepresent))
+            {
+                return m_RLEffectTemplateList[nRepresent];
             }
             return null;
         }

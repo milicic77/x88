@@ -267,7 +267,7 @@ namespace Game.GameLogic
             try
             {
                 // 萝卜掉血
-                m_GLRadish.m_nLife--;
+                m_GLRadish.OnHurt();
                 // 删除Npc
                 args.npc.UnInit();
                 m_GLNpcList.Remove(args.npc);

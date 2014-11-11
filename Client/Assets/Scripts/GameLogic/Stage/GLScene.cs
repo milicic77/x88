@@ -41,10 +41,14 @@ namespace Game.GameLogic
             m_RLScene.AddNpc(npc.m_RLNpc);
         }
 
-
         public void AddRadish(GLRadish radish)
         {
             m_RLScene.AddRadish(radish.m_RLRadish);
+        }
+
+        public void AddEffect(GLEffect effect)
+        {
+            m_RLScene.AddEffect(effect.m_RLEffect);
         }
 
         public void AddTower(GLTower tower)

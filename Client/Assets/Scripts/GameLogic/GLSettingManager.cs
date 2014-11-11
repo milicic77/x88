@@ -20,6 +20,8 @@ namespace Game.GameLogic
         private Dictionary<int, GLNpcTemplate> m_GLNpcTemplateList = new Dictionary<int, GLNpcTemplate>();
         // 逻辑场景萝卜配置模板
         private Dictionary<int, GLRadishTemplate> m_GLRadishTemplateList = new Dictionary<int, GLRadishTemplate>();
+        // 逻辑场景特效配置模板
+        private Dictionary<int, GLEffectTemplate> m_GLEffectTemplateList = new Dictionary<int, GLEffectTemplate>();
         // 逻辑场景炮塔配置模板
         private Dictionary<int, GLTowerTemplate> m_GLTowerTemplateList = new Dictionary<int, GLTowerTemplate>();
         // 逻辑场景路径配置模板
@@ -43,6 +45,9 @@ namespace Game.GameLogic
             // 加载逻辑场景萝卜配置模板
             LoadGLRadishTemplate();
 
+            // 加载逻辑场景特效配置模板
+            LoadGLEffectTemplate();
+
             // 加载逻辑炮塔配置模板
             LoadGLTowerTemplate();
 
@@ -58,6 +63,7 @@ namespace Game.GameLogic
             m_GLNpcTemplateList.Clear();
             m_GLRadishTemplateList.Clear();
             m_GLTowerTemplateList.Clear();
+            m_GLEffectTemplateList.Clear();
             m_GLPathList.Clear();
         }
 
@@ -421,6 +427,56 @@ namespace Game.GameLogic
             if (m_GLRadishTemplateList.ContainsKey(nTemplateId))
             {
                 return m_GLRadishTemplateList[nTemplateId];
+            }
+            return null;
+        }
+        //////////////////////////////////////////////////////////////////////////
+        // 加载逻辑场景特效模板
+        public void LoadGLEffectTemplate()
+        {
+            bool success = true;
+            try
+            {
+                Common.TableFile tabFile = Common.TableFile.LoadFromFile(GameLogicDef.LOGIC_EFFECT_TEMPLATE_FILE);
+                int rowCount = tabFile.GetRowsCount();
+                for (int i = 1; i <= rowCount; i++)
+                {
+                    GLEffectTemplate template = new GLEffectTemplate();
+
+                    int nTemp = 0;
+                    string szTemp = null;
+
+                    tabFile.GetInteger(i, "TemplateId", 0, ref nTemp);
+                    template.nTemplateId = nTemp;
+
+                    tabFile.GetInteger(i, "RepresentId", 0, ref nTemp);
+                    template.nRepresentId = nTemp;
+
+                    tabFile.GetString(i, "Name", "", ref szTemp);
+                    template.szName = szTemp;
+
+                    m_GLEffectTemplateList[template.nTemplateId] = template;
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Common.ExceptionTool.ProcessException(e);
+            }
+            finally
+            {
+                if (!success)
+                {
+                    m_GLEffectTemplateList.Clear();
+                }
+            }
+        }
+        // 获取逻辑场景萝卜模板
+        public GLEffectTemplate GetGLEffectTemplate(int nTemplateId)
+        {
+            if (m_GLEffectTemplateList.ContainsKey(nTemplateId))
+            {
+                return m_GLEffectTemplateList[nTemplateId];
             }
             return null;
         }

@@ -33,6 +33,11 @@ namespace Game.RepresentLogic
         // 表现萝卜图片路径
         public const string RADISH_REPRESENT_TEXTURE_PATH = "image/radish/";
 
+        // 表现特效模板
+        public const string EFFECT_REPRESENT_TEMPLATE = "setting/represent_effecttemplate";
+        // 表现特效图片路径
+        public const string EFFECT_REPRESENT_TEXTURE_PATH = "image/effect/";
+
         // 表现炮塔模板
         public const string TOWER_REPRESENT_TEMPLATE = "setting/represent_towertemplate";
         // 表现萝卜图片路径
@@ -55,6 +60,7 @@ namespace Game.RepresentLogic
         RLSceneOrder_Npc = 4,         // 场景Npc
         RLSceneOrder_Radish = 5,         // 场景萝卜
         RLSceneOrder_Tower = 6,         // 场景炮塔
+        RLSceneOrder_Effect = 7,         // 场景特效
     }
 
     // 场景对象动作
@@ -187,6 +193,16 @@ namespace Game.RepresentLogic
         public List<Texture2D> TexStandAni2 = new List<Texture2D>();
         // 默认贴图
         public Texture2D DefaultTexture = null;
+    }
+    // 表现特效模板
+    public class RLEffectTemplate
+    {
+        // 表现ID
+        public int nRepresentId;
+        // 表现名字
+        public string szName;
+        // 站立动画1贴图
+        public List<Texture2D> TexAni = new List<Texture2D>();
     }
 
     // 表现炮塔配置

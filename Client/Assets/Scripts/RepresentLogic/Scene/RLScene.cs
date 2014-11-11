@@ -93,6 +93,11 @@ namespace Game.RepresentLogic
             AddClild(radish.gameObject);
         }
 
+        public void AddEffect(RLEffect effect)
+        {
+            AddClild(effect.gameObject);
+        }
+
         public void AddTower(RLTower tower)
         {
             AddClild(tower.gameObject);

@@ -141,6 +141,28 @@ namespace Game.RepresentLogic
             GameObject.Destroy(radish.gameObject);
         }
 
+        // 创建表现特效
+        public RLEffect CreateEffect(int nRepresentId, float fWorldX, float fWorldY)
+        {
+            GameObject EffectObject = new GameObject();
+            RLEffect effect = EffectObject.AddComponent<RLEffect>();
+
+            effect.Init(nRepresentId, fWorldX, fWorldY,
+                (int)RLSceneObjectOrder.RLSceneOrder_Effect);
+
+            return effect;
+        }
+
+        public void DestroyEffect(RLEffect effect)
+        {
+            GameObject.Destroy(effect.gameObject);
+        }
+
+        public void DestroyEffect(RLRadish radish)
+        {
+            GameObject.Destroy(radish.gameObject);
+        }
+
         // 创建表现炮塔
         public RLTower CreateTower(int nRepresentId, float fWorldX, float fWorldY)
         {

@@ -23,11 +23,19 @@ namespace Game.GameLogic
         // 当前血量
         public int m_nLife = 0;
 
+        // 受伤特效
+        public GLEffect m_GLEffect = new GLEffect();
+
+        // 所在场景
+        public GLScene m_GLScene;
+
         public void Init(int nTemplateId, int nCellX, int nCellY, GLScene scene)
         {
             GLRadishTemplate template = GLSettingManager.Instance().GetGLRadishTemplate(nTemplateId);
 
             m_Template = template;
+
+            m_GLScene = scene;
 
             m_nLife = template.nLife;
             // 格子坐标 => 逻辑坐标
@@ -42,6 +50,10 @@ namespace Game.GameLogic
 
             m_nLogicX = nLogicX;
             m_nLogicY = nLogicY;
+
+            // 受伤特效
+            m_GLEffect.Init(1, nCellX, nCellY, m_GLScene);
+            m_GLScene.AddEffect(m_GLEffect);
         }
 
         public void UnInit()
@@ -63,6 +75,14 @@ namespace Game.GameLogic
             if (m_nLife >= m_Template.nLife)
                 return true;
             return false;
+        }
+
+        public void OnHurt()
+        {
+            m_nLife--;
+            
+            // 只播放1次
+            m_GLEffect.Play(1);
         }
 
         public void Activate()

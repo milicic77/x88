@@ -135,6 +135,17 @@ namespace Game.GameLogic
         public int nLife = 0;
     }
     //////////////////////////////////////////////////////////////////////////
+    // 逻辑场景特效模板
+    public class GLEffectTemplate
+    {
+        // 模板ID
+        public int nTemplateId = 0;
+        // 名字
+        public string szName = null;
+        // 表现ID
+        public int nRepresentId = 0;
+    }
+    //////////////////////////////////////////////////////////////////////////
     // 逻辑炮塔NPC模板
     public class GLTowerTemplate
     {
@@ -165,6 +176,9 @@ namespace Game.GameLogic
 
         // 逻辑场景萝卜配置文件
         public const string LOGIC_RADISH_TEMPLATE_FILE = "setting/logic_radishtemplate";
+
+        // 逻辑场景特效配置文件
+        public const string LOGIC_EFFECT_TEMPLATE_FILE = "setting/logic_effecttemplate";
 
         // 逻辑场景炮塔配置文件
         public const string LOGIC_TOWER_TEMPLATE_FILE = "setting/logic_towertemplate";
