@@ -8,7 +8,7 @@ namespace Game.RepresentLogic
 {
     public class RLEffect : MonoBehaviour
     {
-        public Sprite[] m_Sprite = null; // 站立动画1精灵
+        public Sprite[] m_Sprite = null; // 动画精灵
 
         private SpriteRenderer spriteRenderer; // 动画渲染
 
