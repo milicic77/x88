@@ -141,9 +141,10 @@ namespace Game.RepresentLogic
 
         private void DrawFireRange()
         {
-            float fRadius = m_nFireRange / 100;
-            float fTheta  = 0.1f;
-            Color m_Color = Color.red;
+            float fRadius         = m_nFireRange / 100;
+            float fTheta          = 0.1f;
+            Color fireRangeColor  = Color.red;
+            Color fireVectorColor = Color.green;
 
             if (transform == null)
                 return;
@@ -151,31 +152,38 @@ namespace Game.RepresentLogic
             if (fTheta < 0.0001f)
                 fTheta = 0.0001f;
 
-
             // 设置矩阵
             Matrix4x4 defaultMatrix = Gizmos.matrix;
             Gizmos.matrix = transform.localToWorldMatrix;
 
             // 设置颜色
             Color defaultColor = Gizmos.color;
-            Gizmos.color = m_Color;
+            Gizmos.color = fireRangeColor;
 
             // 绘制圆环
-            Vector3 beginPoint = Vector3.zero;
-            Vector3 firstPoint = Vector3.zero;
+            Vector3 beginPoint = Vector3.zero;                          // 每次画线的起始点
+            Vector3 firstPoint = Vector3.zero;                          // 记录圆的第一个点
+
             for (float theta = 0; theta < 2 * Mathf.PI; theta += fTheta)
             {
-                float x = fRadius * Mathf.Sin(theta);
-                float y = fRadius * Mathf.Cos(theta);
+                float   x        = fRadius * Mathf.Sin(theta);
+                float   y        = fRadius * Mathf.Cos(theta);
+                Vector3 endPoint = new Vector3(x, y, 0);                // 每次画线的结束点
 
-                Vector3 endPoint = new Vector3(x, y, 0);
                 if (theta == 0)
-                {
-                    firstPoint = endPoint;
+                { // 画半径(本地坐标Y轴正方向)
+                    Gizmos.color = fireVectorColor;
+
+                    firstPoint = endPoint;                              // 保存圆的第一个点
+                    Gizmos.DrawLine(beginPoint, endPoint);              // 画出炮管方向向量
+                    beginPoint = endPoint;                              // 下一次画线起始点
+
+                    Gizmos.color = fireRangeColor;
+                    continue;
                 }
 
                 Gizmos.DrawLine(beginPoint, endPoint);
-                beginPoint = endPoint;
+                beginPoint = endPoint;                                  // 下一次画线起始点
             }
 
             // 绘制最后一条线段
