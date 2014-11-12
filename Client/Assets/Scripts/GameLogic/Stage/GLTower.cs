@@ -236,7 +236,7 @@ namespace Game.GameLogic
         public object Target
         {
             get { return m_Target;  }
-            set { m_Target = value; }
+            set { m_Target = value; m_RLTower.Target = m_Target; }
         }
 
         public void Init(int nTemplateId, int nCellX, int nCellY, GLScene scene)

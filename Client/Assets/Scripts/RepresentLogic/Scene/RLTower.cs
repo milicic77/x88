@@ -3,23 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Common;
+using Game.GameLogic;
 
 namespace Game.RepresentLogic
 {
     public class RLTower : MonoBehaviour
     {
         // 表现模板
-        public RLTowerTemplate m_Template;                  // 炮塔模板
-        public GameObject      m_ObjectBG;                  // 背景容器：存放背景图片
-        public GameObject      m_ObjectFG;                  // 前景容器：存放前景动画
+        public RLTowerTemplate m_Template;                              // 炮塔模板
+        public GameObject      m_ObjectBG;                              // 背景容器：存放背景图片
+        public GameObject      m_ObjectFG;                              // 前景容器：存放前景动画
 
         // 动画控制器
         private RLAniController m_AniController = new RLAniController();
 
         // 同步逻辑的数据
-        private int m_nAngle         = 0;
-        private int m_nFireRange     = 0;                   // 炮塔射程(像素)
-        private int m_nRotationAngle = 0;                   // 逻辑帧1帧转的角度
+        private int    m_nAngle         = 0;
+        private int    m_nFireRange     = 0;                            // 炮塔射程(像素)
+        private int    m_nRotationAngle = 0;                            // 逻辑帧1帧转的角度
+        private object m_Target         = null;                         // 目标对象
 
         public int Angle
         {
@@ -39,6 +41,12 @@ namespace Game.RepresentLogic
             set { m_nRotationAngle = value; }
         }
 
+        public object Target
+        {
+            get { return m_Target;  }
+            set { m_Target = value; }
+        }
+		
         public void Init(int nRepresentId, float fWorldX, float fWorldY, int nOrder)
         {
             // 初始化模板
@@ -115,6 +123,7 @@ namespace Game.RepresentLogic
         {
             //DrawFireRange(transform);                                   // 整个容器
             DrawFireRange(m_ObjectFG.transform);                        // 前景容器
+            DrawAimAuxiliaryLine();                                     // 瞄准辅助线
         }
 
         private void DrawFireRange(Transform transform)
@@ -166,6 +175,39 @@ namespace Game.RepresentLogic
 
             // 绘制最后一条线段
             Gizmos.DrawLine(firstPoint, beginPoint);
+
+            // 恢复默认颜色
+            Gizmos.color = defaultColor;
+
+            // 恢复默认矩阵
+            Gizmos.matrix = defaultMatrix;
+        }
+
+        private void DrawAimAuxiliaryLine()
+        {
+            Color color  = Color.black;
+            GLNpc target = m_Target as GLNpc;
+
+            if (null == target)
+                return;
+
+            if (null == transform)
+                return;
+
+            // 设置矩阵
+            Matrix4x4 defaultMatrix = Gizmos.matrix;
+            //Gizmos.matrix = transform.localToWorldMatrix;
+
+            // 设置颜色
+            Color defaultColor = Gizmos.color;
+            Gizmos.color = color;
+
+            float x = RepresentCommon.LogicX2WorldX(target.GetLogicCenterX());
+            float y = RepresentCommon.LogicY2WorldY(target.GetLogicCenterY());
+
+            Vector3 from = transform.position;
+            Vector3 to   = new Vector3(x, y, 0);
+            Gizmos.DrawLine(from, to);
 
             // 恢复默认颜色
             Gizmos.color = defaultColor;
