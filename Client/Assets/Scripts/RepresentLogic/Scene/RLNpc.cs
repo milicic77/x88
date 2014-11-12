@@ -133,5 +133,60 @@ namespace Game.RepresentLogic
             spriteRenderer.sprite = m_sprites[nIndex];
         }
 
+        void OnDrawGizmos()
+        {
+            DrawCentrePoint();
+        }
+
+        private void DrawCentrePoint()
+        {
+            float fRadius = 0.05f;
+            float fTheta  = 0.1f;
+            Color color   = Color.blue;
+
+            if (transform == null)
+                return;
+
+            if (fTheta < 0.0001f)
+                fTheta = 0.0001f;
+
+            // 设置矩阵
+            Matrix4x4 defaultMatrix = Gizmos.matrix;
+            Gizmos.matrix = transform.localToWorldMatrix;
+
+            // 设置颜色
+            Color defaultColor = Gizmos.color;
+            Gizmos.color = color;
+
+            // 绘制圆环
+            Vector3 beginPoint = Vector3.zero;                          // 每次画线的起始点
+            Vector3 firstPoint = Vector3.zero;                          // 记录圆的第一个点
+
+            for (float theta = 0; theta < 2 * Mathf.PI; theta += fTheta)
+            {
+                float x = fRadius * Mathf.Sin(theta);
+                float y = fRadius * Mathf.Cos(theta);
+                Vector3 endPoint = new Vector3(x, y, 0);                // 每次画线的结束点
+
+                if (theta == 0)
+                { // 画半径(这里不需要画)
+                    firstPoint = endPoint;                              // 保存圆的第一个点
+                    beginPoint = endPoint;                              // 下一次画线起始点
+                    continue;
+                }
+
+                Gizmos.DrawLine(beginPoint, endPoint);
+                beginPoint = endPoint;                                  // 下一次画线起始点
+            }
+
+            // 绘制最后一条线段
+            Gizmos.DrawLine(firstPoint, beginPoint);
+
+            // 恢复默认颜色
+            Gizmos.color = defaultColor;
+
+            // 恢复默认矩阵
+            Gizmos.matrix = defaultMatrix;
+        }
     }
 }
