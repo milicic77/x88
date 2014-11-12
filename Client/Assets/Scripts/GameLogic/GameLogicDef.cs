@@ -203,4 +203,19 @@ namespace Game.GameLogic
         public const string LOGIC_STAGE_DOODAD_NPC = "setting/logic_scenenpc/";
     }
     //////////////////////////////////////////////////////////////////////////
+
+    public struct GLCircle
+    {
+        public float x;                  // 圆心坐标x
+        public float y;                  // 圆心坐标y
+        public float r;                  // 圆半径
+    }
+
+    public struct GLRectangle
+    {
+        public float x;                  // 矩形中心坐标x
+        public float y;                  // 矩形中心坐标y
+        public float w;                  // 矩形宽度
+        public float h;                  // 矩形高度
+    }
 }

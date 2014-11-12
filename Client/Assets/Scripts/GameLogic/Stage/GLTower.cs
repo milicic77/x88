@@ -350,13 +350,42 @@ namespace Game.GameLogic
             int nNpcLogicCenterX = npc.GetLogicCenterX();
             int nNpcLogicCenterY = npc.GetLogicCenterY();
 
-            double distance = Math.Sqrt(Math.Pow(m_nLogicX - nNpcLogicCenterX, 2) + Math.Pow(m_nLogicY - nNpcLogicCenterY, 2));
-            if (distance <= m_nFireRange)
-            {
-                return true;
-            }
+            //double distance = Math.Sqrt(Math.Pow(m_nLogicX - nNpcLogicCenterX, 2) + Math.Pow(m_nLogicY - nNpcLogicCenterY, 2));
+            //if (distance <= m_nFireRange)
+            //{
+            //    return true;
+            //}
 
-            return false;
+            GLCircle circle = new GLCircle();
+            circle.x = m_nLogicX;
+            circle.y = m_nLogicY;
+            circle.r = m_nFireRange;
+
+            GLRectangle rect = new GLRectangle();
+            rect.x = nNpcLogicCenterX;
+            rect.y = nNpcLogicCenterY;
+            rect.w = npc.Width;
+            rect.h = npc.Height;
+
+            return IsIntersected(circle, rect);
+        }
+
+        public bool IsIntersected(GLCircle circle, GLRectangle rect)
+        {
+            float fDistanceX = Mathf.Abs(circle.x - rect.x);
+            float fDistanceY = Mathf.Abs(circle.y - rect.y);
+
+            //2
+            if (fDistanceX > (rect.w / 2 + circle.r)) { return false; }
+            if (fDistanceY > (rect.h / 2 + circle.r)) { return false; }
+
+            //3
+            if (fDistanceX <= (rect.w / 2)) { return true; }
+            if (fDistanceY <= (rect.h / 2)) { return true; }
+
+            //4
+            float fCornerDistanceSq = Mathf.Pow(fDistanceX - rect.w / 2, 2) + Mathf.Pow(fDistanceY - rect.h / 2, 2);
+            return fCornerDistanceSq <= Mathf.Pow(circle.r, 2);
         }
     }
 }

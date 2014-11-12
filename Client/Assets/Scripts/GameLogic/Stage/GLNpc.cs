@@ -36,6 +36,18 @@ namespace Game.GameLogic
         // 高
         public int m_nHeight = 0;
 
+        public int Width
+        {
+            get { return m_nWidth; }
+            set { m_nWidth = value; }
+        }
+
+        public int Height
+        {
+            get { return m_nHeight; }
+            set { m_nHeight = value; }
+        }
+
         public int m_nLogicCenterX = 0;// 逻辑坐标中的中心点X
         public int m_nLogicCenterY = 0;// 逻辑坐标中的中心点Y
 
