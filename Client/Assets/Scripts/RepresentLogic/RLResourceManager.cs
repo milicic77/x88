@@ -27,6 +27,9 @@ namespace Game.RepresentLogic
         // 表现特效模板
         private Dictionary<int, RLEffectTemplate> m_RLEffectTemplateList = new Dictionary<int, RLEffectTemplate>();
 
+        // UI配置
+        private Dictionary<int, RLUISetting> m_RLUISettingList = new Dictionary<int, RLUISetting>();
+
         public void Init()
         {
             // 加载表现场景模板
@@ -46,6 +49,9 @@ namespace Game.RepresentLogic
 
             // 加载表现炮塔模板
             LoadRLTowerTemplate();
+
+            // 加载UI配置
+            LoadRLUISetting();
         }
 
         public void UnInit()
@@ -421,6 +427,58 @@ namespace Game.RepresentLogic
             if (m_RLTowerTemplateList.ContainsKey(nRepresent))
             {
                 return m_RLTowerTemplateList[nRepresent];
+            }
+            return null;
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        // 加载UI配置
+        public void LoadRLUISetting()
+        {
+            bool success = true;
+            try
+            {
+                Common.TableFile tabFile = Common.TableFile.LoadFromFile(UIPathDef.STR_UICONFIG_PATH);
+                int rowCount = tabFile.GetRowsCount();
+                for (int i = 1; i <= rowCount; i++)
+                {
+                    RLUISetting template = new RLUISetting();
+
+                    int nTemp = 0;
+                    string szTemp = null;
+
+                    tabFile.GetInteger(i, "Number", -1, ref nTemp);
+                    template.nUINumber = nTemp;
+
+                    tabFile.GetString(i, "ResourceName", "", ref szTemp);
+                    template.resourceName = szTemp;
+
+                    tabFile.GetInteger(i, "IsSceneUI", 0, ref nTemp);
+                    template.bIsSceneUI = (nTemp>0?true:false);
+
+                    m_RLUISettingList[template.nUINumber] = template;
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Common.ExceptionTool.ProcessException(e);
+            }
+            finally
+            {
+                if (!success)
+                {
+                    m_RLUISettingList.Clear();
+                }
+            }
+        }
+
+        // 获取UI配置
+        public RLUISetting GetRLUISetting(int nUINumber)
+        {
+            if (m_RLUISettingList.ContainsKey(nUINumber))
+            {
+                return m_RLUISettingList[nUINumber];
             }
             return null;
         }

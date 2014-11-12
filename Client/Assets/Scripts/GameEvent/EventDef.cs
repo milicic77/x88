@@ -48,6 +48,9 @@ namespace Game.GameEvent
             public GLNpc npc;
         }
         //////////////////////////////////////////////////////////////////////////
+        // 关卡开始
+        public delegate void Event_LevelStart(object sender, BaseEventArgs args);
+        //////////////////////////////////////////////////////////////////////////
         // 游戏结束事件
         public delegate void Event_GameOver(object sender, BaseEventArgs args);
         

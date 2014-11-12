@@ -51,6 +51,20 @@ namespace Game.GameEvent
             }
         }
         //////////////////////////////////////////////////////////////////////////
+        // 关卡开始
+        public static event EventDef.Event_LevelStart m_EventLevelStart;
+        public static EventDef.Event_LevelStart Event_LevelStart
+        {
+            get
+            {
+                return m_EventLevelStart;
+            }
+            set
+            {
+                m_EventLevelStart = value;
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////
         // 游戏结束
         public static event EventDef.Event_GameOver m_EventGameOver;
         public static EventDef.Event_GameOver Event_GameOver

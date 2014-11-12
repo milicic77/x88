@@ -227,4 +227,29 @@ namespace Game.RepresentLogic
         // 场景摄像机对象
         static public Camera MainCamera;
     }
+
+    public enum UITypeDef
+    {
+        UI_STARTGAME    = 1,        //游戏开始界面
+        UI_LEVELSELECT  = 2,        //关卡选择界面
+        UI_GAMEMAIN     = 3,        //游戏主界面
+        UI_GAMEMENU     = 4,        //游戏菜单界面
+    }
+    public class UIPathDef
+    {
+        public const string UI_RESOURCE_PATH = "Prefabs/UI/";
+        public const string STR_UICONFIG_PATH = "setting/UIConfig";
+    }
+    //UI配置
+    public class RLUISetting
+    {
+        //编号
+        public int nUINumber;
+        
+        //资源名称
+        public string resourceName; 
+   
+        //是否场景UI（不是则为屏幕UI）
+        public bool bIsSceneUI;         
+    }
 }

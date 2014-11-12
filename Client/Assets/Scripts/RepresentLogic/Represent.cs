@@ -19,6 +19,9 @@ namespace Game.RepresentLogic
 
             // 创建摄像机
             CreateCamera();   
+
+            // 创建UI
+            RLUIManager.Instance().Init();
         }
 
         public void UnInit()
