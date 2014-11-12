@@ -143,9 +143,10 @@ namespace Game.GameLogic
             tower.Angle = nTowerAngle;
 
             // 瞄准成功
-            if (0 == nRotationAngle)
+            if (Mathf.Abs(nRotationAngle) <= tower.AimDeviation)
             {
                 m_State = BTTaskState.SUCCESS;
+                Debug.Log("瞄准成功！");
                 return;
             }
 
@@ -195,14 +196,15 @@ namespace Game.GameLogic
     }
     public class GLTower
     {
-        public  RLTower       m_RLTower       = null;                      // 表现炮塔
-        private BehaviourTree m_TowerAI       = null;                      // 炮塔AI
-        private int           m_nLogicX       = 0;                         // 逻辑坐标X
-        private int           m_nLogicY       = 0;                         // 逻辑坐标Y
-        private int           m_nAngle        = 0;                         // 炮塔当前角度
-        private int           m_nFireRange    = 0;                         // 炮塔射程(像素)
-        private int           m_nAngularSpeed = 0;
-        private object        m_Target        = null;                      // 锁定目标
+        public  RLTower       m_RLTower       = null;                   // 表现炮塔
+        private BehaviourTree m_TowerAI       = null;                   // 炮塔AI
+        private int           m_nLogicX       = 0;                      // 逻辑坐标X
+        private int           m_nLogicY       = 0;                      // 逻辑坐标Y
+        private int           m_nAngle        = 0;                      // 炮塔当前角度
+        private int           m_nFireRange    = 0;                      // 炮塔射程(像素)
+        private int           m_nAngularSpeed = 0;                      // 角速度
+        private int           m_nAimDeviation = 0;                      // 瞄准误差值
+        private object        m_Target        = null;                   // 锁定目标
 
         public RLTower RLTower
         {
@@ -233,6 +235,13 @@ namespace Game.GameLogic
             get { return m_nAngularSpeed;  }
             set { m_nAngularSpeed = value; }
         }
+
+        public int AimDeviation
+        {
+            get { return m_nAimDeviation; }
+            set { m_nAimDeviation = value; }
+        }
+
         public object Target
         {
             get { return m_Target;  }
@@ -261,6 +270,7 @@ namespace Game.GameLogic
             m_nLogicY    = nLogicY;
             FireRange    = 200;
             AngularSpeed = 10;
+            AimDeviation = 2;
 
             // 初始化AI
             InitAI();
