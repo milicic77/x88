@@ -146,7 +146,6 @@ namespace Game.GameLogic
             if (Mathf.Abs(nRotationAngle) <= tower.AimDeviation)
             {
                 m_State = BTTaskState.SUCCESS;
-                Debug.Log("瞄准成功！");
                 return;
             }
 
@@ -191,20 +190,23 @@ namespace Game.GameLogic
             }
 
             // 攻击成功
+            tower.Attack();
             m_State = BTTaskState.SUCCESS;
         }
     }
     public class GLTower
     {
-        public  RLTower       m_RLTower       = null;                   // 表现炮塔
-        private BehaviourTree m_TowerAI       = null;                   // 炮塔AI
-        private int           m_nLogicX       = 0;                      // 逻辑坐标X
-        private int           m_nLogicY       = 0;                      // 逻辑坐标Y
-        private int           m_nAngle        = 0;                      // 炮塔当前角度
-        private int           m_nFireRange    = 0;                      // 炮塔射程(像素)
-        private int           m_nAngularSpeed = 0;                      // 角速度
-        private int           m_nAimDeviation = 0;                      // 瞄准误差值
-        private object        m_Target        = null;                   // 锁定目标
+        public  RLTower       m_RLTower         = null;                 // 表现炮塔
+        private BehaviourTree m_TowerAI         = null;                 // 炮塔AI
+        private int           m_nLogicX         = 0;                    // 逻辑坐标X
+        private int           m_nLogicY         = 0;                    // 逻辑坐标Y
+        private int           m_nAngle          = 0;                    // 炮塔当前角度
+        private int           m_nFireRange      = 0;                    // 炮塔射程(像素)
+        private int           m_nAngularSpeed   = 0;                    // 角速度
+        private int           m_nAimDeviation   = 0;                    // 瞄准误差值
+        private object        m_Target          = null;                 // 锁定目标
+        private int           m_nAttackFreq     = 0;                    // 攻击频率(ms)
+        private int           m_nLastAttackTime = 0;                    // 上一次攻击时间
 
         public RLTower RLTower
         {
@@ -247,6 +249,11 @@ namespace Game.GameLogic
             get { return m_Target;  }
             set { m_Target = value; m_RLTower.Target = m_Target; }
         }
+        public int AttackFreq
+        {
+            get { return m_nAttackFreq; }
+            set { m_nAttackFreq = value;}
+        }
 
         public void Init(int nTemplateId, int nCellX, int nCellY, GLScene scene)
         {
@@ -271,6 +278,7 @@ namespace Game.GameLogic
             FireRange    = 200;
             AngularSpeed = 10;
             AimDeviation = 2;
+            AttackFreq   = 20;
 
             // 初始化AI
             InitAI();
@@ -401,6 +409,16 @@ namespace Game.GameLogic
 
             float fCornerDistanceSq = Mathf.Pow(fDistanceX - rect.w / 2, 2) + Mathf.Pow(fDistanceY - rect.h / 2, 2);
             return fCornerDistanceSq <= Mathf.Pow(circle.r, 2);
+        }
+
+        public void Attack()
+        {
+            int nCurTime = (int)Time.time * 1000;
+            if (nCurTime - m_nLastAttackTime > m_nAttackFreq)
+            {
+                Debug.Log("瞄准后攻击！");
+            }
+            m_nLastAttackTime = nCurTime;
         }
     }
 }
