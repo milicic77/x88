@@ -99,11 +99,13 @@ namespace Game.RepresentLogic
 
             if (m_nRotationAngle > 0)
             {
-                transform.Rotate(Vector3.back,    m_nRotationAngle);
+                //transform.Rotate(Vector3.back,    m_nRotationAngle);
+                m_ObjectFG.transform.Rotate(Vector3.back, m_nRotationAngle);
             }
             else
             {
-                transform.Rotate(Vector3.forward, -m_nRotationAngle);
+                //transform.Rotate(Vector3.forward, -m_nRotationAngle);
+                m_ObjectFG.transform.Rotate(Vector3.forward, -m_nRotationAngle);
             }
 
             m_nRotationAngle = 0;
@@ -111,17 +113,18 @@ namespace Game.RepresentLogic
 
         void OnDrawGizmos()
         {
-            DrawFireRange();
+            //DrawFireRange(transform);                                   // 整个容器
+            DrawFireRange(m_ObjectFG.transform);                        // 前景容器
         }
 
-        private void DrawFireRange()
+        private void DrawFireRange(Transform transform)
         {
             float fRadius         = m_nFireRange / RepresentDef.PIXEL_UNITY_SCALE;
             float fTheta          = 0.1f;
             Color fireRangeColor  = Color.red;
             Color fireVectorColor = Color.green;
 
-            if (transform == null)
+            if (null == transform)
                 return;
 
             if (fTheta < 0.0001f)
