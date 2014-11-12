@@ -8,17 +8,13 @@ namespace Game.RepresentLogic
 {
     public class RLTower : MonoBehaviour
     {
-        public Sprite[] m_SpriteFireAni = null; // 攻击动画精灵
-        private SpriteRenderer spriteRenderer;  // 动画渲染
-
-
         // 表现模板
-        public RLTowerTemplate m_Template;
+        public RLTowerTemplate m_Template;                  // 炮塔模板
+        public GameObject      m_ObjectBG;                  // 背景容器：存放背景图片
+        public GameObject      m_ObjectFG;                  // 前景容器：存放前景动画
 
-        public float framesPerSecond = 10;
-
-        public GameObject m_ObjectBG;
-        public GameObject m_ObjectFG;
+        // 动画控制器
+        private RLAniController m_AniController = null;     // 动画控制器
 
         // 同步逻辑的数据
         private int m_nAngle         = 0;
@@ -39,71 +35,57 @@ namespace Game.RepresentLogic
 
         public int RotationAngle
         {
-            get { return m_nRotationAngle; }
+            get { return m_nRotationAngle;  }
             set { m_nRotationAngle = value; }
         }
 
         public void Init(int nRepresentId, float fWorldX, float fWorldY, int nOrder)
         {
+            // 初始化模板
             RLTowerTemplate template = RLResourceManager.Instance().GetRLTowerTemplate(nRepresentId);
             if (template == null)
             {
                 ExceptionTool.ThrowException("nRepresentId不合法！");
             }
-
             m_Template = template;
 
-            //////////////////////////////////////////////////////////////////////////
-            // 背景
+            // 背景容器初始化
             m_ObjectBG = new GameObject();
-            Rect spriteBGRect = new Rect(0, 0,
-                template.BGTexture.width, template.BGTexture.height);
-            Sprite spriteBG = Sprite.Create(template.BGTexture,
-                spriteBGRect,
-                new Vector2(0.5f, 0.5f)
-            );
-            m_ObjectBG.AddComponent<SpriteRenderer>().sprite = spriteBG;
-
+            Rect   spriteBGRect = new Rect(0, 0, template.BGTexture.width, template.BGTexture.height);
+            Sprite spriteBG     = Sprite.Create(template.BGTexture, spriteBGRect, new Vector2(0.5f, 0.5f));
+            m_ObjectBG.AddComponent<SpriteRenderer>().sprite       = spriteBG;
             m_ObjectBG.GetComponent<SpriteRenderer>().sortingOrder = 1;
-
             m_ObjectBG.transform.position = new Vector3(0, 0, 0);
-            m_ObjectBG.transform.parent = gameObject.transform;
+            m_ObjectBG.transform.parent   = gameObject.transform;
 
-            //////////////////////////////////////////////////////////////////////////
-            // 前景
+            // 前景容器初始化
             m_ObjectFG = new GameObject();
-            Rect spriteRect = new Rect(0, 0,
-                template.DefaultTexture.width, template.DefaultTexture.height);
-            // 精灵
-            Sprite sprite = Sprite.Create(template.DefaultTexture,
-                spriteRect,
-                new Vector2(0.5f, 0.5f)
-            );
+            Rect   spriteFGRect = new Rect(0, 0, template.DefaultTexture.width, template.DefaultTexture.height);
+            Sprite spriteFG     = Sprite.Create(template.DefaultTexture, spriteFGRect, new Vector2(0.5f, 0.5f));
+            m_ObjectFG.AddComponent<SpriteRenderer>().sprite = spriteFG;
+            m_ObjectFG.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            m_ObjectFG.transform.position = new Vector3(0, 0, 0);
+            m_ObjectFG.transform.parent   = gameObject.transform;
 
-            // 攻击
-            m_SpriteFireAni = new Sprite[template.TexFireAni.Count];
+            // 动画控制器初始化 - m_SpriteAnimation初始化
+            // -- step 1 : 加上动画控制器组件
+            m_ObjectFG.AddComponent<RLAniController>();
+            m_AniController = m_ObjectFG.GetComponent <RLAniController>();
+            // -- step 2 : 初始化动画控制器组件
+            m_AniController.SpriteAnimation = new Sprite[template.TexFireAni.Count];
             for (int i = 0; i < template.TexFireAni.Count; ++i)
             {
-                Rect rect = new Rect(0, 0,
-                    template.TexFireAni[i].width, template.TexFireAni[i].height);
+                Rect rect = new Rect(0, 0, template.TexFireAni[i].width, template.TexFireAni[i].height);
 
-                m_SpriteFireAni[i] = Sprite.Create(
+                m_AniController.SpriteAnimation[i] = Sprite.Create(
                     template.TexFireAni[i],
                     rect,
                     new Vector2(0.5f, 0.5f)
                 );
             }
+            m_AniController.SpriteRenderer = m_ObjectFG.GetComponent<Renderer>() as SpriteRenderer;
 
-            m_ObjectFG.AddComponent<SpriteRenderer>().sprite = sprite;
-
-            spriteRenderer = m_ObjectFG.GetComponent<Renderer>() as SpriteRenderer;
-
-            m_ObjectFG.GetComponent<SpriteRenderer>().sortingOrder = 2;
-
-            m_ObjectFG.transform.position = new Vector3(0, 0, 0);
-            m_ObjectFG.transform.parent = gameObject.transform;
-
-            //////////////////////////////////////////////////////////////////////////
+            // 整个炮塔容器初始化
             gameObject.AddComponent<SpriteRenderer>();
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = nOrder;
             gameObject.transform.position = new Vector3(fWorldX, fWorldY, 0);
@@ -116,12 +98,6 @@ namespace Game.RepresentLogic
 
         virtual public void Update()
         {
-            int nIndex = (int)(Time.timeSinceLevelLoad * framesPerSecond);
-
-            nIndex = nIndex % m_Template.TexFireAni.Count;
-
-            spriteRenderer.sprite = m_SpriteFireAni[nIndex];
-
             if (m_nRotationAngle > 0)
             {
                 transform.Rotate(Vector3.back,    m_nRotationAngle);
