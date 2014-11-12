@@ -120,6 +120,10 @@ namespace Game.GameLogic
         public string szName = null;
         // 表现ID
         public int nRepresentId = 0;
+        // 高
+        public int nHeight = 0;
+        // 宽
+        public int nWidth = 0;
     }
     //////////////////////////////////////////////////////////////////////////
     // 逻辑场景萝卜模板

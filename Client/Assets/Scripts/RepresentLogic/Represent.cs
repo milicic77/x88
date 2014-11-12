@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Common;
+using Game.GameLogic;
 
 namespace Game.RepresentLogic
 {
@@ -103,13 +104,13 @@ namespace Game.RepresentLogic
         }
 
         // 创建表现Npc
-        public RLNpc CreateNpc(int nRepresentId, float fWorldX, float fWorldY)
+        public RLNpc CreateNpc(int nRepresentId, float fWorldX, float fWorldY, GLNpc glnpc)
         {
             GameObject NpcObject = new GameObject();
             RLNpc npc = NpcObject.AddComponent<RLNpc>();
 
             npc.Init(nRepresentId, fWorldX, fWorldY,
-                (int)RLSceneObjectOrder.RLSceneOrder_Npc);
+                (int)RLSceneObjectOrder.RLSceneOrder_Npc, glnpc);
 
             return npc;
         }

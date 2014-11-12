@@ -1,3 +1,3 @@
-TemplateId	Name	RepresentId
-1	怪物1	1
-2	怪物2	2
+TemplateId	Name	RepresentId	Width	Height
+1	怪物1	1	50	50
+2	怪物2	2	120	90

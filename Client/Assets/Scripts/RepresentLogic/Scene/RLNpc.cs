@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Common;
+using Game.GameLogic;
 
 namespace Game.RepresentLogic
 {
@@ -21,6 +22,8 @@ namespace Game.RepresentLogic
 
         // 每秒播放几帧动画
         public float framesPerSecond = 5;
+
+        public GLNpc m_GLNpc = null;
 
         //// 逻辑X坐标
         //public int m_nLogicX;
@@ -67,7 +70,7 @@ namespace Game.RepresentLogic
         //    }
         //}
 
-        public void Init(int nRepresentId, float fWorldX, float fWorldY, int nOrder)
+        public void Init(int nRepresentId, float fWorldX, float fWorldY, int nOrder, GLNpc npc)
         {
             RLNpcTemplate template = RLResourceManager.Instance().GetRLNpcTemplate(nRepresentId);
             if (template == null)
@@ -105,6 +108,8 @@ namespace Game.RepresentLogic
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = nOrder;
 
             gameObject.transform.position = new Vector3(fWorldX, fWorldY, 0);
+
+            m_GLNpc = npc;
         }
 
         public void UnInit()
@@ -136,6 +141,7 @@ namespace Game.RepresentLogic
         void OnDrawGizmos()
         {
             DrawCentrePoint();
+            DrawNpcRange();
         }
 
         private void DrawCentrePoint()
@@ -181,6 +187,41 @@ namespace Game.RepresentLogic
 
             // 绘制最后一条线段
             Gizmos.DrawLine(firstPoint, beginPoint);
+
+            // 恢复默认颜色
+            Gizmos.color = defaultColor;
+
+            // 恢复默认矩阵
+            Gizmos.matrix = defaultMatrix;
+        }
+
+        private void DrawNpcRange()
+        {
+            float fCenterX = RepresentCommon.LogicX2WorldX((int)(m_GLNpc.GetLogicCenterX()));
+            float fCenterY = RepresentCommon.LogicY2WorldY((int)(m_GLNpc.GetLogicCenterY()));
+
+            int nLogicwidth = m_GLNpc.m_nWidth;
+            int nLogicHeight = m_GLNpc.m_nHeight;
+
+            float fWorldWidth = RepresentCommon.LogicDis2WorldDis(nLogicwidth);
+            float fWorldHeight = RepresentCommon.LogicDis2WorldDis(nLogicHeight);
+
+            Color VectorColor = Color.green;
+
+            if (transform == null)
+                return;
+
+            // 设置矩阵
+            Matrix4x4 defaultMatrix = Gizmos.matrix;
+            //Gizmos.matrix = transform.localToWorldMatrix;
+
+            // 设置颜色
+            Color defaultColor = Gizmos.color;
+            Gizmos.color = VectorColor;
+
+            Gizmos.DrawWireCube(
+                new Vector3(fCenterX, fCenterY, 0),
+                new Vector3(fWorldWidth, fWorldHeight, 0));
 
             // 恢复默认颜色
             Gizmos.color = defaultColor;

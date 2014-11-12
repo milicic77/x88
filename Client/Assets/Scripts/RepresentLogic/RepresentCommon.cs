@@ -105,5 +105,14 @@ namespace Game.RepresentLogic
             return nWorldY;
         }
         //////////////////////////////////////////////////////////////////////////
+        // 逻辑距离=》世界距离
+        public static float LogicDis2WorldDis(int nLogicDis)
+        {
+            float fWorldDis = 0.0f;
+            fWorldDis = (float)nLogicDis / (float)RepresentDef.PIXEL_UNITY_SCALE;
+
+            return fWorldDis;
+        }
+
     }
 }

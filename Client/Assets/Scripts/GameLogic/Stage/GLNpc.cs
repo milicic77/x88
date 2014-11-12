@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Game.RepresentLogic;
 using Game.GameEvent;
+using UnityEngine;
 
 namespace Game.GameLogic
 {
@@ -29,6 +30,14 @@ namespace Game.GameLogic
         }
     //    private int m_nDoing = (int)SceneObjectAni.SceneObjectAni_Stand;
     //    private int m_nDirection = (int)SceneObjectDirection.SceneObjectDirection_Right;
+
+        // 宽
+        public int m_nWidth = 0;
+        // 高
+        public int m_nHeight = 0;
+
+        public int m_nLogicCenterX = 0;// 逻辑坐标中的中心点X
+        public int m_nLogicCenterY = 0;// 逻辑坐标中的中心点Y
 
         // 行走路径
         private GLPath m_Path;
@@ -58,10 +67,14 @@ namespace Game.GameLogic
             float fWorldX = RepresentCommon.LogicX2WorldX(nLogicX);
             float fWorldY = RepresentCommon.LogicY2WorldY(nLogicY);
 
-            m_RLNpc = Represent.Instance().CreateNpc(template.nRepresentId, fWorldX, fWorldY);
+            m_RLNpc = Represent.Instance().CreateNpc(
+                template.nRepresentId, fWorldX, fWorldY, this);
 
             m_nLogicX = nLogicX;
             m_nLogicY = nLogicY;
+
+            m_nHeight = template.nHeight;
+            m_nWidth = template.nWidth;
 
             // 受伤特效
             m_GLEffect.Init(1, nCellX, nCellY, m_GLScene);
@@ -74,6 +87,19 @@ namespace Game.GameLogic
         public void UnInit()
         {
             Represent.Instance().DestroyNpc(m_RLNpc);
+        }
+
+        public int GetLogicCenterX()
+        {
+            m_nLogicCenterX = m_nLogicX;
+
+            return m_nLogicCenterX;
+        }
+
+        public int GetLogicCenterY()
+        {
+            m_nLogicCenterY = m_nLogicY - m_nHeight / 2;
+            return m_nLogicCenterY;
         }
 
         public void SetPath(int nPathId)
