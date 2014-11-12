@@ -350,12 +350,6 @@ namespace Game.GameLogic
             int nNpcLogicCenterX = npc.GetLogicCenterX();
             int nNpcLogicCenterY = npc.GetLogicCenterY();
 
-            //double distance = Math.Sqrt(Math.Pow(m_nLogicX - nNpcLogicCenterX, 2) + Math.Pow(m_nLogicY - nNpcLogicCenterY, 2));
-            //if (distance <= m_nFireRange)
-            //{
-            //    return true;
-            //}
-
             GLCircle circle = new GLCircle();
             circle.x = m_nLogicX;
             circle.y = m_nLogicY;
@@ -375,15 +369,26 @@ namespace Game.GameLogic
             float fDistanceX = Mathf.Abs(circle.x - rect.x);
             float fDistanceY = Mathf.Abs(circle.y - rect.y);
 
-            //2
-            if (fDistanceX > (rect.w / 2 + circle.r)) { return false; }
-            if (fDistanceY > (rect.h / 2 + circle.r)) { return false; }
+            if (fDistanceX > (rect.w / 2 + circle.r))
+            {
+                return false;
+            }
 
-            //3
-            if (fDistanceX <= (rect.w / 2)) { return true; }
-            if (fDistanceY <= (rect.h / 2)) { return true; }
+            if (fDistanceY > (rect.h / 2 + circle.r))
+            {
+                return false;
+            }
 
-            //4
+            if (fDistanceX <= (rect.w / 2))
+            {
+                return true;
+            }
+
+            if (fDistanceY <= (rect.h / 2))
+            {
+                return true;
+            }
+
             float fCornerDistanceSq = Mathf.Pow(fDistanceX - rect.w / 2, 2) + Mathf.Pow(fDistanceY - rect.h / 2, 2);
             return fCornerDistanceSq <= Mathf.Pow(circle.r, 2);
         }
