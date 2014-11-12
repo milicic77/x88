@@ -1,0 +1,5 @@
+Number	ResourceName	IsSceneUI
+1	UIStart	0
+2	UILevelSelect	0
+3	UIGameMain	0
+4	UIGameMenu	0
