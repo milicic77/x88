@@ -116,7 +116,7 @@ namespace Game.RepresentLogic
 
         private void DrawFireRange()
         {
-            float fRadius         = m_nFireRange / 100;
+            float fRadius         = m_nFireRange / RepresentDef.PIXEL_UNITY_SCALE;
             float fTheta          = 0.1f;
             Color fireRangeColor  = Color.red;
             Color fireVectorColor = Color.green;

@@ -28,9 +28,10 @@ namespace Game.GameLogic
 
             for (int i = 0; i < enemies.Count; i++)
             { // 查找射程范围中一个敌人
-                GLNpc npc = enemies[i];
-                double distance = Math.Sqrt(Math.Pow(tower.LogicX - npc.LogicX, 2) + Math.Pow(tower.LogicY - npc.LogicY, 2));
-                if (distance <= tower.FireRange)
+                GLNpc npc            = enemies[i];
+                bool  bIsInFireRange = tower.IsInFireRange(npc);
+
+                if (bIsInFireRange)
                 {
                     tower.Target = npc;
                     m_State = BTTaskState.SUCCESS;
@@ -70,8 +71,8 @@ namespace Game.GameLogic
             }
 
             // 对准目标
-            Vector2 towerPos        = new Vector2(RepresentCommon.LogicX2WorldX(tower.LogicX),  RepresentCommon.LogicY2WorldY(tower.LogicY) );
-            Vector2 targetPos       = new Vector2(RepresentCommon.LogicX2WorldX(target.LogicX), RepresentCommon.LogicY2WorldY(target.LogicY));
+            Vector2 towerPos        = new Vector2(RepresentCommon.LogicX2WorldX(tower.LogicX),             RepresentCommon.LogicY2WorldY(tower.LogicY) );
+            Vector2 targetPos       = new Vector2(RepresentCommon.LogicX2WorldX(target.GetLogicCenterX()), RepresentCommon.LogicY2WorldY(target.GetLogicCenterY()));
             Vector2 vecTower2Target = targetPos - towerPos;                         // 炮塔到目标的方向向量
             float   angTower2Target = Vector2.Angle(vecTower2Target, Vector2.up);   // 炮塔到目标的方向向量和Y轴的夹角
 
@@ -180,8 +181,8 @@ namespace Game.GameLogic
             }
 
             // 判断射程
-            double distance = Math.Sqrt(Math.Pow(tower.LogicX - target.LogicX, 2) + Math.Pow(tower.LogicY - target.LogicY, 2));
-            if (distance > tower.FireRange)
+            bool bIsInFireRange = tower.IsInFireRange(target);
+            if (!bIsInFireRange)
             { // 超出射程，攻击失败，序列执行失败
                 tower.Target = null;
                 m_State = BTTaskState.FAILURE;
@@ -337,6 +338,25 @@ namespace Game.GameLogic
         public void Activate()
         {
             m_TowerAI.Activate();
+        }
+
+        public bool IsInFireRange(GLNpc npc)
+        {
+            if (null == npc)
+            {
+                return false;
+            }
+
+            int nNpcLogicCenterX = npc.GetLogicCenterX();
+            int nNpcLogicCenterY = npc.GetLogicCenterY();
+
+            double distance = Math.Sqrt(Math.Pow(m_nLogicX - nNpcLogicCenterX, 2) + Math.Pow(m_nLogicY - nNpcLogicCenterY, 2));
+            if (distance <= m_nFireRange)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
