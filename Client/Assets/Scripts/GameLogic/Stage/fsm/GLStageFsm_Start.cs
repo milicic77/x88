@@ -63,6 +63,7 @@ namespace Game.GameLogic
             m_Stage.ActivateNpc();
             m_Stage.ActivateTower();
             m_Stage.ActivateRadish();
+            m_Stage.ActivateMissile();
         }
     }
     //////////////////////////////////////////////////////////////////////////

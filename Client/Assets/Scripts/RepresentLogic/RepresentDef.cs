@@ -40,8 +40,12 @@ namespace Game.RepresentLogic
 
         // 表现炮塔模板
         public const string TOWER_REPRESENT_TEMPLATE = "setting/represent_towertemplate";
-        // 表现萝卜图片路径
+        // 表现子弹模板
+        public const string MISSILE_REPRESENT_TEMPLATE = "setting/represent_missiletemplate";
+        // 表现炮塔图片路径
         public const string TOWER_REPRESENT_TEXTURE_PATH = "image/tower/";
+        // 表现子弹图片路径
+        public const string MISSILE_REPRESENT_TEXTURE_PATH = "image/tower/";
     }
 
     public class SceneObjectDef
@@ -57,9 +61,10 @@ namespace Game.RepresentLogic
         RLSceneOrder_MiddleLayer = 1,    // 场景中层
         RLSceneOrder_ForceLayer = 2,     // 场景上层
         RLSceneOrder_Doodad = 3,         // 场景Doodad
-        RLSceneOrder_Npc = 4,         // 场景Npc
-        RLSceneOrder_Radish = 5,         // 场景萝卜
-        RLSceneOrder_Tower = 6,         // 场景炮塔
+        RLSceneOrder_Radish = 4,         // 场景萝卜
+        RLSceneOrder_Tower = 5,         // 场景炮塔
+        RLSceneOrder_Npc = 6,           // 场景Npc
+        RLSceneOrder_Missile = 7,           // 场景子弹
         RLSceneOrder_Effect = 7,         // 场景特效
     }
 
@@ -218,6 +223,17 @@ namespace Game.RepresentLogic
         public Texture2D DefaultTexture = null;
         // 背景贴图
         public Texture2D BGTexture = null;
+    }
+
+    // 表现子弹配置
+    public class RLMissileTemplate
+    {
+        // 表现ID
+        public int nRepresentId;
+        // 表现名字
+        public string szName;
+        // 攻击动画贴图
+        public List<Texture2D> TexFlyAni = new List<Texture2D>();
     }
 
     public class RepresentEnv

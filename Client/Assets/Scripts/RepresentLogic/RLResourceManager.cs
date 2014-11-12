@@ -1,4 +1,4 @@
-锘縰sing System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,49 +9,55 @@ namespace Game.RepresentLogic
 {
     public class RLResourceManager : Common.Singleton<RLResourceManager>
     {
-        // 琛ㄧ幇鍦烘櫙妯℃澘
+        // 表现场景模板
         private Dictionary<int, RLSceneTemplate> m_RLSceneTemplateList = new Dictionary<int, RLSceneTemplate>();
 
-        // 琛ㄧ幇鐗╁搧妯℃澘
+        // 表现物品模板
         private Dictionary<int, RLDoodadTemplate> m_RLDoodadTemplateList = new Dictionary<int, RLDoodadTemplate>();
 
-        // 琛ㄧ幇鎬墿妯℃澘
+        // 表现怪物模板
         private Dictionary<int, RLNpcTemplate> m_RLNpcTemplateList = new Dictionary<int, RLNpcTemplate>();
 
-        // 琛ㄧ幇钀濆崪妯℃澘
+        // 表现萝卜模板
         private Dictionary<int, RLRadishTemplate> m_RLRadishTemplateList = new Dictionary<int, RLRadishTemplate>();
 
-        // 琛ㄧ幇鐐妯℃澘
+        // 表现炮塔模板
         private Dictionary<int, RLTowerTemplate> m_RLTowerTemplateList = new Dictionary<int, RLTowerTemplate>();
+
+        // 表现子弹模板
+        private Dictionary<int, RLMissileTemplate> m_RLMissileTemplateList = new Dictionary<int, RLMissileTemplate>();
         
-        // 琛ㄧ幇鐗规晥妯℃澘
+        // 表现特效模板
         private Dictionary<int, RLEffectTemplate> m_RLEffectTemplateList = new Dictionary<int, RLEffectTemplate>();
 
-        // UI閰嶇疆
+        // UI配置
         private Dictionary<int, RLUISetting> m_RLUISettingList = new Dictionary<int, RLUISetting>();
 
         public void Init()
         {
-            // 鍔犺浇琛ㄧ幇鍦烘櫙妯℃澘
+            // 加载表现场景模板
             LoadRLSceneTemplate();
 
-            // 鍔犺浇琛ㄧ幇鐗╁搧妯℃澘
+            // 加载表现物品模板
             LoadRLDoodadTemplate();
 
-            // 鍔犺浇琛ㄧ幇鎬墿妯℃澘
+            // 加载表现怪物模板
             LoadRLNpcTemplate();
 
-            // 鍔犺浇琛ㄧ幇钀濆崪妯℃澘
+            // 加载表现萝卜模板
             LoadRLRadishTemplate();
 
-            // 鍔犺浇琛ㄧ幇鐗规晥妯℃澘
+            // 加载表现特效模板
             LoadRLEffectTemplate();
 
-            // 鍔犺浇琛ㄧ幇鐐妯℃澘
+            // 加载表现炮塔模板
             LoadRLTowerTemplate();
 
-            // 鍔犺浇UI閰嶇疆
-            LoadRLUISetting();
+            // 加载表现子弹模板
+            LoadRLMissileTemplate();
+
+            // 加载UI配置
+            //LoadRLUISetting();
         }
 
         public void UnInit()
@@ -62,10 +68,11 @@ namespace Game.RepresentLogic
             m_RLRadishTemplateList.Clear();
             m_RLTowerTemplateList.Clear();
             m_RLEffectTemplateList.Clear();
+            m_RLMissileTemplateList.Clear();
         }
 
         //////////////////////////////////////////////////////////////////////////
-        // 琛ㄧ幇鍦烘櫙妯℃澘
+        // 表现场景模板
         private void LoadRLSceneTemplate()
         {
             bool success = true;
@@ -112,7 +119,7 @@ namespace Game.RepresentLogic
             }
         }
 
-        // 鑾峰彇鍦烘櫙妯℃澘
+        // 获取场景模板
         public RLSceneTemplate GetRLSceneTemplate(int nTemplateId)
         {
             if (m_RLSceneTemplateList.ContainsKey(nTemplateId))
@@ -122,7 +129,7 @@ namespace Game.RepresentLogic
             return null;
         }
         //////////////////////////////////////////////////////////////////////////
-        // 鍔犺浇琛ㄧ幇鐗╁搧妯℃澘
+        // 加载表现物品模板
         private void LoadRLDoodadTemplate()
         {
             bool success = true;
@@ -172,7 +179,7 @@ namespace Game.RepresentLogic
             }
         }
 
-        // 鑾峰彇琛ㄧ幇鐗╁搧妯℃澘
+        // 获取表现物品模板
         public RLDoodadTemplate GetRLDoodadTemplate(int nRepresent)
         {
             if (m_RLDoodadTemplateList.ContainsKey(nRepresent))
@@ -182,7 +189,7 @@ namespace Game.RepresentLogic
             return null;
         }
         //////////////////////////////////////////////////////////////////////////
-        // 鍔犺浇鎬墿琛ㄧ幇妯℃澘
+        // 加载怪物表现模板
         public void LoadRLNpcTemplate()
         {
             bool success = true;
@@ -226,7 +233,7 @@ namespace Game.RepresentLogic
             }
         }
 
-        // 鑾峰彇琛ㄧ幇鎬墿妯℃澘
+        // 获取表现怪物模板
         public RLNpcTemplate GetRLNpcTemplate(int nRepresent)
         {
             if (m_RLNpcTemplateList.ContainsKey(nRepresent))
@@ -236,7 +243,7 @@ namespace Game.RepresentLogic
             return null;
         }
         //////////////////////////////////////////////////////////////////////////
-        // 鍔犺浇钀濆崪琛ㄧ幇妯℃澘
+        // 加载萝卜表现模板
         public void LoadRLRadishTemplate()
         {
             bool success = true;
@@ -297,7 +304,7 @@ namespace Game.RepresentLogic
             }
         }
 
-        // 鑾峰彇琛ㄧ幇钀濆崪妯℃澘
+        // 获取表现萝卜模板
         public RLRadishTemplate GetRLRadishTemplate(int nRepresent)
         {
             if (m_RLRadishTemplateList.ContainsKey(nRepresent))
@@ -307,7 +314,7 @@ namespace Game.RepresentLogic
             return null;
         }
         //////////////////////////////////////////////////////////////////////////
-        // 鍔犺浇鐗规晥琛ㄧ幇妯℃澘
+        // 加载特效表现模板
         public void LoadRLEffectTemplate()
         {
             bool success = true;
@@ -356,7 +363,7 @@ namespace Game.RepresentLogic
             }
         }
 
-        // 鑾峰彇琛ㄧ幇鐗规晥妯℃澘
+        // 获取表现特效模板
         public RLEffectTemplate GetRLEffectTemplate(int nRepresent)
         {
             if (m_RLEffectTemplateList.ContainsKey(nRepresent))
@@ -366,7 +373,7 @@ namespace Game.RepresentLogic
             return null;
         }
         //////////////////////////////////////////////////////////////////////////
-        // 鍔犺浇琛ㄧ幇鐐妯℃澘
+        // 加载表现炮塔模板
         public void LoadRLTowerTemplate()
         {
             bool success = true;
@@ -421,7 +428,7 @@ namespace Game.RepresentLogic
             }
         }
 
-        // 鑾峰彇琛ㄧ幇钀濆崪妯℃澘
+        // 获取表现炮塔模板
         public RLTowerTemplate GetRLTowerTemplate(int nRepresent)
         {
             if (m_RLTowerTemplateList.ContainsKey(nRepresent))
@@ -432,7 +439,67 @@ namespace Game.RepresentLogic
         }
 
         //////////////////////////////////////////////////////////////////////////
-        // 鍔犺浇UI閰嶇疆
+        // 加载表现子弹模板
+        public void LoadRLMissileTemplate()
+        {
+            bool success = true;
+            try
+            {
+                Common.TableFile tabFile = Common.TableFile.LoadFromFile(SceneDef.MISSILE_REPRESENT_TEMPLATE);
+                int rowCount = tabFile.GetRowsCount();
+                for (int i = 1; i <= rowCount; i++)
+                {
+                    RLMissileTemplate template = new RLMissileTemplate();
+
+                    int nTemp = 0;
+                    string szTemp = null;
+
+                    tabFile.GetInteger(i, "RepresentId", 0, ref nTemp);
+                    template.nRepresentId = nTemp;
+
+                    tabFile.GetString(i, "Name", "", ref szTemp);
+                    template.szName = szTemp;
+
+                    //////////////////////////////////////////////////////////////////////////
+                    tabFile.GetString(i, "FlyAni", "", ref szTemp);
+                    string[] szFlyAni = szTemp.Split(new char[] { ',' });
+                    for (int nIndex = 0; nIndex < szFlyAni.Count(); ++nIndex)
+                    {
+                        Texture2D tex = Resources.Load(SceneDef.MISSILE_REPRESENT_TEXTURE_PATH + szFlyAni[nIndex]) as Texture2D;
+                        template.TexFlyAni.Add(tex);
+                    }
+
+                    //////////////////////////////////////////////////////////////////////////
+
+                    m_RLMissileTemplateList[template.nRepresentId] = template;
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Common.ExceptionTool.ProcessException(e);
+            }
+            finally
+            {
+                if (!success)
+                {
+                    m_RLTowerTemplateList.Clear();
+                }
+            }
+        }
+
+        // 获取表现子弹模板
+        public RLMissileTemplate GetRLMissileTemplate(int nRepresent)
+        {
+            if (m_RLMissileTemplateList.ContainsKey(nRepresent))
+            {
+                return m_RLMissileTemplateList[nRepresent];
+            }
+            return null;
+        }
+
+        //////////////////////////////////////////////////////////////////////////
+        // 加载UI配置
         public void LoadRLUISetting()
         {
             bool success = true;
@@ -473,7 +540,7 @@ namespace Game.RepresentLogic
             }
         }
 
-        // 鑾峰彇UI閰嶇疆
+        // 获取UI配置
         public RLUISetting GetRLUISetting(int nUINumber)
         {
             if (m_RLUISettingList.ContainsKey(nUINumber))

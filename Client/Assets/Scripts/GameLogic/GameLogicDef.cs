@@ -161,6 +161,19 @@ namespace Game.GameLogic
         public int nRepresentId = 0;
     }
     //////////////////////////////////////////////////////////////////////////
+    // 逻辑场景子弹模板
+    public class GLMissileTemplate
+    {
+        public int nTemplateId = 0;
+        public string szName = null;
+        public int nRepresentId = 0;
+        public BallisticMode eBallisticMode = 0;
+        public float fSpeed = 0f;
+        public float fPassThroughDamage = 0f;
+        public float fExploseDamage = 0f;
+        public float fLifespan = 0;
+    }
+    //////////////////////////////////////////////////////////////////////////
     class GameLogicDef
     {
         // 关卡配置文件
@@ -186,6 +199,9 @@ namespace Game.GameLogic
 
         // 逻辑场景炮塔配置文件
         public const string LOGIC_TOWER_TEMPLATE_FILE = "setting/logic_towertemplate";
+
+        // 逻辑场景子弹配置文件
+        public const string LOGIC_TOWER_MISSILE_FILE = "setting/logic_missiletemplate";
 
         // 逻辑场景格子类型配置目录
         public const string LOGIC_SCENE_CELLTYPE_PATH = "setting/logic_scenecelltype/";

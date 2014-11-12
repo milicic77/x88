@@ -21,7 +21,7 @@ namespace Game.RepresentLogic
             CreateCamera();   
 
             // 创建UI
-            RLUIManager.Instance().Init();
+//            RLUIManager.Instance().Init();
         }
 
         public void UnInit()
@@ -177,6 +177,28 @@ namespace Game.RepresentLogic
                 (int)RLSceneObjectOrder.RLSceneOrder_Tower);
 
             return tower;
+        }
+
+        // 创建表现子弹
+        public RLMissile CreateMissile(RLNpc target, int nRepresentId)
+        {
+            GameObject missileObject = new GameObject();
+            RLMissile rlMissile = missileObject.AddComponent<RLMissile>();
+            SpriteRenderer spriteRenderer = missileObject.AddComponent<SpriteRenderer>();
+            Rigidbody2D rigidbody = missileObject.AddComponent<Rigidbody2D>();
+            CircleCollider2D collider = missileObject.AddComponent<CircleCollider2D>();
+
+            rigidbody.isKinematic = true;
+
+            Vector2 offset = new Vector2(0f, 0.09f);
+            collider.offset = offset;
+            collider.radius = 0.08f;
+            collider.isTrigger = true;
+
+            rlMissile.Init(target, nRepresentId,
+                (int)RLSceneObjectOrder.RLSceneOrder_Missile);
+
+            return rlMissile;
         }
     }
 }

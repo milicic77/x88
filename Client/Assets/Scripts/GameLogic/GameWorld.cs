@@ -9,7 +9,7 @@ namespace Game.GameLogic
 {
     public class GameWorld : Common.Singleton<GameWorld>
     {
-        private GLStage m_stage = null;
+        public GLStage m_stage = null;
         public void Init()
         {
             GLSettingManager.Instance().Init();

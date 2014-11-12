@@ -100,7 +100,15 @@ namespace Game.RepresentLogic
                     new Vector2(0.5f, 0.2f)
                 );
             }
-                
+
+            CircleCollider2D collider = gameObject.AddComponent<CircleCollider2D>();
+            Vector2 offset = new Vector2(0f, 0.24f);
+            collider.offset = offset;
+            collider.radius = 0.18f;
+            collider.isTrigger = true;
+
+            gameObject.AddComponent<Rigidbody2D>().isKinematic = true;
+
             gameObject.AddComponent<SpriteRenderer>().sprite = sprite;
 
             spriteRenderer = GetComponent<Renderer>() as SpriteRenderer;

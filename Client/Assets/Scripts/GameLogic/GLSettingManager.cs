@@ -24,6 +24,8 @@ namespace Game.GameLogic
         private Dictionary<int, GLEffectTemplate> m_GLEffectTemplateList = new Dictionary<int, GLEffectTemplate>();
         // 逻辑场景炮塔配置模板
         private Dictionary<int, GLTowerTemplate> m_GLTowerTemplateList = new Dictionary<int, GLTowerTemplate>();
+        // 逻辑场景子弹配置模板
+        private Dictionary<int, GLMissileTemplate> m_GLMissileTemplateList = new Dictionary<int, GLMissileTemplate>();
         // 逻辑场景路径配置模板
         private Dictionary<int, GLPath> m_GLPathList = new Dictionary<int, GLPath>();
         //////////////////////////////////////////////////////////////////////////
@@ -51,6 +53,9 @@ namespace Game.GameLogic
             // 加载逻辑炮塔配置模板
             LoadGLTowerTemplate();
 
+            // 加载逻辑子弹配置模板
+            LoadGLMissileTemplate();
+
             // 加载路径
             LoadGLPathList();
         }
@@ -63,6 +68,7 @@ namespace Game.GameLogic
             m_GLNpcTemplateList.Clear();
             m_GLRadishTemplateList.Clear();
             m_GLTowerTemplateList.Clear();
+            m_GLMissileTemplateList.Clear();
             m_GLEffectTemplateList.Clear();
             m_GLPathList.Clear();
         }
@@ -533,6 +539,77 @@ namespace Game.GameLogic
             if (m_GLTowerTemplateList.ContainsKey(nTemplateId))
             {
                 return m_GLTowerTemplateList[nTemplateId];
+            }
+            return null;
+        }
+        //////////////////////////////////////////////////////////////////////////
+        // 加载逻辑场景子弹模板
+        public void LoadGLMissileTemplate()
+        {
+            bool success = true;
+            try
+            {
+                Common.TableFile tabFile = Common.TableFile.LoadFromFile(GameLogicDef.LOGIC_TOWER_MISSILE_FILE);
+                int rowCount = tabFile.GetRowsCount();
+                for (int i = 1; i <= rowCount; i++)
+                {
+                    GLMissileTemplate template = new GLMissileTemplate();
+
+                    int nTemp = 0;
+                    string szTemp = null;
+
+                    tabFile.GetInteger(i, "TemplateId", 0, ref nTemp);
+                    template.nTemplateId = nTemp;
+
+                    tabFile.GetString(i, "Name", "", ref szTemp);
+                    template.szName = szTemp;
+
+                    int nRepresentId = 0;
+                    tabFile.GetInteger(i, "RepresentId", 0, ref nRepresentId);
+                    template.nRepresentId = nRepresentId;
+
+                    int nBallisticMode = 0;
+                    tabFile.GetInteger(i, "BallisticMode", 0, ref nBallisticMode);
+                    template.eBallisticMode = (BallisticMode)nBallisticMode;
+
+                    float fSpeed = 0f;
+                    tabFile.GetFloat(i, "Speed", 0f, ref fSpeed);
+                    template.fSpeed = fSpeed;
+
+                    float fPassThrougnDamge = 0f;
+                    tabFile.GetFloat(i, "PassThroughDamage", 0f, ref fPassThrougnDamge);
+                    template.fPassThroughDamage = fPassThrougnDamge;
+
+                    float fExploseDamage = 0f;
+                    tabFile.GetFloat(i, "ExploseDamage", 0f, ref fExploseDamage);
+                    template.fExploseDamage = fExploseDamage;
+
+                    float fLifespan = 0;
+                    tabFile.GetFloat(i, "Lifespan", 0, ref fLifespan);
+                    template.fLifespan = fLifespan;
+
+                    m_GLMissileTemplateList[template.nTemplateId] = template;
+                }
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Common.ExceptionTool.ProcessException(e);
+            }
+            finally
+            {
+                if (!success)
+                {
+                    m_GLMissileTemplateList.Clear();
+                }
+            }
+        }
+        // 获取逻辑场景子弹模板
+        public GLMissileTemplate GetGLMissileTemplate(int nTemplateId)
+        {
+            if (m_GLMissileTemplateList.ContainsKey(nTemplateId))
+            {
+                return m_GLMissileTemplateList[nTemplateId];
             }
             return null;
         }

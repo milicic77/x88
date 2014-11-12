@@ -10,6 +10,7 @@ namespace Game
     {
         // 逻辑帧数
         public const int GAME_FPS = 16;
+        public const float LOGIC_FRAME_INTERVEL = 1f / GAME_FPS;
     }
 
     class GameEnv

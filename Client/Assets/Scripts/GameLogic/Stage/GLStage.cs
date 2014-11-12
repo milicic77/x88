@@ -38,6 +38,8 @@ namespace Game.GameLogic
             get { return m_TowerList; }
         }
 
+        public List<GLMissile> m_GLMissileList = new List<GLMissile>();
+
 
         // 怪物总组数
         public int m_nNpcGroupCount = 0;
@@ -180,6 +182,17 @@ namespace Game.GameLogic
         public void ActivateRadish()
         {
             m_GLRadish.Activate();
+        }
+
+        public void ActivateMissile()
+        {
+            for (int i = 0; i < m_GLMissileList.Count; ++i)
+            {
+                if (m_GLMissileList[i] != null)
+                {
+                    m_GLMissileList[i].Activate();
+                }
+            }
         }
 
         // ret==1 所有组Npc创建完成
