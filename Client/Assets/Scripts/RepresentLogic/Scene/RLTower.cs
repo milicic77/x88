@@ -14,7 +14,7 @@ namespace Game.RepresentLogic
         public GameObject      m_ObjectFG;                  // 前景容器：存放前景动画
 
         // 动画控制器
-        private RLAniController m_AniController = null;     // 动画控制器
+        private RLAniController m_AniController = new RLAniController();
 
         // 同步逻辑的数据
         private int m_nAngle         = 0;
@@ -68,10 +68,7 @@ namespace Game.RepresentLogic
             m_ObjectFG.transform.parent   = gameObject.transform;
 
             // 动画控制器初始化 - m_SpriteAnimation初始化
-            // -- step 1 : 加上动画控制器组件
-            m_ObjectFG.AddComponent<RLAniController>();
-            m_AniController = m_ObjectFG.GetComponent <RLAniController>();
-            // -- step 2 : 初始化动画控制器组件
+            // -- step 1 : 初始化动画控制器组件
             m_AniController.SpriteAnimation = new Sprite[template.TexFireAni.Count];
             for (int i = 0; i < template.TexFireAni.Count; ++i)
             {
@@ -98,6 +95,8 @@ namespace Game.RepresentLogic
 
         virtual public void Update()
         {
+            m_AniController.Update();
+
             if (m_nRotationAngle > 0)
             {
                 transform.Rotate(Vector3.back,    m_nRotationAngle);

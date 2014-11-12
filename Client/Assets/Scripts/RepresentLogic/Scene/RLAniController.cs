@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RLAniController : MonoBehaviour
+public class RLAniController
 {
     private Sprite[]       m_SpriteAnimation = null;                    // 攻击动画精灵
     private SpriteRenderer m_SpriteRenderer  = null;                    // 动画渲染
@@ -25,7 +25,7 @@ public class RLAniController : MonoBehaviour
         set { m_FramesPerSecond = value; }
     }
 
-    void Update ()
+    public void Update ()
     {
         if (null == m_SpriteAnimation)
         {
