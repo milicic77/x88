@@ -11,7 +11,7 @@ namespace Game.Common
         }
     }
 
-    public class BTCondition : BTBehaviorNode
+    public class BTConditionNode : BTBehaviorNode
     {
         public override void Activate()
         {

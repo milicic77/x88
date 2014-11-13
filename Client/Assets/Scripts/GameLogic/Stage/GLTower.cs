@@ -195,7 +195,7 @@ namespace Game.GameLogic
         }
     }
 
-    class TowerCondition_LockTarget : BTCondition
+    class TowerCondition_LockTarget : BTConditionNode
     {
         public override void Activate()
         {
@@ -217,7 +217,7 @@ namespace Game.GameLogic
         }
     }
 
-    class TowerCondition_AttackTarget : BTCondition
+    class TowerCondition_AttackTarget : BTConditionNode
     {
         public override void Activate()
         {
@@ -436,15 +436,14 @@ namespace Game.GameLogic
         {
             int nCurTime = (int)Time.time * 1000;
             if (nCurTime - m_nLastAttackTime <= m_nAttackFreq)
-            {
+            { // 攻击间隔未到，不能攻击
                 return;
             }
-            Debug.Log("瞄准后攻击！");
             m_nLastAttackTime = nCurTime;
 
-            Vector2 vecTowerTube = new Vector2(Mathf.Sin(Angle * Mathf.Deg2Rad), Mathf.Cos(Angle * Mathf.Deg2Rad));
-            Vector2 towerPos = new Vector2(RepresentCommon.LogicX2WorldX(LogicX), RepresentCommon.LogicY2WorldY(LogicY));
-            GLMissile missile = new GLMissile();
+            Vector2   vecTowerTube = new Vector2(Mathf.Sin(Angle * Mathf.Deg2Rad), Mathf.Cos(Angle * Mathf.Deg2Rad));
+            Vector2   towerPos     = new Vector2(RepresentCommon.LogicX2WorldX(LogicX), RepresentCommon.LogicY2WorldY(LogicY));
+            GLMissile missile      = new GLMissile();
             GameWorld.Instance().m_stage.m_GLMissileList.Add(missile);
 
             missile.Init(1, vecTowerTube, towerPos, m_Target as GLNpc);
