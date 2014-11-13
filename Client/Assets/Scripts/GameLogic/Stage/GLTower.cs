@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Game.GameLogic
 {
-    class TowerAction_FindTarget : BTActionNode
+    class TowerAction_LockTarget : BTActionNode
     {
         public override void Activate()
         {
@@ -287,43 +287,41 @@ namespace Game.GameLogic
         public void InitAI()
         {
             m_TowerAI  = new BehaviourTree();
-            BTNonPrioritySelector ai = new BTNonPrioritySelector();
 
+            BTNonPrioritySelector ai = new BTNonPrioritySelector();
             ai.Owner = m_TowerAI;
             ai.Name  = "炮塔AI";
+
             m_TowerAI.RootNode = ai;
             m_TowerAI.Blackboard.AddData("self", this);
 
-            // 锁定目标
-            BTCondition lockCond = new BTCondition();
-            lockCond.Name = "选择目标条件";
+            // 锁定目标序列构建
+            BTSequenceNode         lockTarget = new BTSequenceNode();
+            BTCondition            lockCond   = new BTCondition();
+            TowerAction_LockTarget lockAction = new TowerAction_LockTarget();
+
+            lockTarget.Name      = "[锁定目标序列]";
+            lockCond.Name        = "[锁定目标序列] - 条件节点";
+            lockAction.Name      = "[锁定目标序列] - 动作节点";
             lockCond.CondHandler = LockTargetCondition;
 
-            TowerAction_FindTarget lockAction = new TowerAction_FindTarget();
-            lockAction.Name = "选择目标动作";
-
-            BTSequenceNode lockTarget = new BTSequenceNode();
             ai.AddNode(lockTarget);
-
-            lockTarget.Name = "选择目标";
             lockTarget.AddCond(lockCond);
             lockTarget.AddNode(lockAction);
 
-            // 攻击目标
-            BTCondition attackCond = new BTCondition();
-            attackCond.Name = "攻击目标条件";
+            // 攻击目标序列构建
+            BTSequenceNode           attackTarget = new BTSequenceNode();
+            BTCondition              attackCond   = new BTCondition();
+            TowerAction_AimTarget    aimAction    = new TowerAction_AimTarget();
+            TowerAction_AttackTarget attackAction = new TowerAction_AttackTarget();
+
+            attackTarget.Name      = "[攻击目标序列]";
+            attackCond.Name        = "[攻击目标序列] - 条件节点";
+            aimAction.Name         = "[攻击目标序列] - 瞄准目标动作节点";
+            attackAction.Name      = "[攻击目标序列] - 攻击目标动作节点";
             attackCond.CondHandler = AttackTargetCondition;
 
-            TowerAction_AimTarget aimAction = new TowerAction_AimTarget();
-            lockAction.Name = "锁定目标动作";
-
-            TowerAction_AttackTarget attackAction = new TowerAction_AttackTarget();
-            lockAction.Name = "攻击目标动作";
-
-            BTSequenceNode attackTarget = new BTSequenceNode();
             ai.AddNode(attackTarget);
-
-            attackTarget.Name = "锁定目标";
             attackTarget.AddCond(attackCond);
             attackTarget.AddNode(aimAction);
             attackTarget.AddNode(attackAction);
