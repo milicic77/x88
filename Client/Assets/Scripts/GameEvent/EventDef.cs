@@ -52,8 +52,11 @@ namespace Game.GameEvent
         public delegate void Event_LevelStart(object sender, BaseEventArgs args);
         //////////////////////////////////////////////////////////////////////////
         // 游戏结束事件
-        public delegate void Event_GameOver(object sender, BaseEventArgs args);
-
+        public delegate void Event_GameOver(object sender, GameOverArgs args);
+        public class GameOverArgs : BaseEventArgs
+        {
+            public int nWin;
+        }
         //////////////////////////////////////////////////////////////////////////
         // Npc被打到
         public delegate void Event_NpcHurt(object sender, NpcHurtArgs args);

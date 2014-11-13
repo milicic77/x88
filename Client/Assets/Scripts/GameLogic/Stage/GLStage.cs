@@ -132,6 +132,10 @@ namespace Game.GameLogic
         {
             Common.Console.Write("游戏结束中");
             UnRegisterEvents();
+
+            EventDef.GameOverArgs EventArg = new EventDef.GameOverArgs();
+            EventArg.nWin = 1;
+            EventCenter.Event_GameOver(null, EventArg);
         }
 
         public void UnInit()
@@ -293,7 +297,9 @@ namespace Game.GameLogic
                 {
                     // 萝卜没血了，游戏应该结束
                     // 发起事件
-                    EventCenter.Event_GameOver(null, null);
+                    EventDef.GameOverArgs EventArg = new EventDef.GameOverArgs();
+                    EventArg.nWin = 0;
+                    EventCenter.Event_GameOver(null, EventArg);
                     return;
                 }
                 // 改变萝卜外观
