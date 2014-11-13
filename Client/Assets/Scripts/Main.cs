@@ -8,7 +8,7 @@ public class Main : MonoBehaviour {
     public static Game.GameClient m_Client = new Game.GameClient();
 	void Start ()
     {
-        Console.Init();
+        //Console.Init();
         m_Client.Init();
 	}
 	
@@ -20,6 +20,6 @@ public class Main : MonoBehaviour {
 
     void OnDestroy()
     {
-        Console.UnInit();
+        //Console.UnInit();
     }
 }

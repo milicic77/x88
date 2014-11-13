@@ -9,10 +9,10 @@ namespace Game.Common
          */
         public static void ThrowException(string errMsg)
         {
-            //throw new Exception(errMsg);
-            Exception tmp = new Exception(errMsg);
-            LogWriter.WriteWarning(tmp.Message + "  " + tmp.GetType().ToString());
-            throw tmp;
+            ////throw new Exception(errMsg);
+            //Exception tmp = new Exception(errMsg);
+            //LogWriter.WriteWarning(tmp.Message + "  " + tmp.GetType().ToString());
+            //throw tmp;
         }
 
         /** 处理异常，记录下详细出错信息

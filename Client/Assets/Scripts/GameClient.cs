@@ -36,7 +36,8 @@ namespace Game
 
                 m_ClientInitialized = true;
                 GameEnv.LogicStartTime = Time.time;
-                //EventCenter.Event_ClientInitComplete(null, null);
+                
+                EventCenter.Event_ClientInitComplete(null, null);
             }
             catch (Exception e)
             {

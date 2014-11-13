@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Game.Common;
 using Game.RepresentLogic;
+using Game.GameEvent;
 
 namespace Game.GameLogic
 {
@@ -14,24 +15,30 @@ namespace Game.GameLogic
         {
             GLSettingManager.Instance().Init();
 
-            // 创建关卡
-            CreateStage(1);
-
+            EventCenter.Event_LevelStart += OnLevelStart;
         }
 
         public void UnInit()
         {
+            EventCenter.Event_LevelStart -= OnLevelStart;
             GLSettingManager.Instance().Init();
         }
 
         public void Activate()
         {
-            m_stage.Activate();
+            if (m_stage != null)
+                m_stage.Activate();
         }
 
         public void Update()
         {
 
+        }
+
+        public void OnLevelStart(object sender, EventDef.BaseEventArgs args)
+        {
+            // 创建关卡
+            CreateStage(1);
         }
 
         public GLStage Stage

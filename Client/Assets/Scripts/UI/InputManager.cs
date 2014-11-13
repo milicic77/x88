@@ -15,6 +15,9 @@ public class InputManager : MonoBehaviour
 
     void Update ()
     {
+        if (m_GameWorld.m_stage == null)
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             // 屏幕坐标 -> 世界坐标

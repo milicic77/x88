@@ -57,7 +57,7 @@ namespace Game.RepresentLogic
             LoadRLMissileTemplate();
 
             // º”‘ÿUI≈‰÷√
-            //LoadRLUISetting();
+            LoadRLUISetting();
         }
 
         public void UnInit()

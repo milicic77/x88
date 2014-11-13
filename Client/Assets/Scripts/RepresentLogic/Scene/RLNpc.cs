@@ -17,6 +17,9 @@ namespace Game.RepresentLogic
 
         //public float moveSpeed;
 
+        // 血条
+        RLBloodBar m_BloodBar;
+
         // 表现模板
         public RLNpcTemplate m_Template;
 
@@ -119,11 +122,20 @@ namespace Game.RepresentLogic
             gameObject.transform.position = new Vector3(fWorldX, fWorldY, 0);
 
             m_GLNpc = npc;
+
+            m_BloodBar = RLBloodBar.Create();
+
+            UpdateBloodBarPosition();
         }
 
         public void UnInit()
         {
+            RLBloodBar.Destroy(m_BloodBar);
+        }
 
+        private void UpdateBloodBarPosition()
+        {
+            m_BloodBar.gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 0.1f);
         }
 
         public void SetPosition(float fWorldX, float fWorldY)
@@ -145,6 +157,8 @@ namespace Game.RepresentLogic
             nIndex = nIndex % 2;
 
             spriteRenderer.sprite = m_sprites[nIndex];
+
+            UpdateBloodBarPosition();
         }
 
         void OnDrawGizmos()

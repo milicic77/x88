@@ -136,18 +136,18 @@ namespace Game.Common
 
         public static void Write(string txt)
         {
-            if (Application.platform != RuntimePlatform.WindowsEditor && Application.platform != RuntimePlatform.WindowsPlayer)
-            {
-                UnityEngine.Debug.Log(txt); // 临时
-            }
-            else
-            {
-                uint charWritten = 0;
-                WriteConsole(m_StdOutHandle, txt, (uint)txt.Length, out charWritten, 0);
+            //if (Application.platform != RuntimePlatform.WindowsEditor && Application.platform != RuntimePlatform.WindowsPlayer)
+            //{
+            //    UnityEngine.Debug.Log(txt); // 临时
+            //}
+            //else
+            //{
+            //    uint charWritten = 0;
+            //    WriteConsole(m_StdOutHandle, txt, (uint)txt.Length, out charWritten, 0);
 
-                if (!txt.EndsWith("\n") && !txt.EndsWith("\r"))
-                    WriteConsole(Console.m_StdOutHandle, "\n", 1, out charWritten, 0);
-            }
+            //    if (!txt.EndsWith("\n") && !txt.EndsWith("\r"))
+            //        WriteConsole(Console.m_StdOutHandle, "\n", 1, out charWritten, 0);
+            //}
         }
 
         public static void SetColor(uint color)

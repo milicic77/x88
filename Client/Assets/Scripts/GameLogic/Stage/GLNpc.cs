@@ -28,8 +28,6 @@ namespace Game.GameLogic
             get { return m_nLogicY; }
             set { m_nLogicY = value; }
         }
-    //    private int m_nDoing = (int)SceneObjectAni.SceneObjectAni_Stand;
-    //    private int m_nDirection = (int)SceneObjectDirection.SceneObjectDirection_Right;
 
         // 宽
         public int m_nWidth = 0;
