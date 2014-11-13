@@ -322,7 +322,7 @@ namespace Game.GameLogic
             m_nLogicY    = nLogicY;
             FireRange    = 200;
             AngularSpeed = 10;
-            AimDeviation = 2;
+            AimDeviation = 5;
             AttackFreq   = 20;
 
             // 初始化AI
