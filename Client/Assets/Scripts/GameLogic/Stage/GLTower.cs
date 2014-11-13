@@ -194,6 +194,51 @@ namespace Game.GameLogic
             m_State = BTTaskState.SUCCESS;
         }
     }
+
+    class TowerCondition_LockTarget : BTCondition
+    {
+        public override void Activate()
+        {
+            GLTower tower = m_Owner.Blackboard.GetData("self") as GLTower;
+            if (null == tower)
+            { // 炮塔对象为空，条件失败
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            if (null != tower.Target)
+            { // 已经锁定目标，条件失败
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            // 未锁定目标，条件成功
+            m_State = BTTaskState.SUCCESS;
+        }
+    }
+
+    class TowerCondition_AttackTarget : BTCondition
+    {
+        public override void Activate()
+        {
+            GLTower tower = m_Owner.Blackboard.GetData("self") as GLTower;
+            if (null == tower)
+            { // 炮塔对象为空，条件失败
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            if (null == tower.Target)
+            { // 还未锁定目标，条件失败
+                m_State = BTTaskState.FAILURE;
+                return;
+            }
+
+            // 已经锁定目标，条件成功
+            m_State = BTTaskState.SUCCESS;
+        }
+    }
+
     public class GLTower
     {
         public  RLTower       m_RLTower         = null;                 // 表现炮塔
@@ -296,55 +341,33 @@ namespace Game.GameLogic
             m_TowerAI.Blackboard.AddData("self", this);
 
             // 锁定目标序列构建
-            BTSequenceNode         lockTarget = new BTSequenceNode();
-            BTCondition            lockCond   = new BTCondition();
-            TowerAction_LockTarget lockAction = new TowerAction_LockTarget();
+            BTSequenceNode            lockTarget = new BTSequenceNode();
+            TowerCondition_LockTarget lockCond   = new TowerCondition_LockTarget();
+            TowerAction_LockTarget    lockAction = new TowerAction_LockTarget();
 
             lockTarget.Name      = "[锁定目标序列]";
             lockCond.Name        = "[锁定目标序列] - 条件节点";
             lockAction.Name      = "[锁定目标序列] - 动作节点";
-            lockCond.CondHandler = LockTargetCondition;
 
             ai.AddNode(lockTarget);
             lockTarget.AddCond(lockCond);
             lockTarget.AddNode(lockAction);
 
             // 攻击目标序列构建
-            BTSequenceNode           attackTarget = new BTSequenceNode();
-            BTCondition              attackCond   = new BTCondition();
-            TowerAction_AimTarget    aimAction    = new TowerAction_AimTarget();
-            TowerAction_AttackTarget attackAction = new TowerAction_AttackTarget();
+            BTSequenceNode              attackTarget = new BTSequenceNode();
+            TowerCondition_AttackTarget attackCond   = new TowerCondition_AttackTarget();
+            TowerAction_AimTarget       aimAction    = new TowerAction_AimTarget();
+            TowerAction_AttackTarget    attackAction = new TowerAction_AttackTarget();
 
             attackTarget.Name      = "[攻击目标序列]";
             attackCond.Name        = "[攻击目标序列] - 条件节点";
             aimAction.Name         = "[攻击目标序列] - 瞄准目标动作节点";
             attackAction.Name      = "[攻击目标序列] - 攻击目标动作节点";
-            attackCond.CondHandler = AttackTargetCondition;
 
             ai.AddNode(attackTarget);
             attackTarget.AddCond(attackCond);
             attackTarget.AddNode(aimAction);
             attackTarget.AddNode(attackAction);
-        }
-
-        public bool LockTargetCondition(object arg)
-        {
-            if (null != m_Target)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool AttackTargetCondition(object arg)
-        {
-            if (null != m_Target)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public void UnInit()
