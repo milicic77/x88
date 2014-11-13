@@ -15,7 +15,7 @@ namespace Game.RepresentLogic
         public GameObject      m_ObjectFG;                              // 前景容器：存放前景动画
 
         // 动画控制器
-        private RLAniController m_AniController = new RLAniController();
+        private IRLAniController m_AniController = null;
 
         // 同步逻辑的数据
         private int    m_nAngle         = 0;
@@ -76,19 +76,20 @@ namespace Game.RepresentLogic
             m_ObjectFG.transform.parent   = gameObject.transform;
 
             // 动画控制器初始化 - m_SpriteAnimation初始化
-            // -- step 1 : 初始化动画控制器组件
-            m_AniController.SpriteAnimation = new Sprite[template.TexFireAni.Count];
+            RLSingleAniController AniController = new RLSingleAniController();
+            AniController.SpriteAnimation       = new Sprite[template.TexFireAni.Count];
             for (int i = 0; i < template.TexFireAni.Count; ++i)
             {
                 Rect rect = new Rect(0, 0, template.TexFireAni[i].width, template.TexFireAni[i].height);
 
-                m_AniController.SpriteAnimation[i] = Sprite.Create(
+                AniController.SpriteAnimation[i] = Sprite.Create(
                     template.TexFireAni[i],
                     rect,
                     new Vector2(0.5f, 0.5f)
                 );
             }
-            m_AniController.SpriteRenderer = m_ObjectFG.GetComponent<Renderer>() as SpriteRenderer;
+            AniController.SpriteRenderer = m_ObjectFG.GetComponent<Renderer>() as SpriteRenderer;
+            m_AniController = AniController;
 
             // 整个炮塔容器初始化
             gameObject.name = "tower";
@@ -118,6 +119,11 @@ namespace Game.RepresentLogic
             }
 
             m_nRotationAngle = 0;
+        }
+
+        public void PlayAttackAnimation()
+        {
+            m_AniController.Play();
         }
 
         void OnDrawGizmos()

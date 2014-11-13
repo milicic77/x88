@@ -15,7 +15,7 @@ namespace Game.GameLogic.Missile
 
         public void Activate()
         {
-            if (lifespan == null)
+            if (0 == lifespan)
             {
                 return;
             }

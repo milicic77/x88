@@ -440,6 +440,7 @@ namespace Game.GameLogic
                 return;
             }
             m_nLastAttackTime = nCurTime;
+            m_RLTower.PlayAttackAnimation();
 
             Vector2   vecTowerTube = new Vector2(Mathf.Sin(Angle * Mathf.Deg2Rad), Mathf.Cos(Angle * Mathf.Deg2Rad));
             Vector2   towerPos     = new Vector2(RepresentCommon.LogicX2WorldX(LogicX), RepresentCommon.LogicY2WorldY(LogicY));
