@@ -79,5 +79,19 @@ namespace Game.GameEvent
             }
         }
         //////////////////////////////////////////////////////////////////////////
+        // 游戏结束
+        public static event EventDef.Event_NpcHurt m_EventNpcHurt;
+        public static EventDef.Event_NpcHurt Event_NpcHurt
+        {
+            get
+            {
+                return m_EventNpcHurt;
+            }
+            set
+            {
+                m_EventNpcHurt = value;
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////
     }
 }

@@ -27,6 +27,7 @@ namespace Game.RepresentLogic
                 new Vector2(template.fPivotX, template.fPivotY)
             );
 
+            gameObject.name = "Doodad";
             gameObject.AddComponent<SpriteRenderer>().sprite = sprite;
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = nOrder;
 

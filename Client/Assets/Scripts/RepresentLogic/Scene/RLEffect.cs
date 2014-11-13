@@ -104,6 +104,7 @@ namespace Game.RepresentLogic
                         if (m_nPlayCount <= 0)
                         {
                             spriteRenderer.enabled = false;
+                            //Represent.Instance().DestroyEffect(this);
                         }
                     }
 

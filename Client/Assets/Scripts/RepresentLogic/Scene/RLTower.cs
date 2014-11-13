@@ -91,6 +91,7 @@ namespace Game.RepresentLogic
             m_AniController.SpriteRenderer = m_ObjectFG.GetComponent<Renderer>() as SpriteRenderer;
 
             // 整个炮塔容器初始化
+            gameObject.name = "tower";
             gameObject.AddComponent<SpriteRenderer>();
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = nOrder;
             gameObject.transform.position = new Vector3(fWorldX, fWorldY, 0);

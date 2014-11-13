@@ -187,6 +187,7 @@ namespace Game.RepresentLogic
             SpriteRenderer spriteRenderer = missileObject.AddComponent<SpriteRenderer>();
             Rigidbody2D rigidbody = missileObject.AddComponent<Rigidbody2D>();
             CircleCollider2D collider = missileObject.AddComponent<CircleCollider2D>();
+            missileObject.name = "missile";
 
             rigidbody.isKinematic = true;
 

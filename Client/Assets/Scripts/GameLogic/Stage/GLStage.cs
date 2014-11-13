@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using Game.GameEvent;
 using Game.Common;
+using Game.RepresentLogic;
 
 namespace Game.GameLogic
 {
@@ -266,12 +267,14 @@ namespace Game.GameLogic
         // 事件处理
         private void RegisterEvents()
         {
+            EventCenter.Event_NpcHurt += OnNpcHurtEvent;
             EventCenter.Event_NpcAttackRadish += OnNpcAttackRadishEvent;
             EventCenter.Event_GameOver += OnGameOverEvent;
         }
 
         private void UnRegisterEvents()
         {
+            EventCenter.Event_NpcHurt -= OnNpcHurtEvent;
             EventCenter.Event_NpcAttackRadish -= OnNpcAttackRadishEvent;
             EventCenter.Event_GameOver -= OnGameOverEvent;
         }
@@ -319,6 +322,49 @@ namespace Game.GameLogic
         {
             // 游戏结束，状态跃迁
             m_fsm.PushEvent((int)StageFsmEvent.STAGE_FSMLINK_GAME_END);
+        }
+        private void OnNpcHurtEvent(object sender, EventDef.NpcHurtArgs args)
+        {
+            try
+            {
+                // TODO 应该获取子弹的攻击力来减掉相应的血，此处先固定减1血
+                // Npc掉血
+                args.npc.m_nLife--;
+                if (args.npc.m_nLife <= 0)
+                {
+                    int nCellX = RepresentCommon.LogicX2CellX(args.npc.m_nLogicCenterX);
+                    int nCellY = RepresentCommon.LogicY2CellY(args.npc.m_nLogicCenterY);
+                    // 死亡特效
+                    args.npc.m_GLEffect.Init(1, nCellX, nCellY, m_GLScene);
+                    m_GLScene.AddEffect(args.npc.m_GLEffect);
+                    // 只播放1次
+                    args.npc.m_GLEffect.Play(1);
+
+                    // 删除Npc
+                    args.npc.UnInit();
+                    m_GLNpcList.Remove(args.npc);
+                }
+                
+                //// 改变萝卜外观
+                //m_GLRadish.ChangeRepresent(10 - m_GLRadish.m_nLife + 1);
+                //// 修改血量显示 TODO 模板Id先写死
+                //m_GLRadishLifeDoodad.UnInit();
+                //int nLifeDoodadTemplateId = 21 - (10 - m_GLRadish.m_nLife);
+                //m_GLRadishLifeDoodad.Init(nLifeDoodadTemplateId,
+                //    m_GLRadishLifeDoodad.m_nCellX, m_GLRadishLifeDoodad.m_nCellY,
+                //    m_GLScene);
+                //m_GLScene.AddDoodad(m_GLRadishLifeDoodad);
+
+                // 设置Npc组出现间隔起始时间
+                if (m_GLNpcList.Count == 0)
+                {
+                    m_nBetweenTime = (uint)Environment.TickCount;
+                }
+            }
+            catch (Exception e)
+            {
+                Common.ExceptionTool.ProcessException(e);
+            }
         }
         //////////////////////////////////////////////////////////////////////////
         

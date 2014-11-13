@@ -124,6 +124,8 @@ namespace Game.GameLogic
         public int nHeight = 0;
         // 宽
         public int nWidth = 0;
+        // 血量
+        public int nLife = 0;
     }
     //////////////////////////////////////////////////////////////////////////
     // 逻辑场景萝卜模板

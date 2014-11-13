@@ -63,6 +63,9 @@ namespace Game.GameLogic
 
         public int m_nDelete = 0;
 
+        // 当前血量
+        public int m_nLife = 0;
+
         // 出生特效
         public GLEffect m_GLEffect = new GLEffect();
         public void Init(int nTemplateId, int nCellX, int nCellY, GLScene scene)
@@ -88,7 +91,9 @@ namespace Game.GameLogic
             m_nHeight = template.nHeight;
             m_nWidth = template.nWidth;
 
-            // 受伤特效
+            m_nLife = template.nLife;
+
+            // 出生特效
             m_GLEffect.Init(1, nCellX, nCellY, m_GLScene);
             m_GLScene.AddEffect(m_GLEffect);
 

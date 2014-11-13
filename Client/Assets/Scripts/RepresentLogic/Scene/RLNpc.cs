@@ -102,11 +102,12 @@ namespace Game.RepresentLogic
             }
 
             CircleCollider2D collider = gameObject.AddComponent<CircleCollider2D>();
-            Vector2 offset = new Vector2(0f, 0.24f);
+            Vector2 offset = new Vector2(0f, 0.25f);
             collider.offset = offset;
-            collider.radius = 0.18f;
+            collider.radius = 0.1f;
             collider.isTrigger = true;
 
+            gameObject.name = "npc";
             gameObject.AddComponent<Rigidbody2D>().isKinematic = true;
 
             gameObject.AddComponent<SpriteRenderer>().sprite = sprite;

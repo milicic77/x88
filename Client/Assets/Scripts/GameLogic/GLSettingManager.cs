@@ -360,6 +360,9 @@ namespace Game.GameLogic
                     tabFile.GetInteger(i, "Height", 0, ref nTemp);
                     template.nHeight = nTemp;
 
+                    tabFile.GetInteger(i, "Life", 0, ref nTemp);
+                    template.nLife = nTemp;
+
                     tabFile.GetString(i, "Name", "", ref szTemp);
                     template.szName = szTemp;
 
