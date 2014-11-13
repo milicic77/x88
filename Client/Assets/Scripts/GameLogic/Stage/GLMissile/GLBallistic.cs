@@ -35,7 +35,7 @@ namespace Game.GameLogic.Missile
 
         public override void Activate()
         {
-            if (m_Itself == null || m_Target == null)
+            if (m_Itself == null || m_Target == null || m_Target.m_nDelete == 1)
             {
                 return;
             }
