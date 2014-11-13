@@ -250,6 +250,7 @@ namespace Game.RepresentLogic
         UI_LEVELSELECT  = 2,        //关卡选择界面
         UI_GAMEMAIN     = 3,        //游戏主界面
         UI_GAMEMENU     = 4,        //游戏菜单界面
+        UI_GAMEOVER     = 5,        //游戏结束界面
     }
     public class UIPathDef
     {

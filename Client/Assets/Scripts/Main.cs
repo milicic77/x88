@@ -4,8 +4,8 @@ using Game;
 using Game.Common;
 
 public class Main : MonoBehaviour {
-
     public static Game.GameClient m_Client = new Game.GameClient();
+
 	void Start ()
     {
         //Console.Init();

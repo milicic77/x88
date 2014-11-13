@@ -16,7 +16,7 @@ namespace Game.RepresentLogic
     {
         private const string SCREEN_UIROOT_PATH = "Prefabs\\UI\\ScreenCavas";
         private RLScreenUIRoot m_screenUIRoot = null;
-        
+
         public void Init()
         {
             //创建屏幕UI背景画布
@@ -25,6 +25,7 @@ namespace Game.RepresentLogic
             //游戏逻辑事件注册
             EventCenter.Event_ClientInitComplete += OnGameStart;
             EventCenter.Event_LevelStart += OnLevelStart;
+            EventCenter.Event_GameOver += OnGameOver;
 
             //UI事件注册
             UIEventCenter.EventAdventureGameStart += OnAdventureGameStart;
@@ -47,6 +48,17 @@ namespace Game.RepresentLogic
             if (uiSetting != null)
             {
                 m_screenUIRoot.CreateChild(UIPathDef.UI_RESOURCE_PATH + uiSetting.resourceName);
+            }
+        }
+        public void OnGameOver(object sender, EventDef.GameOverArgs args)
+        {
+            if(args.nWin == 0)
+            {
+                RLUISetting uiSetting = RLResourceManager.Instance().GetRLUISetting((int)UITypeDef.UI_GAMEOVER);
+                if (uiSetting != null)
+                {
+                    m_screenUIRoot.CreateChild(UIPathDef.UI_RESOURCE_PATH + uiSetting.resourceName);
+                }
             }
         }
 
