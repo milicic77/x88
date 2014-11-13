@@ -94,6 +94,11 @@ namespace Game.RepresentLogic
             return scene;
         }
 
+        public void DestroyScene(RLScene scene)
+        {
+            GameObject.Destroy(scene.gameObject);
+        }
+
         // 创建表现Doodad
         public RLDoodad CreateDoodad(int nRepresentId, float fWorldX, float fWorldY)
         {

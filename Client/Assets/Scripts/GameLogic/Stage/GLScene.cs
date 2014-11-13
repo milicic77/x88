@@ -28,7 +28,7 @@ namespace Game.GameLogic
 
         public void UnInit()
         {
-
+            Represent.Instance().DestroyScene(m_RLScene);
         }
 
         public void AddDoodad(GLDoodad doodad)

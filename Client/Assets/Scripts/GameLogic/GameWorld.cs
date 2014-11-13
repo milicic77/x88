@@ -48,11 +48,20 @@ namespace Game.GameLogic
 
         public void CreateStage(int nStageId)
         {
+            DestroyStage();
+
             m_stage = new GLStage();
-
             m_stage.Init(nStageId);
-
             m_stage.Start();
+        }
+
+        public void DestroyStage()
+        {
+            if (m_stage != null)
+            {
+                m_stage.UnInit();
+                m_stage = null;
+            }
         }
     }
 }

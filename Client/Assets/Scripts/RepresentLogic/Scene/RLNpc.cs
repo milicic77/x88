@@ -119,11 +119,11 @@ namespace Game.RepresentLogic
 
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = nOrder;
 
+            m_BloodBar = RLBloodBar.Create();
+            AddChild(m_BloodBar.gameObject);
             gameObject.transform.position = new Vector3(fWorldX, fWorldY, 0);
 
             m_GLNpc = npc;
-
-            m_BloodBar = RLBloodBar.Create();
 
             UpdateBloodBarPosition();
         }
@@ -133,9 +133,14 @@ namespace Game.RepresentLogic
             RLBloodBar.Destroy(m_BloodBar);
         }
 
+        public void AddChild(GameObject gameobject)
+        {
+            gameobject.transform.parent = gameObject.transform;
+        }
+
         private void UpdateBloodBarPosition()
         {
-            m_BloodBar.gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 0.1f);
+            //m_BloodBar.gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y);
         }
 
         public void SetPosition(float fWorldX, float fWorldY)

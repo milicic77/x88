@@ -132,14 +132,12 @@ namespace Game.GameLogic
         {
             Common.Console.Write("游戏结束中");
             UnRegisterEvents();
-
-            EventDef.GameOverArgs EventArg = new EventDef.GameOverArgs();
-            EventArg.nWin = 1;
-            EventCenter.Event_GameOver(null, EventArg);
         }
 
         public void UnInit()
         {
+            m_GLScene.UnInit();
+
             UnRegisterEvents();
         }
         public GLScene Scene
