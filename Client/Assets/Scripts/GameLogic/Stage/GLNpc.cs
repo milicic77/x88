@@ -93,6 +93,8 @@ namespace Game.GameLogic
 
             m_nLife = template.nLife;
 
+            m_nDelete = 0;
+
             // 出生特效
             m_GLEffect.Init(1, nCellX, nCellY, m_GLScene);
             m_GLScene.AddEffect(m_GLEffect);
@@ -104,6 +106,7 @@ namespace Game.GameLogic
         public void UnInit()
         {
             Represent.Instance().DestroyNpc(m_RLNpc);
+            m_nDelete = 1;
         }
 
         public int GetLogicCenterX()
