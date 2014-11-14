@@ -177,6 +177,8 @@ namespace Game.GameLogic
         public int exploseRadius = 0;
         public int childTemplateId = 0;
         public float lifespan = 0;
+        public int warheadRadius = 0;
+        public UnityEngine.Vector2 wardheadOffset = UnityEngine.Vector2.zero;
     }
     //////////////////////////////////////////////////////////////////////////
     class GameLogicDef

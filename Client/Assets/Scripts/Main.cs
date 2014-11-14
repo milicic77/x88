@@ -13,7 +13,6 @@ public class Main : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-
         // 在此处理逻辑帧和绘制帧
         m_Client.Loop();
 	}

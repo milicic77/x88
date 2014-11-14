@@ -185,7 +185,7 @@ namespace Game.RepresentLogic
         }
 
         // 创建表现子弹
-        public RLMissile CreateMissile(GLMissile itself, int nRepresentId)
+        public RLMissile CreateMissile(GLMissile itself, Vector2 offset, int radius, int nRepresentId)
         {
             GameObject missileObject = new GameObject();
             RLMissile rlMissile = missileObject.AddComponent<RLMissile>();
@@ -196,9 +196,8 @@ namespace Game.RepresentLogic
 
             rigidbody.isKinematic = true;
 
-            Vector2 offset = new Vector2(0f, 0.09f);
-            collider.offset = offset;
-            collider.radius = 0.08f;
+            collider.offset = new Vector2(RepresentCommon.LogicDis2WorldDis((int)offset.x), RepresentCommon.LogicDis2WorldDis((int)offset.y));
+            collider.radius = RepresentCommon.LogicDis2WorldDis(radius);
             collider.isTrigger = true;
 
             rlMissile.Init(itself, nRepresentId,

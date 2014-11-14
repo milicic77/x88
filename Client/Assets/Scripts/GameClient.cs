@@ -22,16 +22,16 @@ namespace Game
             try
             {
                 //////////////////////////////////////////////////////////////////////////
-                LogWriter.Write("Initializing Client...");
+                Debug.Log("Initializing Client...");
 
                 //////////////////////////////////////////////////////////////////////////
                 // 初始化表现逻辑
-                LogWriter.Write("Initializing Represent...");
+                Debug.Log("Initializing Represent...");
                 Represent.Instance().Init();
 
                 //////////////////////////////////////////////////////////////////////////
                 // 初始化游戏逻辑
-                LogWriter.Write("Initializing GameWorld...");
+                Debug.Log("Initializing GameWorld...");
                 GameWorld.Instance().Init();
 
                 m_ClientInitialized = true;

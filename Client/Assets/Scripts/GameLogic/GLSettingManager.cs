@@ -602,6 +602,15 @@ namespace Game.GameLogic
                     tabFile.GetFloat(i, "Lifespan", 0, ref lifespan);
                     template.lifespan = lifespan;
 
+                    int warheadRadius = 0;
+                    tabFile.GetInteger(i, "WarheadRadius", 0, ref warheadRadius);
+                    template.warheadRadius = warheadRadius;
+
+                    string temp = null;
+                    tabFile.GetString(i, "WarheadOffset", "", ref temp);
+                    string[] offsetString = temp.Split(new char[] { ',' });
+                    template.wardheadOffset = new UnityEngine.Vector2(Int32.Parse(offsetString[0]), Int32.Parse(offsetString[1]));
+
                     m_GLMissileTemplateList[template.templateId] = template;
                 }
             }

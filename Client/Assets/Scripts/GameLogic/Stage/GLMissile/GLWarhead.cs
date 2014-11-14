@@ -143,4 +143,28 @@ namespace Game.GameLogic.Missile
             EventCenter.Event_NpcHurt(null, args);
         }
     }
+
+    public class GLRocketWarhead : GLWarheadBase
+    {
+        public int impactDamage;
+
+        public GLRocketWarhead(GLMissile itself)
+            : base(itself)
+        {
+        }
+
+        public override void OnTriggerEnter(GLNpc target)
+        {
+            OnImpact(target);
+        }
+
+        public void OnImpact(GLNpc target)
+        {
+            EventDef.NpcHurtArgs args = new EventDef.NpcHurtArgs();
+            args.npc = target;
+            args.missile = itself;
+            args.damage = impactDamage;
+            EventCenter.Event_NpcHurt(null, args);
+        }
+    }
 }

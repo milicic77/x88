@@ -21,6 +21,8 @@ namespace Game.GameLogic
         BULLET = 1,
         BOMB,
         MULTI,
+        ROCKET,
+
     }
 
     public class GLMissile
@@ -34,7 +36,7 @@ namespace Game.GameLogic
         public void Init(int templateId, Vector2 direction, Vector2 position, GLNpc targetNpc)
         {
             GLMissileTemplate template = GLSettingManager.Instance().GetGLMissileTemplate(templateId);
-            rlMissile = Represent.Instance().CreateMissile(this, template.representId);
+            rlMissile = Represent.Instance().CreateMissile(this, template.wardheadOffset, template.warheadRadius, template.representId);
 
             switch (template.ballisticMode)
             {
@@ -84,6 +86,11 @@ namespace Game.GameLogic
                     multiWarhead.impactDamage = template.impactDamage;
                     multiWarhead.childTemplateId = template.childTemplateId;
                     warhead = multiWarhead;
+                    break;
+                case WarheadType.ROCKET:
+                    GLRocketWarhead rocketWarhead = new GLRocketWarhead(this);
+                    rocketWarhead.impactDamage = template.impactDamage;
+                    warhead = rocketWarhead;
                     break;
                 default:
                     break;
