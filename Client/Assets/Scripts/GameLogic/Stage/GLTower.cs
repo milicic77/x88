@@ -447,7 +447,7 @@ namespace Game.GameLogic
             GLMissile missile      = new GLMissile();
             GameWorld.Instance().m_stage.m_GLMissileList.Add(missile);
 
-            missile.Init(1, vecTowerTube, towerPos, m_Target as GLNpc);
+            missile.Init(2, vecTowerTube, towerPos, m_Target as GLNpc);
         }
     }
 }

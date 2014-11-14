@@ -558,40 +558,47 @@ namespace Game.GameLogic
                 {
                     GLMissileTemplate template = new GLMissileTemplate();
 
-                    int nTemp = 0;
-                    string szTemp = null;
+                    int templateId = 0;
+                    tabFile.GetInteger(i, "TemplateId", 0, ref templateId);
+                    template.templateId = templateId;
 
-                    tabFile.GetInteger(i, "TemplateId", 0, ref nTemp);
-                    template.nTemplateId = nTemp;
+                    string name = null;
+                    tabFile.GetString(i, "Name", "", ref name);
+                    template.name = name;
 
-                    tabFile.GetString(i, "Name", "", ref szTemp);
-                    template.szName = szTemp;
+                    int representId = 0;
+                    tabFile.GetInteger(i, "RepresentId", 0, ref representId);
+                    template.representId = representId;
 
-                    int nRepresentId = 0;
-                    tabFile.GetInteger(i, "RepresentId", 0, ref nRepresentId);
-                    template.nRepresentId = nRepresentId;
+                    int ballisticMode = 0;
+                    tabFile.GetInteger(i, "BallisticMode", 0, ref ballisticMode);
+                    template.ballisticMode = (BallisticMode)ballisticMode;
 
-                    int nBallisticMode = 0;
-                    tabFile.GetInteger(i, "BallisticMode", 0, ref nBallisticMode);
-                    template.eBallisticMode = (BallisticMode)nBallisticMode;
+                    int warheadType = 0;
+                    tabFile.GetInteger(i, "WarheadType", 0, ref warheadType);
+                    template.warheadType = (WarheadType)warheadType;
 
-                    float fSpeed = 0f;
-                    tabFile.GetFloat(i, "Speed", 0f, ref fSpeed);
-                    template.fSpeed = fSpeed;
+                    float speed = 0f;
+                    tabFile.GetFloat(i, "Speed", 0f, ref speed);
+                    template.speed = speed;
 
-                    float fPassThrougnDamge = 0f;
-                    tabFile.GetFloat(i, "PassThroughDamage", 0f, ref fPassThrougnDamge);
-                    template.fPassThroughDamage = fPassThrougnDamge;
+                    int impactDamage = 0;
+                    tabFile.GetInteger(i, "ImpactDamage", 0, ref impactDamage);
+                    template.impactDamage = impactDamage;
 
-                    float fExploseDamage = 0f;
-                    tabFile.GetFloat(i, "ExploseDamage", 0f, ref fExploseDamage);
-                    template.fExploseDamage = fExploseDamage;
+                    int exploseDamage = 0;
+                    tabFile.GetInteger(i, "ExploseDamage", 0, ref exploseDamage);
+                    template.exploseDamage = exploseDamage;
 
-                    float fLifespan = 0;
-                    tabFile.GetFloat(i, "Lifespan", 0, ref fLifespan);
-                    template.fLifespan = fLifespan;
+                    float lifespan = 0;
+                    tabFile.GetFloat(i, "Lifespan", 0, ref lifespan);
+                    template.lifespan = lifespan;
 
-                    m_GLMissileTemplateList[template.nTemplateId] = template;
+                    int exploseRadius = 0;
+                    tabFile.GetInteger(i, "ExploseRadius", 0, ref exploseRadius);
+                    template.exploseRadius = exploseRadius;
+
+                    m_GLMissileTemplateList[template.templateId] = template;
                 }
             }
             catch (Exception e)

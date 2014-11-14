@@ -185,7 +185,7 @@ namespace Game.RepresentLogic
         }
 
         // 创建表现子弹
-        public RLMissile CreateMissile(RLNpc target, int nRepresentId)
+        public RLMissile CreateMissile(GLMissile itself, int nRepresentId)
         {
             GameObject missileObject = new GameObject();
             RLMissile rlMissile = missileObject.AddComponent<RLMissile>();
@@ -201,7 +201,7 @@ namespace Game.RepresentLogic
             collider.radius = 0.08f;
             collider.isTrigger = true;
 
-            rlMissile.Init(target, nRepresentId,
+            rlMissile.Init(itself, nRepresentId,
                 (int)RLSceneObjectOrder.RLSceneOrder_Missile);
 
             return rlMissile;

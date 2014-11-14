@@ -23,8 +23,13 @@ namespace Game.GameLogic.Missile
             lifespan -= GameDef.LOGIC_FRAME_INTERVEL;
             if (lifespan <= 0f)
             {
-                itself.Destroy();
+                OnTimeout();
             }
+        }
+
+        private void OnTimeout()
+        {
+            itself.Destroy();
         }
     }
 }

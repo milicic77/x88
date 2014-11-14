@@ -10,8 +10,9 @@ namespace Game.GameLogic.Missile
 {
     public class GLBallisticBase
     {
-        protected float m_Speed;
-        protected Rigidbody2D m_Itself;
+        protected float speed;
+        protected GLMissile itself;
+        protected Rigidbody2D rigidbody;
 
         public virtual void Activate()
         {
@@ -23,19 +24,25 @@ namespace Game.GameLogic.Missile
     {
         protected GLNpc m_Target;
 
-        public void Init(GLNpc target, Rigidbody2D itself, float speed, Vector2 initDirection, Vector2 position)
+        public void Init(GLNpc target, GLMissile itself, float speed, Vector2 initDirection, Vector2 position)
         {
+            this.itself = itself;
             m_Target = target;
-            m_Itself = itself;
-            m_Speed = speed;
+            rigidbody = itself.rlMissile.GetComponent<Rigidbody2D>();
+            this.speed = speed;
 
-            m_Itself.velocity = initDirection * m_Speed * GameDef.LOGIC_FRAME_INTERVEL;
-            m_Itself.position = position;
+            rigidbody.velocity = initDirection * speed * GameDef.LOGIC_FRAME_INTERVEL;
+            rigidbody.position = position;
         }
 
         public override void Activate()
         {
-            if (m_Itself == null || m_Target == null || m_Target.m_nDelete == 1)
+            if (itself == null || itself.bExplosed)
+            {
+                rigidbody.velocity = Vector2.zero;
+            }
+
+            if (m_Target == null || m_Target.m_nDelete == 1)
             {
                 return;
             }
@@ -43,8 +50,8 @@ namespace Game.GameLogic.Missile
             float x = RepresentCommon.LogicX2WorldX(m_Target.GetLogicCenterX());
             float y = RepresentCommon.LogicY2WorldY(m_Target.GetLogicCenterY());
 
-            Vector2 direction = (new Vector2(x, y) - m_Itself.position).normalized;
-            m_Itself.velocity = Vector2.Lerp(m_Itself.velocity, direction * m_Speed * GameDef.LOGIC_FRAME_INTERVEL, 0.5f);
+            Vector2 direction = (new Vector2(x, y) - rigidbody.position).normalized;
+            rigidbody.velocity = Vector2.Lerp(rigidbody.velocity, direction * speed * GameDef.LOGIC_FRAME_INTERVEL, 0.5f);
         }
     }
 }

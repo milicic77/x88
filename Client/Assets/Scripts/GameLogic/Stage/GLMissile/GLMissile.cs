@@ -11,30 +11,39 @@ namespace Game.GameLogic
 {
     public enum BallisticMode
     {
-        LINEAR,
+        LINEAR = 1,
         GUIDED,
         CURVE,
     }
+
+    public enum WarheadType
+    {
+        BULLET = 1,
+        BOMB,
+        MULTI,
+    }
+
     public class GLMissile
     {
         public RLMissile rlMissile;
         private GLBallisticBase ballisticSystem;
-        private GLDamageControl damageControl;
-        private GLLifeControl lifeControl;
+        public GLWarheadBase warhead;
+        public GLLifeControl lifeControl;
+        public bool bExplosed = false;
 
         public void Init(int templateId, Vector2 direction, Vector2 position, GLNpc targetNpc)
         {
             GLMissileTemplate template = GLSettingManager.Instance().GetGLMissileTemplate(templateId);
-            rlMissile = Represent.Instance().CreateMissile(targetNpc.m_RLNpc, template.nRepresentId);
+            rlMissile = Represent.Instance().CreateMissile(this, template.representId);
 
-            switch (template.eBallisticMode)
+            switch (template.ballisticMode)
             {
                 case BallisticMode.LINEAR:
                     GLGuidedBallistic linearBallistic = new GLGuidedBallistic();
                     linearBallistic.Init(
                         null, 
-                        rlMissile.gameObject.GetComponent<Rigidbody2D>(), 
-                        template.fSpeed, 
+                        this, 
+                        template.speed, 
                         direction,
                         position
                         );
@@ -44,8 +53,8 @@ namespace Game.GameLogic
                     GLGuidedBallistic guidedBallistic = new GLGuidedBallistic();
                     guidedBallistic.Init(
                         targetNpc,
-                        rlMissile.gameObject.GetComponent<Rigidbody2D>(),
-                        template.fSpeed,
+                        this,
+                        template.speed,
                         direction,
                         position
                         );
@@ -57,11 +66,30 @@ namespace Game.GameLogic
                     break;
             }
 
-            damageControl = new GLDamageControl();
-            damageControl.Init(this);
+            switch (template.warheadType)
+            {
+                case WarheadType.BULLET:
+                    GLBulletWarhead bulletWarhead = new GLBulletWarhead(this);
+                    bulletWarhead.impactDamage = template.impactDamage;
+                    warhead = bulletWarhead;
+                    break;
+                case WarheadType.BOMB:
+                    GLBombWarhead bombWarhead = new GLBombWarhead(this);
+                    bombWarhead.exploseDamage = template.exploseDamage;
+                    bombWarhead.exploseRadius = template.exploseRadius;
+                    warhead = bombWarhead;
+                    break;
+                case WarheadType.MULTI:
+                    GLMultiWarhead multiWarhead = new GLMultiWarhead(this);
+                    multiWarhead.impactDamage = template.impactDamage;
+                    warhead = multiWarhead;
+                    break;
+                default:
+                    break;
+            }
 
             lifeControl = new GLLifeControl();
-            lifeControl.lifespan = template.fLifespan;
+            lifeControl.lifespan = template.lifespan;
             lifeControl.itself = this;
         }
 
@@ -74,7 +102,7 @@ namespace Game.GameLogic
         public void Destroy()
         {
             GameWorld.Instance().m_stage.m_GLMissileList.Remove(this);
-            UnityEngine.Object.Destroy(rlMissile.gameObject);
+            rlMissile.Destroy();
         }
     }
 }

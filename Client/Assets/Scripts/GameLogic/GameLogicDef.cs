@@ -166,14 +166,16 @@ namespace Game.GameLogic
     // 逻辑场景子弹模板
     public class GLMissileTemplate
     {
-        public int nTemplateId = 0;
-        public string szName = null;
-        public int nRepresentId = 0;
-        public BallisticMode eBallisticMode = 0;
-        public float fSpeed = 0f;
-        public float fPassThroughDamage = 0f;
-        public float fExploseDamage = 0f;
-        public float fLifespan = 0;
+        public int templateId = 0;
+        public string name = null;
+        public int representId = 0;
+        public BallisticMode ballisticMode = 0;
+        public WarheadType warheadType = 0;
+        public float speed = 0f;
+        public int impactDamage = 0;
+        public int exploseDamage = 0;
+        public int exploseRadius = 0;
+        public float lifespan = 0;
     }
     //////////////////////////////////////////////////////////////////////////
     class GameLogicDef

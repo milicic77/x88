@@ -333,7 +333,7 @@ namespace Game.GameLogic
             {
                 // TODO 应该获取子弹的攻击力来减掉相应的血，此处先固定减1血
                 // Npc掉血
-                args.npc.m_nLife--;
+                args.npc.m_nLife -= args.damage;
                 if (args.npc.m_nLife <= 0)
                 {
                     int nCellX = RepresentCommon.LogicX2CellX(args.npc.m_nLogicCenterX);

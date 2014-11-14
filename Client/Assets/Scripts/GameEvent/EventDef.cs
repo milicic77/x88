@@ -64,6 +64,7 @@ namespace Game.GameEvent
         {
             public GLNpc npc;
             public GLMissile missile;
+            public int damage;
         }
         //////////////////////////////////////////////////////////////////////////
     }
