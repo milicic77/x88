@@ -24,6 +24,11 @@ namespace Game.GameLogic.Missile
         {
         
         }
+
+        public virtual void OnExplose(GLNpc target = null)
+        {
+
+        }
     }
 
     public class GLBulletWarhead : GLWarheadBase
@@ -73,7 +78,7 @@ namespace Game.GameLogic.Missile
             }
         }
 
-        public void OnExplose(GLNpc target)
+        public override void OnExplose(GLNpc target)
         {
             OnExploseDamage(target);
             circleCollider.radius = RepresentCommon.LogicDis2WorldDis(exploseRadius);
@@ -94,6 +99,7 @@ namespace Game.GameLogic.Missile
     public class GLMultiWarhead : GLWarheadBase
     {
         public int impactDamage;
+        public int childTemplateId;
 
         public GLMultiWarhead(GLMissile itself)
             : base(itself)
@@ -106,7 +112,7 @@ namespace Game.GameLogic.Missile
             OnExplose(target);
         }
 
-        public void OnExplose(GLNpc target)
+        public override void OnExplose(GLNpc target)
         {
             itself.bExplosed = true;
             itself.lifeControl.lifespan = GameDef.LOGIC_FRAME_INTERVEL * 3;
@@ -118,12 +124,13 @@ namespace Game.GameLogic.Missile
                 -Vector2.up
             };
 
-            for (int i = 0; i < 4; ++i)
+            for (int i = 0; i < 2; ++i)
             {
+                int directionIdx = UnityEngine.Random.Range(0, 4);
                 GLMissile missile = new GLMissile();
                 GameWorld.Instance().m_stage.m_GLMissileList.Add(missile);
 
-                missile.Init(1, directions[i], itself.rlMissile.gameObject.transform.position, null);
+                missile.Init(childTemplateId, directions[directionIdx], itself.rlMissile.gameObject.transform.position, null);
             }
         }
 

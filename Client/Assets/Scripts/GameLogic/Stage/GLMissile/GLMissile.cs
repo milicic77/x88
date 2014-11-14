@@ -82,6 +82,7 @@ namespace Game.GameLogic
                 case WarheadType.MULTI:
                     GLMultiWarhead multiWarhead = new GLMultiWarhead(this);
                     multiWarhead.impactDamage = template.impactDamage;
+                    multiWarhead.childTemplateId = template.childTemplateId;
                     warhead = multiWarhead;
                     break;
                 default:

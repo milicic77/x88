@@ -590,13 +590,17 @@ namespace Game.GameLogic
                     tabFile.GetInteger(i, "ExploseDamage", 0, ref exploseDamage);
                     template.exploseDamage = exploseDamage;
 
-                    float lifespan = 0;
-                    tabFile.GetFloat(i, "Lifespan", 0, ref lifespan);
-                    template.lifespan = lifespan;
-
                     int exploseRadius = 0;
                     tabFile.GetInteger(i, "ExploseRadius", 0, ref exploseRadius);
                     template.exploseRadius = exploseRadius;
+
+                    int childTemplateId = 0;
+                    tabFile.GetInteger(i, "ChildTemplateId", 0, ref childTemplateId);
+                    template.childTemplateId = childTemplateId;
+
+                    float lifespan = 0;
+                    tabFile.GetFloat(i, "Lifespan", 0, ref lifespan);
+                    template.lifespan = lifespan;
 
                     m_GLMissileTemplateList[template.templateId] = template;
                 }

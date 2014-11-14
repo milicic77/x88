@@ -175,6 +175,7 @@ namespace Game.GameLogic
         public int impactDamage = 0;
         public int exploseDamage = 0;
         public int exploseRadius = 0;
+        public int childTemplateId = 0;
         public float lifespan = 0;
     }
     //////////////////////////////////////////////////////////////////////////
