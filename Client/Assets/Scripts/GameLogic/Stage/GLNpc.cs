@@ -64,12 +64,15 @@ namespace Game.GameLogic
         // 当前血量
         public int m_nLife = 0;
 
+        public GLNpcTemplate m_Template;
+
         // 出生特效
         public GLEffect m_GLEffect = new GLEffect();
         public void Init(int nTemplateId, int nCellX, int nCellY, GLScene scene)
         {
             GLNpcTemplate template = GLSettingManager.Instance().GetGLNpcTemplate(nTemplateId);
 
+            m_Template = template;
             m_GLScene = scene;
 
             // 格子坐标 => 逻辑坐标

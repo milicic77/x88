@@ -8,17 +8,18 @@ namespace Game.RepresentLogic
 {
     public class RLBloodBar : MonoBehaviour
     {
-        // 血条前景贴图
-        public Texture2D m_BloodFG;
-        // 血条背景贴图
-        public Texture2D m_BloodBG;
+        private Texture2D m_BloodFG; // 血条前景贴图
+        private Texture2D m_BloodBG; // 血条背景贴图
 
-        public GameObject m_ObjectBG;                              // 背景容器：存放背景图片
-        public GameObject m_ObjectFG;                              // 前景容器：存放前景动画
+        private GameObject m_ObjectBG; // 背景容器：存放背景图片
+        private GameObject m_ObjectFG; // 前景容器：存放前景动画
 
-        public Sprite m_sprites;
+        private SpriteRenderer spriteRenderer; // 渲染组件
 
-        public void Init()
+        private int m_nStartShowTime = 0; // 开始显示的时间（毫秒）
+        private int m_nShowTime = 0; // 显示时间（毫秒）
+
+        public void Init(float fWorldX, float fWorldY)
         {
             m_BloodFG = Resources.Load("image/misc/MonsterHP01") as Texture2D;
             m_BloodBG = Resources.Load("image/misc/MonsterHP02") as Texture2D;
@@ -26,10 +27,10 @@ namespace Game.RepresentLogic
             // 背景容器初始化
             m_ObjectBG = new GameObject();
             Rect spriteBGRect = new Rect(0, 0, m_BloodBG.width, m_BloodBG.height);
-            Sprite spriteBG = Sprite.Create(m_BloodBG, spriteBGRect, new Vector2(0.5f, 0.5f));
+            Sprite spriteBG = Sprite.Create(m_BloodBG, spriteBGRect, new Vector2(1.0f, 0.5f));
             m_ObjectBG.AddComponent<SpriteRenderer>().sprite = spriteBG;
             m_ObjectBG.GetComponent<SpriteRenderer>().sortingOrder = 2;
-            m_ObjectBG.transform.position = new Vector3(0, 0, 0);
+            m_ObjectBG.transform.position = new Vector3(RepresentCommon.LogicDis2WorldDis(m_BloodBG.width) / 2, 0, 0);
             m_ObjectBG.transform.parent = gameObject.transform;
 
             // 前景容器初始化
@@ -44,9 +45,11 @@ namespace Game.RepresentLogic
             gameObject.name = "bloodbar";
             gameObject.AddComponent<SpriteRenderer>();
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
-            gameObject.transform.position = new Vector3(0, 0, 0);
+            spriteRenderer = GetComponent<Renderer>() as SpriteRenderer;
+            gameObject.transform.position = new Vector3(fWorldX, fWorldY, 0);
 
-            m_ObjectBG.transform.localScale = new Vector3(0.5f,1,1);
+            // 初始设为不可见
+            SetVisible(false);
         }
 
         private void UnInit()
@@ -54,12 +57,30 @@ namespace Game.RepresentLogic
 
         }
 
-        public static RLBloodBar Create()
+        // 设置是否可见
+        private void SetVisible(bool bShow)
+        {
+            gameObject.SetActive(bShow);
+        }
+
+        // 显示血条 （血量百分比 显示时间毫秒）
+        public void Show(int nPercent, int nTime)
+        {
+            float fScale = (float)(100 - nPercent) / 100f;
+            m_ObjectBG.transform.localScale = new Vector3(fScale, 1, 1);
+
+            m_nShowTime = nTime;
+            m_nStartShowTime = Environment.TickCount;
+
+            SetVisible(true);
+        }
+
+        public static RLBloodBar Create(float fWorldX, float fWorldY)
         {
             GameObject gameobject = new GameObject();
             RLBloodBar bloodbar = gameobject.AddComponent<RLBloodBar>();
 
-            bloodbar.Init();
+            bloodbar.Init(fWorldX, fWorldY);
 
             return bloodbar;
         }
@@ -72,23 +93,17 @@ namespace Game.RepresentLogic
 
         virtual public void Update()
         {
-            //float fBGTop = transform.position.y + m_BloodBG.height / 2;
-            //float fBGLeft = transform.position.x - m_BloodBG.width / 2;
-
-            //float fFGTop = transform.position.y + m_BloodFG.height / 2;
-            //float fFGLeft = transform.position.x - m_BloodFG.width / 2;
-
-            //// 绘制前景
-            //GUI.DrawTexture(
-            //    new Rect(fFGLeft, fFGTop, m_BloodFG.width, m_BloodFG.height), 
-            //    m_BloodFG
-            //);
-
-            //// 绘制背景
-            //GUI.DrawTexture(
-            //    new Rect(fBGLeft, fBGTop, m_BloodBG.width, m_BloodBG.height), 
-            //    m_BloodBG
-            //);
+            if (m_nShowTime != 0) // 需要显示
+            {
+                if (Environment.TickCount - m_nStartShowTime >= m_nShowTime)
+                {
+                    // 显示时间够了，不显示
+                    m_nShowTime = 0;
+                    m_nStartShowTime = 0;
+                    SetVisible(false);
+                }
+            }
+            
         }
     }
 }

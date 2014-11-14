@@ -348,6 +348,12 @@ namespace Game.GameLogic
                     args.npc.UnInit();
                     m_GLNpcList.Remove(args.npc);
                 }
+                else
+                {
+                    // 显示血条2秒
+                    int nBloodPercent = args.npc.m_nLife * 100 / args.npc.m_Template.nLife;
+                    args.npc.m_RLNpc.m_BloodBar.Show(nBloodPercent, 2000);
+                }
                 
                 //// 改变萝卜外观
                 //m_GLRadish.ChangeRepresent(10 - m_GLRadish.m_nLife + 1);
