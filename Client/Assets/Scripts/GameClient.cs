@@ -15,7 +15,7 @@ namespace Game
         private uint m_LastShowFpsFrames = 0;
         private float m_FpsUpdateTime = 0;
 
-        public void Init()
+        public void Init(bool isOpenScreenUI)
         {
             bool success = true;
 
@@ -27,16 +27,18 @@ namespace Game
                 //////////////////////////////////////////////////////////////////////////
                 // 初始化表现逻辑
                 Debug.Log("Initializing Represent...");
-                Represent.Instance().Init();
+                Represent.Instance().Init(isOpenScreenUI);
 
                 //////////////////////////////////////////////////////////////////////////
                 // 初始化游戏逻辑
                 Debug.Log("Initializing GameWorld...");
-                GameWorld.Instance().Init();
+                GameWorld.Instance().Init(isOpenScreenUI);
 
                 m_ClientInitialized = true;
                 GameEnv.LogicStartTime = Time.time;
-                EventCenter.Event_ClientInitComplete(null, null);
+
+                if (isOpenScreenUI)
+                    EventCenter.Event_ClientInitComplete(null, null);
             }
             catch (Exception e)
             {

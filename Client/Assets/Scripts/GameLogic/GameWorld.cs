@@ -11,11 +11,14 @@ namespace Game.GameLogic
     public class GameWorld : Common.Singleton<GameWorld>
     {
         public GLStage m_stage = null;
-        public void Init()
+        public void Init(bool isOpenScreenUI)
         {
             GLSettingManager.Instance().Init();
 
-            EventCenter.Event_LevelStart += OnLevelStart;
+            if (isOpenScreenUI)
+                EventCenter.Event_LevelStart += OnLevelStart;
+            else
+                CreateStage(1);
         }
 
         public void UnInit()

@@ -9,7 +9,7 @@ namespace Game.RepresentLogic
 {
     public class Represent : Common.Singleton<Represent>
     {
-        public void Init()
+        public void Init(bool isOpenScreenUI)
         {
             // 资源管理器
             RLResourceManager.Instance().Init();
@@ -21,7 +21,8 @@ namespace Game.RepresentLogic
             CreateCamera();   
 
             // 创建UI
-            RLUIManager.Instance().Init();
+            if (isOpenScreenUI)
+                RLUIManager.Instance().Init();
         }
 
         public void UnInit()

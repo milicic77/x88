@@ -5,11 +5,13 @@ using Game.Common;
 
 public class Main : MonoBehaviour {
     public static Game.GameClient m_Client = new Game.GameClient();
+    [SerializeField]
+    public bool isOpenScreenUI = false;
 
 	void Start ()
     {
         //Console.Init();
-        m_Client.Init();
+        m_Client.Init(isOpenScreenUI);
 	}
 	
 	void FixedUpdate () {
