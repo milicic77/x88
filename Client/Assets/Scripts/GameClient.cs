@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -25,12 +25,12 @@ namespace Game
                 Debug.Log("Initializing Client...");
 
                 //////////////////////////////////////////////////////////////////////////
-                // ³õÊ¼»¯±íÏÖÂß¼­
+                // åˆå§‹åŒ–è¡¨ç°é€»è¾‘
                 Debug.Log("Initializing Represent...");
                 Represent.Instance().Init(isOpenScreenUI);
 
                 //////////////////////////////////////////////////////////////////////////
-                // ³õÊ¼»¯ÓÎÏ·Âß¼­
+                // åˆå§‹åŒ–æ¸¸æˆé€»è¾‘
                 Debug.Log("Initializing GameWorld...");
                 GameWorld.Instance().Init(isOpenScreenUI);
 
@@ -68,17 +68,17 @@ namespace Game
                 return;
 
             //////////////////////////////////////////////////////////////////////////
-            // ´¦ÀíÂß¼­Ö¡
+            // å¤„ç†é€»è¾‘å¸§
             while (CanActive())
             {
                 Activate();
                 GameEnv.CurrentLogicFrame++;
             }
             //////////////////////////////////////////////////////////////////////////
-            // ´¦Àí»æÖÆÖ¡
+            // å¤„ç†ç»˜åˆ¶å¸§
             Represent.Instance().Update();
 
-            // ÏÔÊ¾FPS
+            // æ˜¾ç¤ºFPS
             //ShowFPS();
         }
 
@@ -107,7 +107,7 @@ namespace Game
                 m_FpsUpdateTime = 0;
                 UInt32 nFrames = GameEnv.CurrentLogicFrame - m_LastShowFpsFrames;
                 StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("µ±Ç°FPS={0}\n", nFrames);
+                sb.AppendFormat("å½“å‰FPS={0}\n", nFrames);
                 Debug.Log(sb.ToString());
                 m_LastShowFpsFrames = GameEnv.CurrentLogicFrame;
             }
