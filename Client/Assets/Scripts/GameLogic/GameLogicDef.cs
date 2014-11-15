@@ -159,6 +159,7 @@ namespace Game.GameLogic
         public string szName        = null;                             // 名字
         public int    nRepresentId  = 0;                                // 表现ID
         public int    nBulletTempId = 0;                                // 子弹模板ID
+        public int    nAITempId     = 0;                                // AI模板ID
     }
     //////////////////////////////////////////////////////////////////////////
     // 逻辑场景子弹模板

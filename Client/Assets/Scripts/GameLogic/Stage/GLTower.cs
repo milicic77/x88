@@ -15,6 +15,7 @@ namespace Game.GameLogic
         public  RLTower       m_RLTower         = null;                 // 表现炮塔
         private BehaviourTree m_TowerAI         = null;                 // 炮塔AI
         private int           m_nBulletTempId   = 0;                    // 子弹模板Id
+        private int           m_nAITempId       = 0;                    // AI模板Id
         private int           m_nLogicX         = 0;                    // 逻辑坐标X
         private int           m_nLogicY         = 0;                    // 逻辑坐标Y
         private int           m_nAngle          = 0;                    // 炮塔当前角度
@@ -46,13 +47,14 @@ namespace Game.GameLogic
             LogicX       = nLogicX;
             LogicY       = nLogicY;
             BulletTempId = t.nBulletTempId;
+            AITempId     = t.nAITempId;
             FireRange    = 200;
             AngularSpeed = 10;
             AimDeviation = 5;
             AttackFreq   = 20;
 
             // 初始化AI
-            m_TowerAI = GLTowerAI.Create(1, this);
+            m_TowerAI = GLTowerAI.Create(AITempId, this);
         }
 
         public void UnInit()
@@ -139,8 +141,13 @@ namespace Game.GameLogic
         }
         public int BulletTempId
         {
-            get { return m_nBulletTempId; }
+            get { return m_nBulletTempId;  }
             set { m_nBulletTempId = value; }
+        }
+        public int AITempId
+        {
+            get { return m_nAITempId;  }
+            set { m_nAITempId = value; }
         }
         public int LogicX
         {
