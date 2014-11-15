@@ -190,7 +190,9 @@ namespace Game.GameLogic
             }
 
             // 攻击成功
-            tower.Attack();
+            Vector2 bulletDirection = new Vector2(Mathf.Sin(tower.Angle * Mathf.Deg2Rad), Mathf.Cos(tower.Angle * Mathf.Deg2Rad));
+            Vector2 bulletPosition  = new Vector2(RepresentCommon.LogicX2WorldX(tower.LogicX), RepresentCommon.LogicY2WorldY(tower.LogicY));
+            tower.Attack(bulletDirection, bulletPosition);
             m_State = BTTaskState.SUCCESS;
         }
     }
@@ -243,6 +245,7 @@ namespace Game.GameLogic
     {
         public  RLTower       m_RLTower         = null;                 // 表现炮塔
         private BehaviourTree m_TowerAI         = null;                 // 炮塔AI
+        private int           m_nBulletTempId   = 0;                    // 子弹模板Id
         private int           m_nLogicX         = 0;                    // 逻辑坐标X
         private int           m_nLogicY         = 0;                    // 逻辑坐标Y
         private int           m_nAngle          = 0;                    // 炮塔当前角度
@@ -256,6 +259,11 @@ namespace Game.GameLogic
         public RLTower RLTower
         {
             get { return m_RLTower; }
+        }
+        public int BulletTempId
+        {
+            get { return m_nBulletTempId;  }
+            set { m_nBulletTempId = value; }
         }
         public int LogicX
         {
@@ -319,7 +327,8 @@ namespace Game.GameLogic
 
             // 初始化值
             LogicX       = nLogicX;
-            m_nLogicY    = nLogicY;
+            LogicY       = nLogicY;
+            BulletTempId = t.nBulletTempId;
             FireRange    = 200;
             AngularSpeed = 10;
             AimDeviation = 5;
@@ -432,7 +441,7 @@ namespace Game.GameLogic
             return fCornerDistanceSq <= Mathf.Pow(circle.r, 2);
         }
 
-        public void Attack()
+        public void Attack(Vector2 bulletDirection, Vector2 bulletPosition)
         {
             int nCurTime = (int)Time.time * 1000;
             if (nCurTime - m_nLastAttackTime <= m_nAttackFreq)
@@ -442,12 +451,10 @@ namespace Game.GameLogic
             m_nLastAttackTime = nCurTime;
             m_RLTower.PlayAttackAnimation();
 
-            Vector2   vecTowerTube = new Vector2(Mathf.Sin(Angle * Mathf.Deg2Rad), Mathf.Cos(Angle * Mathf.Deg2Rad));
-            Vector2   towerPos     = new Vector2(RepresentCommon.LogicX2WorldX(LogicX), RepresentCommon.LogicY2WorldY(LogicY));
             GLMissile missile      = new GLMissile();
             GameWorld.Instance().m_stage.m_GLMissileList.Add(missile);
 
-            missile.Init(9, vecTowerTube, towerPos, m_Target as GLNpc);
+            missile.Init(BulletTempId, bulletDirection, bulletPosition, m_Target as GLNpc);
         }
     }
 }

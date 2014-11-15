@@ -155,12 +155,10 @@ namespace Game.GameLogic
     // 逻辑炮塔NPC模板
     public class GLTowerTemplate
     {
-        // 模板ID
-        public int nTemplateId = 0;
-        // 名字
-        public string szName = null;
-        // 表现ID
-        public int nRepresentId = 0;
+        public int    nTemplateId   = 0;                                // 模板ID
+        public string szName        = null;                             // 名字
+        public int    nRepresentId  = 0;                                // 表现ID
+        public int    nBulletTempId = 0;                                // 子弹模板ID
     }
     //////////////////////////////////////////////////////////////////////////
     // 逻辑场景子弹模板

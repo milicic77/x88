@@ -520,6 +520,10 @@ namespace Game.GameLogic
                     tabFile.GetString(i, "Name", "", ref szTemp);
                     template.szName = szTemp;
 
+                    int nBulletTempId = 0;
+                    tabFile.GetInteger(i, "BulletTempId", 1, ref nBulletTempId);
+                    template.nBulletTempId = nBulletTempId;
+
                     m_GLTowerTemplateList[template.nTemplateId] = template;
                 }
             }

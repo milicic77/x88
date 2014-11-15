@@ -1,4 +1,4 @@
-TemplateId	Name	RepresentId
-1	瓶子炮小	1
-2	瓶子炮中	2
-3	瓶子炮大	3
+TemplateId	Name	RepresentId	BulletTempId
+1	瓶子炮小	1	1
+2	瓶子炮中	2	1
+3	瓶子炮大	3	1
